@@ -1,0 +1,10 @@
+<h1>login page</h1>
+<form action='login?next={{ action }}' method="post">
+
+  {% csrf_token %}
+
+  <input type="text" name="username" placeholder="User Name" autofocus="true"/>
+  <input type="password" name="password"/>
+  <input type="submit" name="submit" value="login"/>
+
+</form>

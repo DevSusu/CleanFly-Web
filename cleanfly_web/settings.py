@@ -37,6 +37,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cleanfly',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -78,7 +79,15 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
+    },
+    'cleanfly' : {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'cleanfly',
+        'USER': 'cleanfly',
+        'PASSWORD': 'cccc1234!',
+        'HOST': 'cleanfly-replica.coc8lqibmkn4.ap-northeast-1.rds.amazonaws.com',
+        'PORT': '3306',
+    },
 }
 
 
