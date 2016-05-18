@@ -1,4 +1,8 @@
-.search-type {
+#search {
+  color : #25679e;
+}
+
+button.search-type , button.control-order {
   font-size: 1.5rem;
   padding : 0;
   /*margin-right: 15px;*/
@@ -8,4 +12,40 @@
   padding: 0;
   font-size: 1.2rem;
   font-weight: bold;
+}
+
+.order-info {
+  font-size: 1.6rem;
+  margin-top: 10px;
+}
+
+.order {
+  margin-top: 10px;
+}
+
+.order h5 {
+  border-bottom: 1px solid #25679e;
+}
+
+.order span {
+  color : #25679e;
+}
+
+.order span[column="address"] {
+  color: #222;
+  font-size: 2rem;
+}
+
+span.warning {
+  color : #E93534;
+}
+
+.order-table {
+  width: 100%;
+  margin-top: 25px;
+  font-weight: 300;
+}
+
+tr:first-child td {
+  border-bottom-color: #25679e;
 }

@@ -17,7 +17,11 @@
           <button class="three-sm search-type" search-type="phone">전화</button>
           <button class="three-sm search-type" search-type="address">주소</button>
         </div>
-        <input id="search" class="u-full-width" type="number" autofocus="true">
+        <input id="search" class="u-full-width" type="number" autofocus="true" placeholder="번호를 입력해주세요">
+        <div class="row control-order" style="display:none;">
+          <button class="six-sm control-order" action="clear">지우기</button>
+          <button class="six-sm control-order" action="process">입고</button>
+        </div>
         <div id="keypad" style="display:none;">
           <div class="row keypad">
             <button class="four-sm" value="1">1</button>
@@ -34,10 +38,68 @@
             <button class="four-sm" value="8">8</button>
             <button class="four-sm" value="9">9</button>
           </div>
+          <div class="row keypad">
+            <button class="four-sm" value="*">*</button>
+            <button class="four-sm" value="0">0</button>
+            <input class="four-sm" type="submit" value="확인"/>
+            <!-- <button class="four-sm" value="">확인</button> -->
+          </div>
         </div>
       </div>
     </div>
-    <h1>Index Page</h1>
+    <div class="order">
+      <div class="row order-info">
+        <h5>주문 정보</h5>
+        <span column="address"></span>
+      </div>
+      <div class="row">
+        <div class="nine columns">
+          <div class="four columns order-info">
+            진행상황 : <span column="progress" class="progress warning"></span>
+          </div>
+          <div class="four columns order-info">
+            주문번호 : <span column="order_code"></span>
+          </div>
+          <div class="four columns order-info">
+            전화번호 : <span column="phone"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="nine columns">
+          <div class="four columns order-info">
+            주문일 : <span column="order_date" class="date"></span>
+          </div>
+          <div class="four columns order-info">
+            수거일 : <span column="collection_date" class="date"></span>
+          </div>
+          <div class="four columns order-info">
+            배달일 : <span column="delivery_date" class="date"></span>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="nine columns">
+          <div class="four columns order-info">
+            가격 : <span column="price"></span>
+          </div>
+          <div class="four columns order-info">
+            마일리지 : <span column="mileage_price"></span>
+          </div>
+          <div class="four columns order-info">
+            방문메모 : <span column="notices"></span>
+          </div>
+        </div>
+      </div>
+      <table class="order-table">
+        <tr class="table-col">
+          <td>택 번호</td>
+          <td>상품코드</td>
+          <td>상품명</td>
+          <td>가격</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </section>
 {% endblock %}
