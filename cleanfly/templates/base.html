@@ -1,0 +1,32 @@
+{% load staticfiles %}
+<html lang="ko">
+
+  <head>
+    <title>크린플라이 웹</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/cleanfly.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cleanfly.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    {% block static %}
+    {% endblock %}
+  </head>
+  <body>
+
+    <header>
+      <div class="container">
+        <a class="logo" href="#">CleanFly</a>
+        <a class="u-pull-right" href="logout">로그아웃</a>
+      </div>
+
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+  </body>
+
+
+</html>

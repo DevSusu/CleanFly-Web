@@ -21,6 +21,8 @@ def login_view(request):
                 return redirect(request.GET['next'])
             else:
                 return render(request, 'account_disabled.html')
+        else:
+            return render(request,'auth_wrong.html')
 
 def logout_view(request):
     logout(request)

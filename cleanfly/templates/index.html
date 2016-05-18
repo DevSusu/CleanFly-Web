@@ -1,1 +1,43 @@
-<h1>Index Page</h1>
+{% extends 'base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<script src="{% static 'js/index.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="first">
+  <div class="container">
+    <div class="row">
+      <div class="five columns">
+        <div class="row">
+          <button class="three-sm search-type focus" search-type="tag">택</button>
+          <button class="three-sm search-type" search-type="order">주문</button>
+          <button class="three-sm search-type" search-type="phone">전화</button>
+          <button class="three-sm search-type" search-type="address">주소</button>
+        </div>
+        <input id="search" class="u-full-width" type="number" autofocus="true">
+        <div id="keypad" style="display:none;">
+          <div class="row keypad">
+            <button class="four-sm" value="1">1</button>
+            <button class="four-sm" value="2">2</button>
+            <button class="four-sm" value="3">3</button>
+          </div>
+          <div class="row keypad">
+            <button class="four-sm" value="4">4</button>
+            <button class="four-sm" value="5">5</button>
+            <button class="four-sm" value="6">6</button>
+          </div>
+          <div class="row keypad">
+            <button class="four-sm" value="7">7</button>
+            <button class="four-sm" value="8">8</button>
+            <button class="four-sm" value="9">9</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <h1>Index Page</h1>
+  </div>
+</section>
+{% endblock %}

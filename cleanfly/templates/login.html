@@ -1,10 +1,25 @@
-<h1>login page</h1>
-<form action='login?next={{ action }}' method="post">
+{% extends 'base.html' %}
 
-  {% csrf_token %}
-
-  <input type="text" name="username" placeholder="User Name" autofocus="true"/>
-  <input type="password" name="password"/>
-  <input type="submit" name="submit" value="login"/>
-
-</form>
+{% block content %}
+<section class="first">
+  <div class="container">
+    <form action='login?next={{ action }}' method="post">
+      <div class="row">
+        <div class="four columns offset-by-four">
+          <input class="u-full-width" type="text" name="username" placeholder="username" autofocus="true"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="four columns offset-by-four">
+          <input class="u-full-width" type="password" name="password" placeholder="password"/>
+        </div>
+      </div>
+        {% csrf_token %}
+      <div class="row">
+        <div class="four columns offset-by-four">
+          <input class="u-full-width" type="submit" name="submit" value="login"/>
+        </div>
+      </div>
+    </form>
+</section>
+{% endblock %}
