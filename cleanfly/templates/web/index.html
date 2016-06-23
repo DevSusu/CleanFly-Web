@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/web.css' %}">
+<script src="{% static 'js/web.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="first">
+  <div class="container">
+    <div class="filters">
+      <div class="row">
+        <h5>검색 필터</h5>
+      </div>
+      <div class="row">
+        <div class="six columns">
+          <div class="six-sm">
+            <span>지점 : </span>
+            <select name="branch" class="branch">
+              <option value="all">전체</option>
+              <option value="1">분당구</option>
+            </select>
+          </div>
+          <div class="six-sm">
+            <span>버드 : </span>
+            <select name="bird" class="bird">
+              <option value="all">전체</option>
+            </select>
+          </div>
+        </div>
+        <div class="six columns">
+          <span>진행상황 : </span>
+          <select name="progress" class="progress">
+            <option value="all">전체</option>
+            <option value="1">수거미처리</option>
+            <option value="2">수거처리중</option>
+            <option value="3">수거완료/배달미처리</option>
+            <option value="4">배달처리중</option>
+            <option value="5">완료</option>
+            <option value="6">취소</option>
+          </select>
+        </div>
+      </div>
+      <div class="row">
+        <div class="six columns start-date">
+          <p class="focus">시작일</p>
+          <button class="three-sm search-type" search-type="tag">오늘</button>
+          <button class="three-sm search-type focus" search-type="order">3일전</button>
+          <button class="three-sm search-type" search-type="phone">1주전</button>
+          <button class="three-sm search-type" search-type="address">1달전</button>
+        </div>
+        <div class="six columns end-date">
+          <p class="focus">종료일</p>
+          <button class="three-sm search-type focus" search-type="tag">오늘</button>
+          <button class="three-sm search-type" search-type="order">3일전</button>
+          <button class="three-sm search-type" search-type="phone">1주전</button>
+          <button class="three-sm search-type" search-type="address">1달전</button>
+        </div>
+        <div class="six columns"></div>
+      </div>
+      <div class="row">
+        <button id="load-order" class="three columns mt-20" search-type="tag">조회</button>
+      </div>
+    </div>
+    <div class="order">
+      <div class="row order-info">
+        <p class="fold">숨기기</p>
+        <h5>주문 목록</h5>
+      </div>
+      <div class="order-content">
+        <table class="order-table">
+          <tr class="table-col">
+            <td>날짜</td>
+            <td>진행상황</td>
+            <td>연락처</td>
+            <td>주소</td>
+            <td>방문메모</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    
+    <!--
+    1. 주택 유형별 분류(오피스텔, 아파트, 주택)
+    2. 고객별 재구매 횟수
+    3. 이탈 고객(1달 기준)
+    4. 월별 신규 이용자 수
+    5. 재구매율
+    -->
+    <div class="statistic">
+      <div class="row">
+        <p class="fold">숨기기</p>
+        <h5>통계</h5>
+      </div>
+      <div class="statistic-content">
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

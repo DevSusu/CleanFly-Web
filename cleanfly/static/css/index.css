@@ -23,7 +23,7 @@ button.search-type , button.control-order {
   margin-top: 10px;
 }
 
-.order h5 {
+.statistic h5 , .order h5 , .filters h5 {
   border-bottom: 1px solid #25679e;
 }
 
@@ -48,4 +48,14 @@ span.warning {
 
 tr:first-child td {
   border-bottom-color: #25679e;
+}
+
+p.fold {
+  float: right;
+  display: inline;
+  position: relative;
+  top: 0;
+  right: 0;
+  font-size: 1.5rem;
+  color: #25679e;
 }

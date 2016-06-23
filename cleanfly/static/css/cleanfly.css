@@ -35,6 +35,7 @@ header a {
   font-size: 1.5rem;
   text-decoration: none;
   text-transform: none;
+  margin-right: 20px;
 }
 
 section {
@@ -49,6 +50,7 @@ section.first {
 
 button {
   font-weight: normal;
+  font-size: 1.4rem;
 }
 
 button.focus {
@@ -56,9 +58,13 @@ button.focus {
   border-color: #25679e;
 }
 
+p.foucs {
+  color : #25679e;
+}
+
 .three-sm {
   display: inline-block;
-  width: 24.3%;
+  width: 24.1%;
 }
 
 .four-sm {
@@ -69,4 +75,12 @@ button.focus {
 .six-sm {
   display: inline-block;
   width: 49.5%;
+}
+
+.filters p {
+  margin-bottom: 10px;
+}
+
+.mt-20 {
+  margin-top: 20px;
 }
