@@ -1,0 +1,63 @@
+{% extends 'order/base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+<script src="{% static 'js/order.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+
+<section class="first">
+  <div class="container">
+    <div class="row">
+      <span class="four-sm u-center-align u-underline">
+        <p>주문자 정보</p>
+      </span>
+      <span class="four-sm u-center-align u-dim">
+        <p>주문 정보</p>
+      </span>
+      <span class="four-sm u-center-align u-dim">
+        <p>카드 등록</p>
+      </span>
+    </div>
+    <div id="form-container">
+      <form>
+        <div class="row">
+          <div class="six columns">
+            <p>이름</p>
+            <label>성함을 알려주세요</label>
+            <input class="u-full-width" type="text" placeholder="홍길동" autofocus="true">
+          </div>
+          <div class="six columns">
+            <p>전화번호</p>
+            <label>수거/배달 시 연락 가능한 전화번호</label>
+            <input class="u-full-width" type="text" placeholder="010-1234-1234">
+          </div>
+        </div>
+        <div class="row">
+          <p>주소</p>
+          <label>수거/배달을 받을 주소</label>
+        </div>
+        <div class="row">
+          <div class="three columns">
+            <input class="u-full-width" type="text" placeholder="성남시">
+          </div>
+          <div class="three columns">
+            <input class="u-full-width" type="text" placeholder="분당구">
+          </div>
+          <div class="six columns">
+            <input class="u-full-width" type="text" placeholder="상세주소">
+          </div>
+        </div>
+        <div class="row">
+          <div class="six columns">
+            <button class="button u-full-width">주소 확인</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

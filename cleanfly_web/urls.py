@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('cleanfly.urls')),
     url(r'^web/', include('web.urls')),
+    url(r'^order/', include('order.urls')),
 ]

@@ -1,0 +1,48 @@
+{% load staticfiles %}
+<html lang="ko">
+
+  <head>
+    <title>크린플라이 웹</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/cleanfly.ico' %}"/>
+    <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+    <link rel="stylesheet" href="{% static 'css/skeleton.css' %}">
+    <link rel="stylesheet" href="{% static 'css/cleanfly.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    {% block static %}
+    {% endblock %}
+  </head>
+  <body>
+
+    <header>
+      <div class="container">
+        <a class="logo" href="#">CleanFly</a>
+        <a class="u-pull-right" href="/">문의하기</a>
+      </div>
+
+    </header>
+
+    {% block content %}
+    {% endblock %}
+
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="four offset-by-two columns u-center-align">
+            <img class="logo" src="/static/img/cleanfly_logo.png">
+          </div>
+          <div class="four columns u-center-align">
+            <p>주식회사 크린플라이 대표 권용재</p>
+            <p>사업자 등록번호 : 259-35-00036</p>
+            <p>대표번호 1800 - 7098</p>
+            <p>카카오톡 @크린플라이</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+
+
+</html>
