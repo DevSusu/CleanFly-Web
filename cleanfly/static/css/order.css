@@ -69,7 +69,7 @@ footer .logo {
   color : #e0e0e0;
 }
 
-#form-container button {
+#form-container button , #form-container input[type="button"] {
   margin-top: 15px;
   background-color: #98DFAF;
   font-size: 1.5rem;
@@ -77,4 +77,9 @@ footer .logo {
   border-color: #98DFAF;
   color: #FFFAFF;
   height: 38px;
+}
+
+p.error {
+  font-size : 1.2rem;
+  color : #FF3838;
 }
