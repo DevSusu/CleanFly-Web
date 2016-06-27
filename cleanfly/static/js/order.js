@@ -18,7 +18,7 @@ $(document).on("ready page:load", function () {
 
   var getFullAddress = function() {
     var full_address = "";
-    $("div[column='address'] input").each( function( index,input ) {
+    $("input[column='address']").each( function( index,input ) {
       full_address += $(input).val() + " ";
     });
     return full_address.slice(0,-1);
@@ -29,14 +29,12 @@ $(document).on("ready page:load", function () {
     var validation = true;
 
     columns.forEach( function(column, index) {
-      console.log("input[column='" + column + "']");
       $("input[column='" + column + "']").each( function( index,input ) {
         var text = $(input).val();
         var regex = column_regex[column];
         var match;
         if( undefined != regex ) {
           match = text.match(regex);
-          console.log(match);
         }
 
         if( text.length == 0 ) {
@@ -50,10 +48,12 @@ $(document).on("ready page:load", function () {
         else {
           $("p.error[column='" + column + "']").text("");
         }
+
       });
+
     });
 
-    // return validation;
+    return validation;
   }
 
   $('form').on('submit', function(e) {
@@ -63,7 +63,7 @@ $(document).on("ready page:load", function () {
     if ( !validateInputs(columns[status]) ) {
       return false;
     }
-
+    console.log("validation passed!");
     console.log(getFullAddress());
 
   });

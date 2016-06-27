@@ -70,13 +70,16 @@ footer .logo {
 }
 
 #form-container button , #form-container input[type="button"] {
-  margin-top: 15px;
   background-color: #98DFAF;
   font-size: 1.5rem;
   font-weight: normal;
   border-color: #98DFAF;
   color: #FFFAFF;
   height: 38px;
+}
+
+#form-container button {
+  margin-top: 15px;
 }
 
 p.error {
