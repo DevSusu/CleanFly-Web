@@ -69,6 +69,15 @@ footer .logo {
   color : #e0e0e0;
 }
 
+button.highlight , input.highlight[type="button"] {
+  background-color: #98DFAF;
+  font-size: 1.5rem;
+  font-weight: normal;
+  border-color: #98DFAF;
+  color: #FFFAFF;
+  height: 38px;
+}
+
 #form-container button , #form-container input[type="button"] {
   background-color: #98DFAF;
   font-size: 1.5rem;

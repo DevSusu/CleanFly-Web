@@ -6,4 +6,5 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', 'order.views.index'),
+    url(r'^order/$', 'order.views.order'),
 ]

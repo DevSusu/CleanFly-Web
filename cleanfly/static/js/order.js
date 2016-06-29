@@ -82,8 +82,6 @@ $(document).on("ready page:load", function () {
       }
     });
 
-    console.log(address_body);
-
   }
 
   var createUser = function() {
@@ -106,16 +104,12 @@ $(document).on("ready page:load", function () {
 
     e.preventDefault();
 
-    if ( !validateInputs(columns) ) {
+    if ( !validateInputs(columns) )
       return false;
-    }
-    console.log("validation passed!");
 
     join_body.name = $('input[column="name"]').val();
     join_body.phone = $('input[column="phone"]').val().replace(/[- ]/g,'');
     join_body.address = getFullAddress();
-
-    // confirm(join_body.name + " 고객님\n" + "전화번호 : " + join_body.phone + "\n주소 : " + join_body.address + "\n진행하시겠습니까?")
 
     if (confirm(join_body.name + " 고객님\n" + "전화번호 : " + join_body.phone + "\n주소 : " + join_body.address + "\n진행하시겠습니까?") ) {
 

@@ -1,0 +1,138 @@
+{% extends 'order/base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<section class="first">
+  <div class="container">
+    <div class="row progress">
+      <span class="four-sm u-center-align u-dim">
+        <p>주소 등록</p>
+      </span>
+      <span class="four-sm u-center-align u-underline">
+        <p>주문 정보</p>
+      </span>
+      <span class="four-sm u-center-align u-dim">
+        <p>카드 등록</p>
+      </span>
+    </div>
+    <div id="form-container">
+      <form name="form" id="address-form">
+        <div class="row">
+          <div class="six columns">
+            <p>배달 날짜</p>
+            <p class="error" column="name"></p>
+            <label>성함을 알려주세요</label>
+            <input class="u-full-width" type="text" placeholder="홍길동" autofocus="true" column="name">
+          </div>
+          <div class="six columns">
+            <p>수거 날짜</p>
+            <p class="error" column="phone"></p>
+            <label>수거/배달 시 연락 가능한 전화번호</label>
+            <input class="u-full-width" type="tel" placeholder="010-1234-1234" column="phone">
+          </div>
+        </div>
+        <div class="row">
+          <p>주소</p>
+          <label>수거/배달을 받을 주소</label>
+          <p class="error" column="address"></p>
+        </div>
+        <input type="text" id="sample3_postcode" placeholder="우편번호" style="display:none;">
+        <div class="row" column="address">
+          <div class="three columns">
+            <input type="button" class="button u-full-width" onclick="sample3_execDaumPostcode()" value="주소 검색">
+          </div>
+        </div>
+        <div class="row">
+          <div class="three columns">
+            <div id="wrap" style="display:none;border:1px solid;width:88vw;max-width:500px;height:300px;margin:5px 0 15px 0;position:relative">
+              <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="six columns">
+            <input type="text" id="sample3_address" class="d_form large u-full-width" onfocus="sample3_execDaumPostcode()" placeholder="ex) 정자동 푸르지오시티" column="address">
+          </div>
+          <div class="six columns">
+            <input type="text" class="u-full-width" id="sample3_address2" placeholder="상세주소" column="address">
+          </div>
+        </div>
+        <div class="row">
+          <div class="three columns">
+            <button class="button u-full-width">주문 진행</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+<script>
+var element_wrap = document.getElementById('wrap');
+
+function foldDaumPostcode() {
+    // iframe을 넣은 element를 안보이게 한다.
+    element_wrap.style.display = 'none';
+}
+
+function sample3_execDaumPostcode() {
+    var themeObj = {
+       bgColor: "#25679E",
+       emphTextColor: "#98DFAF" //강조 글자색
+       //outlineColor: "", //테두리
+    };
+    // 현재 scroll 위치를 저장해놓는다.
+    var currentScroll = Math.max(document.body.scrollTop, document.documentElement.scrollTop);
+    new daum.Postcode({
+        oncomplete: function(data) {
+            // 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+            // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+            // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+            var fullAddr = data.jibunAddress; // 최종 주소 변수
+            var extraAddr = ''; // 조합형 주소 변수
+            //
+            // 기본 주소가 도로명 타입일때 조합한다.
+            // if(data.addressType === 'R'){
+              //법정동명이 있을 경우 추가한다.
+            if(data.bname !== ''){
+                extraAddr += data.bname;
+            }
+            // 건물명이 있을 경우 추가한다.
+            if(data.buildingName !== ''){
+                extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+            }
+            // 조합형주소의 유무에 따라 양쪽에 괄호를 추가하여 최종 주소를 만든다.
+            fullAddr += (extraAddr !== '' ? ' ('+ extraAddr +')' : '');
+            // }
+
+            // 우편번호와 주소 정보를 해당 필드에 넣는다.
+            document.getElementById('sample3_postcode').value = data.zonecode; //5자리 새우편번호 사용
+            document.getElementById('sample3_address').value = fullAddr;
+
+            // iframe을 넣은 element를 안보이게 한다.
+            // (autoClose:false 기능을 이용한다면, 아래 코드를 제거해야 화면에서 사라지지 않는다.)
+            element_wrap.style.display = 'none';
+
+            // 우편번호 찾기 화면이 보이기 이전으로 scroll 위치를 되돌린다.
+            document.body.scrollTop = currentScroll;
+        },
+        // 우편번호 찾기 화면 크기가 조정되었을때 실행할 코드를 작성하는 부분. iframe을 넣은 element의 높이값을 조정한다.
+        onresize : function(size) {
+            element_wrap.style.height = size.height+'px';
+        },
+        width : '100%',
+        height : '100%',
+        theme: themeObj
+    }).embed(element_wrap);
+
+    // iframe을 넣은 element를 보이게 한다.
+    element_wrap.style.display = 'block';
+}
+</script>
+{% endblock %}
