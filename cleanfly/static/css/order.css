@@ -14,20 +14,6 @@ section {
   font-family: 'Nanum Gothic', sans-serif;
 }
 
-footer {
-  color : #F5F5F5;
-  font-family: 'Nanum Gothic', sans-serif;
-}
-
-footer p {
-  margin-bottom: 10px;
-}
-
-footer .logo {
-  width: 100%;
-  max-width: 150px;
-}
-
 @media (min-width: 400px) {
   .container {
     width: 90%;
@@ -55,7 +41,7 @@ footer .logo {
   margin-top: 30px;
 }
 
-#form-container input {
+form input {
   color : #1E1B18;
 }
 
@@ -70,15 +56,6 @@ footer .logo {
 }
 
 button.highlight , input.highlight[type="button"] {
-  background-color: #98DFAF;
-  font-size: 1.5rem;
-  font-weight: normal;
-  border-color: #98DFAF;
-  color: #FFFAFF;
-  height: 38px;
-}
-
-#form-container button , #form-container input[type="button"] {
   background-color: #98DFAF;
   font-size: 1.5rem;
   font-weight: normal;

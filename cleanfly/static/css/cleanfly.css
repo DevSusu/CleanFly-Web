@@ -50,8 +50,24 @@ section.first {
   margin-top: 48px;
   min-height: 450px;
 }
+
 section.padding {
   padding : 100px 0;
+}
+
+footer {
+  color : #F5F5F5;
+  font-family: 'Nanum Gothic', sans-serif;
+  margin-bottom: 80px;
+}
+
+footer p {
+  margin-bottom: 10px;
+}
+
+footer .logo {
+  width: 100%;
+  max-width: 150px;
 }
 
 button {

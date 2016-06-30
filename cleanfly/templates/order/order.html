@@ -25,15 +25,15 @@
       <form name="form" id="address-form">
         <div class="row">
           <div class="six columns">
-            <p>배달 날짜</p>
+            <p>수거일</p>
             <p class="error" column="name"></p>
-            <label>성함을 알려주세요</label>
+            <label>배달원이 세탁물을 <strong>받아가는</strong> 날짜</label>
             <input class="u-full-width" type="text" placeholder="홍길동" autofocus="true" column="name">
           </div>
           <div class="six columns">
-            <p>수거 날짜</p>
+            <p>배달일</p>
             <p class="error" column="phone"></p>
-            <label>수거/배달 시 연락 가능한 전화번호</label>
+            <label>배달원이 세탁물을 <strong>전해주는</strong> 날짜</label>
             <input class="u-full-width" type="tel" placeholder="010-1234-1234" column="phone">
           </div>
         </div>
@@ -45,7 +45,7 @@
         <input type="text" id="sample3_postcode" placeholder="우편번호" style="display:none;">
         <div class="row" column="address">
           <div class="three columns">
-            <input type="button" class="button u-full-width" onclick="sample3_execDaumPostcode()" value="주소 검색">
+            <input type="button" class="button u-full-width highlight" onclick="sample3_execDaumPostcode()" value="주소 검색">
           </div>
         </div>
         <div class="row">
@@ -65,7 +65,7 @@
         </div>
         <div class="row">
           <div class="three columns">
-            <button class="button u-full-width">주문 진행</button>
+            <button class="button u-full-width highlight">주문 진행</button>
           </div>
         </div>
       </form>
