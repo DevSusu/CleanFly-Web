@@ -1,5 +1,8 @@
 $(document).on('ready page:load', function() {
 
+  // change on production
+  var server_ip = "http://localhost/";
+
   var to_ko = {
     'Sun' : "일요일",
     'Mon' : "월요일",
@@ -79,7 +82,7 @@ $(document).on('ready page:load', function() {
     };
 
     $.ajax({
-      url : "http://localhost/fly/order",
+      url : server_ip + "fly/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {

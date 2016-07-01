@@ -1,5 +1,8 @@
 $(document).on("ready page:load", function () {
 
+  // change on production
+  var server_ip = "http://localhost/";
+
   var columns = ['name','phone','address'];
 
   var column_regex = {
@@ -95,7 +98,7 @@ $(document).on("ready page:load", function () {
     };
 
     $.ajax({
-      url : "http://localhost/fly/order",
+      url : server_ip + "fly/order",
       type : "POST",
       data : address_body,
       success : function(result,status) {
@@ -112,7 +115,7 @@ $(document).on("ready page:load", function () {
   var createUser = function(callback) {
 
     $.ajax({
-      url : "http://localhost/web/user",
+      url : server_ip + "web/user",
       type : "POST",
       data : join_body,
       success : function(result,status) {
@@ -135,7 +138,7 @@ $(document).on("ready page:load", function () {
       // user 정보 서버에 보내서 새로운 유저인지, 아닌지 판단하고 생성
       // 기존 유저라면 알림창.
       // 다 넘어가면 주문 정보 입력 페이지로
-      
+
       e.preventDefault();
 
       if ( !validateInputs(columns) )
