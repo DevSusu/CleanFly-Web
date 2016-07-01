@@ -2,10 +2,11 @@
 
 {% block static %}
 {% load staticfiles %}
+<script src="{% static 'js/postcode.v2.js' %}"></script>
+<script src="https://s1.daumcdn.net/svc/attach/U03/cssjs/postcode/1467267596298/160630.js"></script>
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
 <script src="{% static 'js/address.js' %}"></script>
-<script src="{% static 'js/daum.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -76,6 +77,8 @@
   </div>
 </section>
 <script>
+
+console.log(daum);
 var element_wrap = document.getElementById('wrap');
 
 function foldDaumPostcode() {
