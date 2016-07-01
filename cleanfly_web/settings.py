@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'cleanfly',
     'web',
+    'order',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -118,3 +119,6 @@ SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
 CSRF_COOKIE_SECURE = True
 
+# HTTPS settings
+os.environ['HTTPS'] = "on"
+os.environ['wsgi.url_scheme'] = 'https'

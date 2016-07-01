@@ -1,19 +1,56 @@
-$(document).on("ready page:load", function () {
+$(document).on('ready page:load', function() {
 
-  var columns = ['name','phone','address'];
+  var to_ko = {
+    'Sun' : "일요일",
+    'Mon' : "월요일",
+    'Tue' : "화요일",
+    'Wed' : "수요일",
+    'Thu' : "목요일",
+    'Fri' : "금요일",
+    'Sat' : "토요일",
+  };
 
-  var column_regex = {
-    "phone" : /[0-9-]{9,16}/
+  var i18n = {
+    previousMonth : '지난달',
+    nextMonth     : '다음달',
+    months        : ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+    weekdays      : ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'],
+    weekdaysShort : ['일','월','화','수','목','금','토']
+  };
+
+  var pickerCollection = new Pikaday({
+    field: $('.datepicker')[0],
+    i18n: i18n,
+    minDate: moment().toDate(),
+    maxDate: moment().add(7,'d').toDate(),
+    defaultDate: moment().toDate(),
+    numberOfMonths: 1,
+    setDefaultDate: true,
+    format: 'YYYY-MM-DD ddd'
+  });
+
+  var pickerDelivery = new Pikaday({
+    field: $('.datepicker')[1],
+    i18n: i18n,
+    minDate: moment().add(4,'d').toDate(),
+    maxDate: moment().add(7+4,'d').toDate(),
+    defaultDate: moment().toDate(),
+    numberOfMonths: 1,
+    setDefaultDate: true,
+    format: 'YYYY-MM-DD ddd'
+  });
+
+  var updateDateInput = function(input) {
+    var val = $(input).val();
+    var day = val.slice(-3);
+    val = val.slice(0,-3) + to_ko[day];
+    $(input).val(val);
   }
 
-  var to_korean = {
-    "name" : "이름을",
-    "phone" : "전화번호를",
-    "address" : "주소를"
-  }
-
-  var join_body = {};
-  var address_body = { "type" : "address" };
+  // initial update
+  $('input.datepicker').each( function( index, value) {
+    updateDateInput(value);
+  });
 
   var getFullAddress = function() {
     var full_address = "";
@@ -23,43 +60,14 @@ $(document).on("ready page:load", function () {
     return full_address.slice(0,-1);
   }
 
-  var validateInputs = function(columns) {
+  var fetchTime = function(type) { // type = collection or delivery
 
-    var validation = true;
-
-    columns.forEach( function(column, index) {
-      $("input[column='" + column + "']").each( function( index,input ) {
-        var text = $(input).val();
-        var regex = column_regex[column];
-        var match;
-        if( undefined != regex ) {
-          match = text.match(regex);
-        }
-
-        if( text.length == 0 ) {
-          validation = false;
-          $("p.error[column='" + column + "']").text(to_korean[column] + " 입력해주세요");
-        }
-        else if ( undefined != regex && null == match ) {
-          validation = false;
-          $("p.error[column='" + column + "']").text(to_korean[column] + " 형식에 맞게 입력해주세요");
-        }
-        else {
-          $("p.error[column='" + column + "']").text("");
-        }
-
-      });
-
-    });
-
-    return validation;
-  }
-
-  var checkAddress = function() {
-
+    var request_body = {
+      "type" : type
+    };
     var full_address = getFullAddress();
     var address_detail = full_address.split(" ");
-    address_body.address = {
+    request_body.address = {
 
       "admin_area" : address_detail[0],
       "locality" : address_detail[1]+" "+address_detail[2],
@@ -73,7 +81,7 @@ $(document).on("ready page:load", function () {
     $.ajax({
       url : "http://localhost/fly/order",
       type : "POST",
-      data : address_body,
+      data : request_body,
       success : function(result,status) {
         console.log(result);
       },
@@ -81,48 +89,26 @@ $(document).on("ready page:load", function () {
         console.log(error);
       }
     });
+  };
 
-  }
+  $('input.datepicker').on('change input', function() {
+    updateDateInput(this);
 
-  var createUser = function() {
+    if( $(this).attr('column') == 'collection_date' ) {
+      var date_string = $(this).val();
+      var collection_date = new moment(date_string);
 
-    $.ajax({
-      url : "http://localhost/web/user",
-      type : "POST",
-      data : join_body,
-      success : function(result,status) {
-        console.log(result);
-      },
-      error : function(xhr, status, error) {
-        console.log(error);
-      }
-    });
+      var interval = 4;
+      if( collection_date.day() >=2 ) interval = 5;
 
-  }
+      pickerDelivery.setDate( moment(date_string).add(interval,'days').toDate() );
 
-  $('form').on('submit', function(e) {
+      pickerDelivery.setMinDate( collection_date.add(interval,'days').toDate() );
+      pickerDelivery.setMaxDate( moment(date_string).add(interval+7,'days').toDate() );
 
-    e.preventDefault();
-
-    if ( !validateInputs(columns) )
-      return false;
-
-    join_body.name = $('input[column="name"]').val();
-    join_body.phone = $('input[column="phone"]').val().replace(/[- ]/g,'');
-    join_body.address = getFullAddress();
-
-    if (confirm(join_body.name + " 고객님\n" + "전화번호 : " + join_body.phone + "\n주소 : " + join_body.address + "\n진행하시겠습니까?") ) {
-
-      createUser();
-      checkAddress();
+    } else {
 
     }
-
-    // address api 로 주문 가능지역 확인
-    // user 정보 서버에 보내서 새로운 유저인지, 아닌지 판단하고 생성
-    // 기존 유저라면 알림창.
-    // 다 넘어가면 주문 정보 입력 페이지로
-
   });
 
 });
