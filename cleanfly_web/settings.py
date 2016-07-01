@@ -23,14 +23,15 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd_1e_b=$f&$+9ktnyo&wb$0u3jyg$e&x!+@^xlnlz+4dwdq0bl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['easy.getcleanfly.com']
 
 
 # Application definition
 
 INSTALLED_APPS = (
+    'sslserver',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -113,8 +114,9 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+# HTTPS settings
+SECURE_SSL_REDIRECT = True
 SESSION_COOKIE_SECURE = True
-
 CSRF_COOKIE_SECURE = True
 
 # HTTPS settings
