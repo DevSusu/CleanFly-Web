@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'cleanfly',
     'web',
+    'order',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -111,3 +112,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+SESSION_COOKIE_SECURE = True
+
+CSRF_COOKIE_SECURE = True
+
+# HTTPS settings
+os.environ['HTTPS'] = "on"
+os.environ['wsgi.url_scheme'] = 'https'

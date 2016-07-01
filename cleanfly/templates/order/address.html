@@ -4,7 +4,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
-<script src="{% static 'js/order.js' %}"></script>
+<script src="{% static 'js/address.js' %}"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 {% endblock %}
 
@@ -24,7 +24,7 @@
       </span>
     </div>
     <div id="form-container">
-      <form name="form" id="address-form">
+      <form name="form" id="address-form" method="post" action="order/">
         <div class="row">
           <div class="six columns">
             <p>이름</p>
@@ -36,7 +36,7 @@
             <p>전화번호</p>
             <p class="error" column="phone"></p>
             <label>수거/배달 시 연락 가능한 전화번호</label>
-            <input class="u-full-width" type="tel" placeholder="010-1234-1234" column="phone">
+            <input class="u-full-width" type="tel" placeholder="010-1234-7098" column="phone">
           </div>
         </div>
         <div class="row">
@@ -70,6 +70,7 @@
             <button class="button u-full-width highlight">주문 진행</button>
           </div>
         </div>
+        {% csrf_token %}
       </form>
     </div>
   </div>
