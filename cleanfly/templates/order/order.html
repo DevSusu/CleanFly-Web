@@ -34,20 +34,19 @@
             <label>배달원이 세탁물을 <strong>받아가는</strong> 날짜</label>
             <input class="u-full-width datepicker" type="text" placeholder="2016-07-28" autofocus="true" column="collection_date">
             <select class="u-full-width" placeholder="11:00" name="collection_time" column="collection_time">
-              <option value="10:00" selected="true">10:00</option>
-              <option value="12:00">12:00</option>
-              <option value="13:00">13:00</option>
-              <option value="14:00">14:00</option>
-              <option value="15:00">15:00</option>
-              <option value="16:00">16:00</option>
-              <option value="17:00">17:00</option>
-              <option value="18:00">18:00</option>
-              <option value="19:00">19:00</option>
-              <option value="20:00">20:00</option>
-              <option value="21:00">21:00</option>
-              <option value="22:00">22:00</option>
-              <option value="23:00">23:00</option>
-              <option value="24:00">24:00</option>
+              <option value="10:00" selected>10:00~12:00</option>
+              <option value="12:00">12:00~13:00</option>
+              <option value="13:00">13:00~14:00</option>
+              <option value="14:00">14:00~15:00</option>
+              <option value="15:00">15:00~16:00</option>
+              <option value="16:00">16:00~17:00</option>
+              <option value="17:00">17:00~18:00</option>
+              <option value="18:00">18:00~19:00</option>
+              <option value="19:00">19:00~20:00</option>
+              <option value="20:00">20:00~21:00</option>
+              <option value="21:00">21:00~22:00</option>
+              <option value="22:00">22:00~23:00</option>
+              <option value="23:00">23:00~24:00</option>
             </select>
           </div>
           <div class="six columns">
@@ -56,51 +55,31 @@
             <label>배달원이 세탁물을 <strong>전해주는</strong> 날짜</label>
             <input class="u-full-width datepicker" type="text" placeholder="010-1234-7098" column="delivery_date">
             <select class="u-full-width" placeholder="11:00" column="delivery_time">
-              <option value="10:00" selected="true">10:00</option>
-              <option value="12:00">12:00</option>
-              <option value="13:00">13:00</option>
-              <option value="14:00">14:00</option>
-              <option value="15:00">15:00</option>
-              <option value="16:00">16:00</option>
-              <option value="17:00">17:00</option>
-              <option value="18:00">18:00</option>
-              <option value="19:00">19:00</option>
-              <option value="20:00">20:00</option>
-              <option value="21:00">21:00</option>
-              <option value="22:00">22:00</option>
-              <option value="23:00">23:00</option>
-              <option value="24:00">24:00</option>
+              <option value="10:00" selected="true">10:00~12:00</option>
+              <option value="12:00">12:00~13:00</option>
+              <option value="13:00">13:00~14:00</option>
+              <option value="14:00">14:00~15:00</option>
+              <option value="15:00">15:00~16:00</option>
+              <option value="16:00">16:00~17:00</option>
+              <option value="17:00">17:00~18:00</option>
+              <option value="18:00">18:00~19:00</option>
+              <option value="19:00">19:00~20:00</option>
+              <option value="20:00">20:00~21:00</option>
+              <option value="21:00">21:00~22:00</option>
+              <option value="22:00">22:00~23:00</option>
+              <option value="23:00">23:00~24:00</option>
             </select>
           </div>
         </div>
         <div class="row">
-          <p>주소</p>
-          <label>수거/배달을 받을 주소</label>
+          <p>세탁 및 배달원 방문 시 유의사항</p>
+          <label>배달원이 주의해야 할 사항</label>
+          <textarea class="u-full-width" style="min-height:150px;" placeholder="소매 부분 얼룩 신경써서 빼주세요&#10;집에 개가 있습니다"></textarea>
           <p class="error" column="address"></p>
         </div>
-        <input type="text" id="sample3_postcode" placeholder="우편번호" style="display:none;">
-        <div class="row" column="address">
-          <div class="three columns">
-            <input type="button" class="button u-full-width highlight" onclick="sample3_execDaumPostcode()" value="주소 검색">
-          </div>
-        </div>
         <div class="row">
-          <div class="three columns">
-            <div id="wrap" style="display:none;border:1px solid;width:88vw;max-width:500px;height:300px;margin:5px 0 15px 0;position:relative">
-              <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="six columns">
-            <input type="text" id="sample3_address" class="d_form large u-full-width" onfocus="sample3_execDaumPostcode()" placeholder="ex) 정자동 푸르지오시티" column="address">
-          </div>
-          <div class="six columns">
-            <input type="text" class="u-full-width" id="sample3_address2" placeholder="상세주소" column="address">
-          </div>
-        </div>
-        <div class="row">
-          <div class="three columns">
+          <div class="six columns offset-by-three">
+            <p class="u-center-align">세탁물은 배달원 방문 시 확인합니다</p>
             <button class="button u-full-width highlight">주문 진행</button>
           </div>
         </div>

@@ -1,7 +1,7 @@
 $(document).on('ready page:load', function() {
 
   // change on production
-  var server_ip = "http://localhost/";
+  var server_ip = "https://cleanfly.link/";
 
   var to_ko = {
     'Sun' : "일요일",
@@ -29,6 +29,7 @@ $(document).on('ready page:load', function() {
     defaultDate: moment().toDate(),
     numberOfMonths: 1,
     setDefaultDate: true,
+    reposition: false,
     format: 'YYYY-MM-DD ddd'
   });
 
@@ -86,9 +87,11 @@ $(document).on('ready page:load', function() {
       type : "POST",
       data : request_body,
       success : function(result,status) {
+        // TODO disable select values
         console.log(result);
       },
       error : function(xhr, status, error) {
+        // alert();
         console.log(error);
       }
     });
@@ -108,6 +111,8 @@ $(document).on('ready page:load', function() {
 
       pickerDelivery.setMinDate( collection_date.add(interval,'days').toDate() );
       pickerDelivery.setMaxDate( moment(date_string).add(interval+7,'days').toDate() );
+
+      fetchTime("collection");
 
     } else {
 

@@ -23,9 +23,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'd_1e_b=$f&$+9ktnyo&wb$0u3jyg$e&x!+@^xlnlz+4dwdq0bl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['easy.getcleanfly.com']
+ALLOWED_HOSTS = ['easy.getcleanfly.com','localhost']
 
 
 # Application definition

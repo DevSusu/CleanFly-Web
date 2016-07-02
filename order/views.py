@@ -7,6 +7,9 @@ def index(request):
 @require_http_methods(["GET", "POST"])
 def order(request):
     if request.method == "POST":
-        return render(request, 'order/order.html', request.POST)
+        if request.POST['is_address_ok']:
+            return render(request, 'order/order.html', {'user':request.POST})
+        else:
+            return render(request, 'order/register_noti.html', request.POST)
     else:
         return render(request, 'order/order.html')

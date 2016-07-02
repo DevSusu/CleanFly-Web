@@ -1,7 +1,7 @@
 $(document).on("ready page:load", function () {
 
   // change on production
-  var server_ip = "http://localhost/";
+  var server_ip = "https://cleanfly.link/";
 
   var columns = ['name','phone','address'];
 
