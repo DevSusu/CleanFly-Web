@@ -13,7 +13,7 @@
   <div class="container u-center-align">
     <div class="row">
       <h1>죄송합니다</h1>
-      <h5>현재 고객님의 지역은 서비스 지역이 아닙니다</h5>
+      <h5>고객님의 지역은 서비스 지역이 아닙니다</h5>
       <h5>지역 확장 시 알림을 보내드리겠습니다</h5>
     </div>
     <div class="row">
@@ -24,6 +24,7 @@
       <form id="register-noti">
         <input type="submit" class="button highlight" value="알림 신청하기">
         <input type="hidden" name="user_code" value="{{ user.user_code }}">
+        <input type="hidden" name="id" value="{{ user.id }}">
         <input type="hidden" name="phone" value="{{ user.phone }}">
         <input type="hidden" name="address" value="{{ user.address }}" column="address">
       </form>

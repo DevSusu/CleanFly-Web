@@ -1,31 +1,55 @@
 function receiveMessage(event)
 {
-  // event.source is popup
-  // event.data is "hi there yourself!  the secret response is: rheeeeet!"
   console.log("data from iframe!!!!");
-  console.dir(event);
-  console.log(event.data);
+  // {"resultcode":"00","cardcd":"06","cardno":"467309019042"}
+
+  $('#frame').remove();
+
+  var result = JSON.parse(event.data);
+  var info = $('#card-info');
+  if( result.resultcode == "00" ) {
+    info.find('h5').text("카드가 등록되었습니다");
+    info.find('p').text("?월?일 ?시에 배달원이 방문합니다");
+  } else {
+    info.find('h5').text("카드 등록에 실패했습니다");
+    info.find('p').text("계좌 잔액이나 분실 상태를 확인해주세요");
+  }
 }
 
 window.addEventListener("message", receiveMessage, false);
 
 $(document).on('ready page:load', function() {
 
-  // TODO
-  var inicis_url = "https://inilite.inicis.com/inibill/inibill_card.jsp?p_noti=41080472795309631&price=0&mid=cleanfly01&period=2016062420260624&buyername=1080472795309631&timestamp=20160624183014&returnurl=https%3A%2F%2Fdev.cleanfly.link%2Finipay&goodname=%ED%81%AC%EB%A6%B0%ED%94%8C%EB%9D%BC%EC%9D%B4+%EC%B9%B4%EB%93%9C%EB%93%B1%EB%A1%9D&hashdata=d697536a42bee3e29bc0a578c8d7c25e69eeeeb839e22afbad2ae02f0609c0f4&orderid=cleanfly4";
+  var server_ip = "https://localhost/";
+  var inicis_url = "https://inilite.inicis.com/inibill/inibill_card.jsp?";
+  var user_id = "web100000001"; // example
+  var user_type = 5;
+  var params = {
 
-  $('#frame').attr('src',inicis_url);
+    price : 0,
+    returnurl : "https://dev.cleanfly.link/inipay",
+    goodname : "크린플라이 카드등록",
+    orderid : "cleanfly4",
+    mid : "cleanfly01",
+    timestamp : moment().format('YYYYMMDDHHmmss'),
+    period : moment().format('YYYYMMDD') + moment('2026',['YYYY'])
 
-  // 암호화된 링크로 요청하여 동의 페이지 얻어오기
-  // script 태그는 따로 추가해주기
-  // 이용약관 hidden 태그 넣어주기
-
-
-  // form submit 막기
-  // form action 에 따라 다음 것 불러오기
-
-  document.getElementById('frame').contentWindow.showHTML = function(html) {
-    console.log(html);
   };
+  params.buyername = user_id;
+  params.p_noti = user_type + user_id;
+
+  $.ajax({
+    url : server_ip + "web/inipay",
+    type : "POST",
+    data : params,
+    success : function(result,status) {
+      params.hashdata = result;
+      inicis_url += $.param(params);
+      $('#frame').attr('src',inicis_url);
+    },
+    error : function(xhr, status, error) {
+      alert("결제 정보를 받아오지 못했습니다.");
+    }
+  });
 
 });

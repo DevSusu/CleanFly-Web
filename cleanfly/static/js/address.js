@@ -1,7 +1,7 @@
 $(document).on("ready page:load", function () {
 
   // change on production
-  var server_ip = "https://cleanfly.link/";
+  var server_ip = "https://localhost/";
 
   var columns = ['name','phone','address'];
 
@@ -103,10 +103,12 @@ $(document).on("ready page:load", function () {
       data : address_body,
       success : function(result,status) {
         form_data.is_address_ok = result.result;
+        form_data.address_code = result.address_code;
         callback(form_data);
       },
       error : function(xhr, status, error) {
         form_data.is_address_ok = false;
+        alert("주소 확인에 실패했습니다.");
       }
     });
 
@@ -120,6 +122,7 @@ $(document).on("ready page:load", function () {
       data : join_body,
       success : function(result,status) {
         form_data.user_code = result.user_code;
+        form_data.id = result.id;
         callback(proceed);
       },
       error : function(xhr, status, error) {

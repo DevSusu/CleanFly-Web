@@ -1,7 +1,7 @@
 $(document).on('ready page:load', function() {
 
   // change on production
-  var server_ip = "https://cleanfly.link/";
+  var server_ip = "https://localhost/";
 
   var to_ko = {
     'Sun' : "일요일",
@@ -51,6 +51,34 @@ $(document).on('ready page:load', function() {
     $(input).val(val);
   }
 
+  var adjustDate = function(input) {
+
+    if( $(input).attr('column') == 'collection_date' ) {
+      var date_string = $(input).val();
+      var collection_moment = new moment(date_string);
+      var collection_date = collection_moment.add(interval,'days').toDate();
+      var collection_date_end = collection_moment.add(7,'days').toDate();
+
+      var interval = 4;
+      if( collection_moment.day() >=2 ) interval = 5;
+
+      // 만약 지금 배달 시간이 4박 5일 이내에 있거나 너무 멀리 있을때만 다시 조정.
+      if ( pickerDelivery.getDate() < collection_date )
+        pickerDelivery.setDate( collection_date );
+      else if ( pickerDelivery.getDate() > collection_date_end )
+        pickerDelivery.setDate( collection_date_end );
+
+      pickerDelivery.setMinDate( collection_date );
+      pickerDelivery.setMaxDate( moment(date_string).add(interval+7,'days').toDate() );
+
+      fetchTime("collection");
+
+    } else {
+
+    }
+
+  }
+
   // initial update
   $('input.datepicker').each( function( index, value) {
     updateDateInput(value);
@@ -66,24 +94,20 @@ $(document).on('ready page:load', function() {
 
   var fetchTime = function(type) { // type = collection or delivery
 
+    // TODO
+    // fetch time from server and disable select option values
     var request_body = {
       "type" : type
     };
     var full_address = getFullAddress();
     var address_detail = full_address.split(" ");
-    request_body.address = {
+    request_body.address = full_address;
+    request_body.adderss_code = $('input[name="address_code"]').val();
 
-      "admin_area" : address_detail[0],
-      "locality" : address_detail[1]+" "+address_detail[2],
-      "thoroughfare" : address_detail[3],
-      "full_address" : full_address,
-      "latitude" : 0.0,
-      "longitude" : 0.0
-
-    };
+    console.log(request_body);
 
     $.ajax({
-      url : server_ip + "fly/order",
+      url : server_ip + "web/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {
@@ -99,24 +123,7 @@ $(document).on('ready page:load', function() {
 
   $('input.datepicker').on('change input', function() {
     updateDateInput(this);
-
-    if( $(this).attr('column') == 'collection_date' ) {
-      var date_string = $(this).val();
-      var collection_date = new moment(date_string);
-
-      var interval = 4;
-      if( collection_date.day() >=2 ) interval = 5;
-
-      pickerDelivery.setDate( moment(date_string).add(interval,'days').toDate() );
-
-      pickerDelivery.setMinDate( collection_date.add(interval,'days').toDate() );
-      pickerDelivery.setMaxDate( moment(date_string).add(interval+7,'days').toDate() );
-
-      fetchTime("collection");
-
-    } else {
-
-    }
+    adjustDate(this);
   });
 
 });

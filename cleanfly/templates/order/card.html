@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
 <link rel="stylesheet" href="{% static 'css/card.css' %}">
 <script src="{% static 'js/card.js' %}"></script>
+<script src="{% static 'js/moment.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -24,7 +25,7 @@
         <p>카드 등록</p>
       </span>
     </div>
-    <div class="row u-center-align">
+    <div id="card-info" class="row u-center-align">
       <h5 class="mt-20">카드를 등록하면 주문이 완료됩니다</h5>
       <p>결제는 세탁물 수거 후 이루어집니다</p>
     </div>
