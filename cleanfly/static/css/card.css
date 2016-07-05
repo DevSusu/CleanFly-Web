@@ -1,0 +1,56 @@
+
+span.btn_sub {
+  background-color: #ececec;
+  font-size: 1.5rem;
+  font-weight: normal;
+  border-color: #ececec;
+  color: #818181;
+  text-shadow: none;
+}
+
+span.btn_main {
+  background-color: #98DFAF;
+  font-size: 1.5rem;
+  font-weight: normal;
+  border-color: #98DFAF;
+  color: #FFFAFF;
+  text-shadow: none;
+}
+
+/* input#allCheckBtn.changeui[type="checkbox"] */
+input.changeui[type="checkbox"] {
+  width:30px;
+  height:30px;
+  margin:-1px 4px 0 0;
+  vertical-align:middle;
+}
+
+@media( max-width : 550px ) {
+
+  .ini_content_common .inside_box {
+      background: #FFFFFF;
+      border: 1px solid #bcbcbc;
+  }
+
+  .ini_content_common .inside_box > .child {
+      width: auto;
+      overflow: auto;
+      margin: 0 auto;
+      padding: 30px 15px 0 15px;
+  }
+  input.changeui[type="checkbox"] {
+    width:13px;
+    height:13px;
+    margin:-1px 4px 0 0;
+    vertical-align:middle;
+  }
+
+}
+
+li.col_text2 {
+  font-size: 1.2rem !important;
+}
+
+li.col_btn {
+  color : #818181;
+}

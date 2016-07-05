@@ -59,7 +59,9 @@ form input, form select {
   color : #e0e0e0;
 }
 
-button.highlight , input.highlight[type="button"] {
+button.highlight,
+input.highlight[type="button"],
+input.highlight[type="submit"]  {
   background-color: #98DFAF;
   font-size: 1.5rem;
   font-weight: normal;

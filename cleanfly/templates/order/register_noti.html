@@ -4,6 +4,7 @@
 {% load staticfiles %}
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
+<script src="{% static 'js/noti.js' %}"></script>
 {% endblock %}
 
 {% block content %}
@@ -20,7 +21,12 @@
       </div>
     </div>
     <div class="row">
-        <button class="button highlight">알림 신청하기</button>
+      <form id="register-noti">
+        <input type="submit" class="button highlight" value="알림 신청하기">
+        <input type="hidden" name="user_code" value="{{ user.user_code }}">
+        <input type="hidden" name="phone" value="{{ user.phone }}">
+        <input type="hidden" name="address" value="{{ user.address }}" column="address">
+      </form>
     </div>
   </div>
 </section>

@@ -1,0 +1,37 @@
+{% extends 'order/base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/inicis.css' %}">
+<script src="{% static 'js/inicis.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+<link rel="stylesheet" href="{% static 'css/card.css' %}">
+<script src="{% static 'js/card.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="first">
+  <div class="container">
+    <div class="row progress">
+      <span class="four-sm u-center-align u-dim">
+        <p>주소 등록</p>
+      </span>
+      <span class="four-sm u-center-align u-dim">
+        <p>주문 정보</p>
+      </span>
+      <span class="four-sm u-center-align u-underline">
+        <p>카드 등록</p>
+      </span>
+    </div>
+    <div class="row u-center-align">
+      <h5 class="mt-20">카드를 등록하면 주문이 완료됩니다</h5>
+      <p>결제는 세탁물 수거 후 이루어집니다</p>
+    </div>
+    <iframe id="frame" style="border:1px solid;width:100%;height:600px;margin:5px 0 15px 0;position:relative">
+      <img src="//i1.daumcdn.net/localimg/localimages/07/postcode/320/close.png" id="btnFoldWrap" style="cursor:pointer;position:absolute;right:0px;top:-1px;z-index:1" onclick="foldDaumPostcode()" alt="접기 버튼">
+    </iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

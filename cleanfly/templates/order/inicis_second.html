@@ -1,0 +1,554 @@
+<body onload="javascript:onInit();" oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+  <script>
+      var $billForm;
+      var carduse = "";
+      var cardBin = "";
+      function onInit() {
+
+          document.getElementById("co_nm").innerHTML = '크린플라이';
+          $billForm = document.billForm;
+
+          var flgMobilians = '';
+          //KG 모빌리언스 가맹점일시에는 KG INICIS 로그를 보여주지 않음 14.01.22 by sk83
+          if (flgMobilians == 1) {
+              document.getElementById("ini_logo").style.display = "none";
+              document.getElementById("co_nm").innerHTML = '(주)케이지모빌리언스';
+          }
+
+
+
+          switch (carduse) {
+              case "percard":
+                  $("#li_Pcard").css("display", "block");
+                  $("#li_Bcard").css("display", "none");
+                  $("#txt_authField1").text("생년월일");
+                  $(".cardGubun2").css("display", "none");
+                  //$(".cardGubun_txt").text("개인카드");
+                  //$("#cardGubun2").attr("checked", "false");
+                  //$("#cardGubun2").attr("disabled", "true");
+                  //$("#cardGubun1").attr("disabled", "true");
+                  $("#cardGubun1").attr("checked", "true");
+                  $("#cardPC").val("P");
+                  break;
+              case "cocard":
+                  $("#li_Pcard").css("display", "none");
+                  $("#li_Bcard").css("display", "block");
+                  $("#txt_authField1").text("사업자번호");
+                  $(".cardGubun1").css("display", "none");
+                  //$(".cardGubun_txt").text("법인카드");
+                  //$("#cardGubun1").attr("checked", "false");
+                  //$("#cardGubun1").attr("disabled", "true");
+                  //$("#cardGubun2").attr("disabled", "true");
+                  $("#cardGubun2").attr("checked", "true");
+                  $("#cardPC").val("C");
+                  break;
+              default:
+                  $("#li_Pcard").css("display", "block");
+                  $("#li_Bcard").css("display", "none");
+                  $("#txt_authField1").text("생년월일");
+                  //$(".cardGubun_txt").text("개인카드");
+                  //$("#cardGubun2").attr("checked", "false");
+                  $("#cardGubun1").attr("checked", "true");
+                  $("#cardPC").val("P");
+                  break;
+          }
+      }
+
+      function cancel() {
+
+          $billForm.type.value = "cancel";
+          //alert($billForm.type.value);
+          $billForm.submit();
+      }
+
+      function auth() {
+          $billForm.type.value = "auth";
+
+          if ($billForm.cardnumber1.value.length < 4) {
+              alert("카드번호가 빠졌습니다. 필수항목입니다.");
+              $billForm.cardnumber1.focus();
+              return false;
+          } else if ($billForm.cardnumber2.value.length < 4) {
+              alert("카드번호가 빠졌습니다. 필수항목입니다.");
+              $billForm.cardnumber2.focus();
+              return false;
+          } else if ($billForm.cardnumber3.value.length < 4) {
+              alert("카드번호가 빠졌습니다. 필수항목입니다.");
+              $billForm.cardnumber3.focus();
+              return false;
+          } else if ($billForm.cardnumber4.value.length < 2) {
+              alert("카드번호가 빠졌습니다. 필수항목입니다.");
+              $billForm.cardnumber4.focus();
+              return false;
+          }
+
+          $billForm.cardnumber.value = $billForm.cardnumber1.value + $billForm.cardnumber2.value + $billForm.cardnumber3.value + $billForm.cardnumber4.value;
+
+          if ($billForm.cardPC.value == "P") {
+              if ($billForm.authField1.value.length < 6) {
+                  alert("생년월일 6자리를 입력해주세요.");
+                  $billForm.authField1.focus();
+                  return false;
+              }
+          } else {
+              $billForm.authField1.value = $billForm.pcard1.value + $billForm.pcard2.value + $billForm.pcard3.value;
+              if ($billForm.authField1.value.length < 10) {
+                  alert("사업자등록번호 10자리를 입력해주세요.");
+                  $billForm.pcard1.focus();
+                  return false;
+              }
+          }
+
+          if (cardBin != "14" && $billForm.authField2.value.length < 2) {
+              alert("카드 비밀번호 앞2자리를 입력해주세요.");
+              $billForm.authField2.focus();
+              return false;
+          }
+
+          if ($billForm.agreeCheck.checked == false) {
+              alert("결제 내용을 확인하신 후, 동의해 주시기 바랍니다.");
+              $billForm.agreeCheck.focus();
+              return false;
+          }
+
+          //두번 클릭 방지 2014.04.12 by sk83
+          try {
+              document.getElementById("select_btn").style.opacity = "0.3";
+              document.getElementById('select_btn').style.pointerEvents = "none";
+          } catch (e) {
+          }
+
+          $billForm.submit();
+      }
+
+      function moveNext(from, to, size) {
+          var cur = document.getElementById(from).value;
+          var curSize = cur.length;
+
+          if (curSize == size) {
+              document.getElementById(to).focus();
+          }
+      }
+
+
+
+
+      $(document).ready(function () {
+          $(".cardGubun").click(function () {
+              $("#cardPC").val($(this).val());
+              $("#authField1").val("");
+              $("#pcard1").val("");
+              $("#pcard2").val("");
+              $("#pcard3").val("");
+
+              if ($(this).val() == "C") {
+                  $("#li_Pcard").css("display", "none");
+                  $("#li_Bcard").css("display", "block");
+                  $("#txt_authField1").text("사업자번호");
+              } else {
+                  $("#li_Pcard").css("display", "block");
+                  $("#li_Bcard").css("display", "none");
+                  $("#txt_authField1").text("생년월일");
+              }
+          });
+
+          $(".cardNumberInput").change(function () {
+              var url = "/Service/SearchBin.jsp";
+              var searchCardNumber = "";
+              searchCardNumber = $("#cardnumber1").val() + $("#cardnumber2").val();
+              if (searchCardNumber.length === 8) {
+                  $.get(url, {cardcode: "14", cardno: searchCardNumber}, function (rs) {
+                      if (rs.result === "success" && rs.count > 0) {
+                          cardBin = "14";
+                          $(".div_passwd").css("display", "none");
+                      } else {
+                          cardBin = "";
+                          $(".div_passwd").css("display", "");
+                      }
+                  }, "json");
+              }
+          });
+      });
+  </script>
+    <form name="billForm" id="billForm" method="post" action="./inibill_card_proc.jsp">
+
+        <article id="overlay_wapper" class="hide"><article id="overlay_subWapper"></article></article>
+
+        <div id="wrapper"><div class="authHide">
+
+
+
+                <!--===========================================================
+                        top
+                    ===========================================================-->
+                <div class="ini_lay_top_01">
+
+                    <div class="ini_top_area_01_user">
+                        <ul class="title">
+                            <div class="left">
+                                <span><img src="https://stdux.inicis.com/images/icon_dot.png" alt="dot" /></span>
+                                <span id="co_nm" class="margin_top1"></span>
+                                <!-- <span class="margin_top1" id="payMethodTitle"> > 결제수단 선택</span><span>  -->
+                            </div>
+                            <div class="right">
+                                <!--<span id="ini_logo" alg="KG INICIS"></span> -->
+                                <img src="https://stdux.inicis.com/images/logo_blue_s.png" alt="KG INICIS" />
+                            </div>
+                        </ul>
+                        <div class="space_h15"></div>
+                        <ul class="info">
+                            <!-- <li class="img ini_t_only"><img src="/demo/stdUI/imgs/img_ex.jpg" alt="제품이미지" /></li>  -->
+                            <li class="text">
+
+
+                                <div class="space_h40 ini_t_only"></div>
+                                <div class="price2">
+                                    <ul>
+                                        <li>
+                                            <span class="price_title">금액</span>
+                                            <span id="show_price" class="price_text">0<font size="4.5" style="padding-left:2px;">원</font></span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                                <div class="space_h5"></div>
+                                <div id="priceUI" class="item2">
+                                    <ul>
+                                        <li>
+                                            <span class="item_title">상품명</span>
+                                            <span class="item_text">크린플라이 카드등록</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="space_h5"></div>
+                                <div class="day2">
+                                    <ul>
+                                        <li>
+                                            <span class="day_title">제공기간</span>
+                                            <span class="day_text">2016.06.24 ~ 2026.06.24</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                </div>
+                <!--    //top   ------------------>
+
+
+                <div class="space_h15"></div>
+
+                <div class="space_h5 ini_t_only"></div>
+
+                <!--===========================================================
+                        contents
+                    ===========================================================-->
+                <div class="ini_lay_content_01 ini_content_common" id="easypay">
+
+                    <!--====    box     ============== -->
+                    <div class=inside_box><div class="child">
+
+                            <div class="space_h5 ini_t_only"></div>
+
+                            <div class="input_area_01">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title"><span class="inputname_text">카드번호</span></li>
+                                        <li class="col_auto">
+                                            <div class="sub_multi">
+                                                <ul>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic numberInput cardNumberInput" type="tel" name="cardnumber1" id="cardnumber1" onkeyup="javascript:moveNext('cardnumber1', 'cardnumber2', 4)" maxlength="4" tabindex="1" style="text-align:center"/></div>
+                                                    </li>
+                                                    <li class="col_5 center">-</li>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic numberInput cardNumberInput" type="tel" name="cardnumber2" id="cardnumber2" onkeyup="javascript:moveNext('cardnumber2', 'cardnumber3', 4)" maxlength="4" tabindex="2" style="text-align:center"/></div>
+                                                    </li>
+                                                    <li class="col_5 center">-</li>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic numberInput" type="tel" name="cardnumber3" id="cardnumber3" onkeyup="" maxlength="4" tabindex="3" style="text-align:center"/></div>
+                                                    </li>
+                                                    <li class="col_5 center">-</li>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic screenKey numberInput" type="password" name="cardnumber4" id="cardnumber4"  maxlength="4" tabindex="4" style="text-align:center" alt="카드번호 나머지 입력"/></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15"></div>
+                            <div class="space_h5 ini_t_only"></div>
+
+                            <div class="input_area_01">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title">유효기간</li>
+                                        <li class="col_auto">
+                                            <select name="cardexpy" class="select_basic" >
+
+                                                <option value="16">2016</option>
+
+                                                <option value="17">2017</option>
+
+                                                <option value="18">2018</option>
+
+                                                <option value="19">2019</option>
+
+                                                <option value="20">2020</option>
+
+                                                <option value="21">2021</option>
+
+                                                <option value="22">2022</option>
+
+                                                <option value="23">2023</option>
+
+                                                <option value="24">2024</option>
+
+                                                <option value="25">2025</option>
+
+                                                <option value="26">2026</option>
+
+                                                <option value="27">2027</option>
+
+                                                <option value="28">2028</option>
+
+                                                <option value="29">2029</option>
+
+                                                <option value="30">2030</option>
+
+                                                <option value="31">2031</option>
+
+                                                <option value="32">2032</option>
+
+                                                <option value="33">2033</option>
+
+                                                <option value="34">2034</option>
+
+                                                <option value="35">2035</option>
+
+                                            </select>
+                                        </li>
+                                        <li class="col_space_20 center">
+                                            년
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15"></div>
+
+                            <div class="input_area_01">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title"></li>
+                                        <li class="col_auto">
+                                            <select name="cardexpm" class="select_basic" >
+                                                <option value="01">01</option>
+                                                <option value="02">02</option>
+                                                <option value="03">03</option>
+                                                <option value="04">04</option>
+                                                <option value="05">05</option>
+                                                <option value="06">06</option>
+                                                <option value="07">07</option>
+                                                <option value="08">08</option>
+                                                <option value="09">09</option>
+                                                <option value="10">10</option>
+                                                <option value="11">11</option>
+                                                <option value="12">12</option>
+                                            </select>
+                                        </li>
+                                        <li class="col_space_20 center">
+                                            월
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15 div_passwd"></div>
+
+                            <div class="input_area_01 div_passwd">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title">비밀번호</li>
+                                        <li class="col_auto">
+                                            <div class="sub_multi">
+                                                <ul>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic screenKey numberInput" type="password" name="authField2" id="authField2" size="4" maxlength="2" tabindex="5" style="text-align:center" alt="신용카드 비밀번호 앞2자리"/></div>
+                                                    </li>
+                                                    <li class="col_space_20">
+                                                        &nbsp;&nbsp;XX
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15"></div>
+
+                            <div class="input_area_01">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title">카드구분</li>
+                                        <li class="col_auto">
+                                            <div class="sub_multi cardGubun_txt">
+                                                <ul>
+                                                    <li class="col_auto">
+                                                        <div class="sub_multi">
+                                                            <ul>
+                                                                <li class="col_20 cardGubun1">
+                                                                    <label for="cardGubun1"><input type="radio" style="float:none;" class="cardGubun"  name="cardGubun" id="cardGubun1" value="P" alt="개인"/> 개인</label>
+                                                                </li>
+                                                                <li class="col_20 cardGubun2">
+                                                                    <label for="cardGubun2"><input type="radio" style="float:none;" class="cardGubun"  name="cardGubun" id="cardGubun2" value="C" alt="법인"/> 법인</label>
+                                                                </li>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15 cardGubun_div"></div>
+
+                            <div class="input_area_01">
+                                <div class="input_line word6">
+                                    <ul>
+                                        <li class="col_title" id="txt_authField1">생년월일</li>
+                                        <li class="col_auto" id="li_Pcard" style="display:block;">
+                                            <div class="sub_multi">
+                                                <ul>
+                                                    <li class="col_40">
+                                                        <div class="input_parent"><input type="tel" class="input_basic numberInput"  name="authField1" id="authField1" style="text-align:center;" maxlength="6" tabindex="6" alt="생년월일 6자리"/></div>
+                                                    </li>
+                                                    <li class="col_space_20"  id="txt_authField2">
+                                                        &nbsp;&nbsp;(6자리)
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                        <li class="col_auto" id="li_Bcard" style="display:none;">
+                                            <div class="sub_multi">
+                                                <ul>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic numberInput" type="tel" name="pcard1" id="pcard1" onkeyup="javascript:moveNext('pcard1', 'pcard2', 3)" maxlength="3" tabindex="6" style="text-align:center"/></div>
+                                                    </li>
+                                                    <li class="col_5 center">-</li>
+                                                    <li class="col_20">
+                                                        <div class="input_parent"><input class="input_basic numberInput" type="tel" name="pcard2" id="pcard2" onkeyup="javascript:moveNext('pcard2', 'pcard3', 2)" maxlength="2" tabindex="7" style="text-align:center"/></div>
+                                                    </li>
+                                                    <li class="col_5 center">-</li>
+                                                    <li class="col_40">
+                                                        <div class="input_parent"><input class="input_basic numberInput" type="tel" name="pcard3" id="pcard3" onkeyup="" maxlength="5" tabindex="8" style="text-align:center"/></div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="space_h15"></div>
+
+                            <div class="space_h15 ini_t_only"></div>
+
+                            <div class="space_h_auto changeUI"></div>
+
+
+                            <!-- 결제 동의 확인 시작-->
+                            <div class="space_h15"></div>
+                            <div class="space_h15 ini_t_only"></div>
+
+                            <div class="input_area_01">
+                                <div class="text_line">
+                                    <ul checkboxParent="true">
+                                        <li class="col_icon">
+                                            <input type="checkbox" class="changeUI" name="agreeCheck"/>
+                                        </li>
+                                        <li class="col_space"></li>
+                                        <li class="col_text2" checkboxClick="true" style="text-align: left;">
+                                            결제하고자하는 내용을 충분히 확인 후, 동의하시면 <font color="#235ea0">다음버튼</font>을 눌러주십시오
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- 결제 동의 확인 마침-->
+
+                        </div>
+
+                    </div>
+                    <!-- box end. -->
+
+                </div>
+                <!--//contents --->
+
+                <div class="space_h20"></div>
+
+
+                <!--===========================================================
+                    bottom
+                    ===========================================================-->
+                <div class="ini_lay_bottom_01" >
+                    <div id="select_btn" class="ini_bottom_area_01">
+
+                        <span class="btn_sub" style="float:left;width:49%;" onclick="javascript:cancel();">
+                            취소<!-- 취소 -->
+                        </span>
+
+
+                        <span class="btn_main" style="float:right;width:49%;" id="cardNext2Btn" onclick="javascript:auth();">
+                            다음<!-- 다음 -->
+                        </span>
+                    </div>
+
+                    <!-- 고객지원 및 결제내역조회 -->
+                    <div class="space_h20"></div>
+                    <div class="ini_bottom_area_01">
+                        <ul>
+                            <li>
+                                <font style="font-size:70%;letter-spacing:-1px;" color="#235ea0">고객지원 : 02-1588-4954 &nbsnbsp;l &nbsp;결제내역조회 <a href="http://www.inicis.com" target="_blank">www.inicis.com</a></font>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- //고객지원 및 결제내역조회 -->
+
+                    <div class="space_h20"></div>
+                    <div class="space_h10 ini_t_only"></div>
+                </div>
+                <!--    //bottom    ------------------>
+
+            </div>
+        </div><!-- sub_wrapper / wrapper -->
+        <input type=hidden name="cardPC" id="cardPC" value="P"/>
+
+        <input type=hidden name="CHKFAKE_RC" value="00"/>
+        <input type=hidden name="orderid" value="cleanfly4"/>
+        <input type=hidden name="returnurl" value="https://cleanfly.link/inipay"/>
+        <input type=hidden name="merchantreserved" value=""/>
+        <input type=hidden name="mid" value="cleanfly01"/>
+        <input type=hidden name="price" value="0"/>
+        <input type=hidden name="goodname" value="크린플라이 카드등록"/>
+        <input type=hidden name="type" />
+        <input type=hidden name="cardnumber" />
+        <input type=hidden name="cardBin" />
+        <input type=hidden name="authtype" value="00" />
+        <input type=hidden name="authkey" value="cleanfly01_2B3D73087A1348EE6D01A059EAAB9" />
+        <input type=hidden name="p_noti" value="41080472795309631" />
+        <input type=hidden name="flgMobilians" value=""/>
+        <input type=hidden name="pgType" value=""/>
+        <input type=hidden name="data1" value="xz1uLv6MOBc%2FADpz5SEcA6SCwpy1ofJCHuGEdcVOTuBvAHFXfKNcZLBdDfyALODH"/>
+        <input type=hidden name="hide_cancel_btn" value=""/>
+
+    </form>
+
+</body>

@@ -1,0 +1,1098 @@
+/*
+@font-face {
+	font-family: 'iPhone keyboard';
+	src: url(iphone-keyboard.ttf);
+}
+*/
+
+
+input.screenKey_icon {background:url(../images/icon_screenkey.png) no-repeat ; }
+
+/*** ���� ***/
+#modalKeyboard .ini_gap_top1 {max-width:500px;margin:auto}
+#modalKeyboard .ini_gap_top2 {max-width:500px;margin:auto}
+#modalKeyboard .ini_gap		{max-width:800px;margin:auto}
+
+#modalKeyboard .ini_gap_top1 {padding:20px 15px 0px 15px;height:auto;clear:both;}
+#modalKeyboard .ini_gap_top2 {padding:10px 15px 15px 15px;height:auto;clear:both;}
+
+#modalKeyboard .ini_gap		{padding:0px 15px 0px 15px;height:auto;clear:both;}
+
+
+/*** ���� �۾� ***/
+#modalKeyboard .ini_tit_top_etc {display:block;clear:both;text-align:left;}
+#modalKeyboard .ini_tit_top_etc ul.ini_etc_left {float:left; font:"UnDotumWeb"; font-weight:bold; color:#235ea0;letter-spacing:-1px;}
+
+
+
+/*** �Է� ǥ��â ***/
+#modalKeyboard .input_parent	{width:auto; clear:both; overflow:hidden; background:#fff; text-align:left; border:1px solid #c0c0c0; padding: 13px 5px 10px 5px; -webkit-box-shadow:inset 1px 1px #EEE}
+
+#modalKeyboard .input_parent input.input_basic	{border:none; width:100%; font-size:20px; background:none; color:#666666;padding:0px;}
+#modalKeyboard .input_parent input.input_basic::-webkit-input-placeholder {color:#686868;     }
+
+
+#modalKeyboard .ini_password {font-size:92%; width:100%; height:auto;}
+#modalKeyboard .ini_password ul {display:table; width:100%;}
+
+#modalKeyboard .ini_password ul li {display:table-cell;}
+
+#modalKeyboard .ini_password ul li.space_area {width:7px;}
+#modalKeyboard .ini_password ul li.text_area {width:40px;background:#f5f5f5; border:1px solid #cecece; text-align:center; font-weight:bold;vertical-align:middle;font-size:14px}
+#modalKeyboard .ini_password ul li.btn_complete {width:120px;text-align:center; vertical-align:middle;font-size:15px; background:#5594c6; border:1px solid #3f749d; color:#fff;margin:0 0 0 0;}
+
+
+/*** �Է¿Ϸ� ��ư ***/
+#modalKeyboard .btn_complete a {color:#fff; text-decoration:none;}
+#modalKeyboard .btn_complete a:link {color:#fff; text-decoration:none;}
+#modalKeyboard .btn_complete a:visited {color:#fff; text-decoration:none;}
+#modalKeyboard .btn_complete a:hover, a:active {color:#fff; text-decoration:none;}
+
+/**********************************************************************/
+/*** Ű���� ***/
+
+#modalKeyboard .small{
+	padding:0px;
+}
+
+.selectedInput {
+	border-style:ridge;
+	border-color:#ff8080;
+}
+
+#keyboardLayer	{
+	z-index:10001;
+	width:100%;
+	height:auto;
+	bottom:0px;
+	display:block;
+}
+
+#overlayLayer{
+	position:fixed;
+	z-index:10000;
+	height:100%;
+	width:100%;
+	min-width:100%;
+	min-height:100%;
+	/*background-color:red;*/
+
+	bottom:0px;
+}
+
+#spaceDiv{
+	overflow:hidden;
+	height:0px;
+	clear:both;
+	background-color:#757D8A;
+/*	border:1px soild red;*/
+}
+/******************* Ű���� ***************************/
+
+#iphone-keyboard {
+	font-family:Helvetica, Arial, sans-serif, Verdana;
+	font-weight:bold;
+
+	min-width:320px;
+	max-width:1280px;
+	margin:0px auto 0px auto;
+	padding:0;
+	overflow:hidden;
+	border:1px solid #3A3D42;
+	border-top:2px solid #3A3D42;
+	background:#757D8A;
+	background-image:-moz-linear-gradient(#9098A3, #454f5d);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#9098A3), to(#454f5d));
+	background-image:gradient(linear, left top, left bottom, from(#9098A3), to(#454f5d));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#9098A3', endColorstr='#454f5d');
+
+	box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+	-moz-box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+	-webkit-box-shadow:0 1px 0 rgba(255,255,255,.3) inset;
+	filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=0, Color='#33FFFFFF'),
+}
+
+#iphone-keyboard li {
+	text-align:center;
+	list-style:none;
+	display:block;
+	height:100%;
+}
+
+#iphone-keyboard li:first-child {
+	margin-top:.5em;
+}
+
+#iphone-keyboard span.ibutton,
+#iphone-keyboard span.ibutton.specialkey:active {
+	color:#3A3D42;
+
+	cursor:pointer;
+
+	text-decoration:none;
+	text-align:center;
+	text-shadow:0 1px 1px white;
+	font-weight:bold;
+	/*height:20px;*/
+
+	border:0;
+	border-top:1px solid rgba(255,255,255,.45);
+
+
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
+
+	box-shadow:0 1px 3px rgba(0,0,0,.7), 0 1px 0 rgba(0,0,0,.3);
+	-moz-box-shadow:0 1px 3px rgba(0,0,0,.7), 0 1px 0 rgba(0,0,0,.3);
+	-webkit-box-shadow:0 1px 3px rgba(0,0,0,.7), 0 1px 0 rgba(0,0,0,.3);
+	filter:progid:DXImageTransform.Microsoft.dropshadow(OffX=1, OffY=2, Color='#77000000'),
+
+}
+#iphone-keyboard span.ibutton{
+	background:#ECEDEF;
+	background-image:-moz-linear-gradient(#f8f8f9, #dddfe1);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#f8f8f9), to(#dddfe1));
+	background-image:gradient(linear, left top, left bottom, from(#f8f8f9), to(#dddfe1));
+	/*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#f8f8f9', endColorstr='#dddfe1');*/
+
+}
+
+#iphone-keyboard span.ibutton:active,
+#iphone-keyboard span.ibutton.space:active {
+	background-image:-moz-linear-gradient(#E2E3E4, #AAADB4);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	background-image:gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E2E3E4', endColorstr='#AAADB4');
+}
+
+#iphone-keyboard span.ibutton.specialkey {
+	/*background:#757D8A;*/
+	background-color:#687180;
+	background-image:-moz-linear-gradient(#7f8792, #535b68);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#7f8792), to(#535b68));
+	background-image:gradient(linear, left top, left bottom, from(#7f8792), to(#535b68));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7f8792', endColorstr='#535b68');
+
+	color:white;
+	text-shadow:0 -1px 1px rgba(0,0,0,.5);
+}
+
+#iphone-keyboard span.ibutton.shift,
+#iphone-keyboard span.ibutton.backspace {
+	background-image:-moz-linear-gradient(#939ba6, #687180);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#939ba6), to(#687180));
+	background-image:gradient(linear, left top, left bottom, from(#939ba6), to(#687180));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#939ba6', endColorstr='#687180');
+}
+
+#iphone-keyboard span.ibutton.space {
+
+	color:#525c69;
+	background-image:-moz-linear-gradient(#dddfe2, #b4b8bf);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#dddfe2), to(#b4b8bf));
+	background-image:gradient(linear, left top, left bottom, from(#dddfe2), to(#b4b8bf));
+	/*filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#dddfe2', endColorstr='#b4b8bf');*/
+}
+/*
+#iphone-keyboard span.ibutton.numberactive {
+	color:#525c69;
+	background-image:-moz-linear-gradient(#E2E3E4, #AAADB4);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	background-image:gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E2E3E4', endColorstr='#AAADB4');
+}
+*/
+
+#iphone-keyboard span.ibutton.shiftactive {
+	color:#525c69;
+	background-image:-moz-linear-gradient(#E2E3E4, #AAADB4);
+	background-image:-webkit-gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	background-image:gradient(linear, left top, left bottom, from(#E2E3E4), to(#AAADB4));
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#E2E3E4', endColorstr='#AAADB4');
+}
+
+
+
+#iphone-keyboard span.ibutton {
+	display:inline-block;
+	margin:0 .20%;
+	color:black;
+	vertical-align:middle;
+}
+
+
+#iphone-keyboard span.blank {
+	display:inline-block;
+	margin:0 .20%;
+	padding:.02em 0 .03em;
+	color:black;
+}
+
+#iphone-keyboard span.blank_nosmall {
+	display:inline-block;
+	margin:0 .20%;
+	color:black;
+}
+
+
+
+
+#iphone-keyboard span.subText.small {
+	margin-left:0.5%;
+	vertical-align: bottom;
+	color:#7f8792;
+}
+
+#iphone-keyboard span.subText.small_char {
+	display:none;
+	margin-left:0.5%;
+	vertical-align: bottom;
+	color:#7f8792;
+}
+
+
+/** ������ �� **/
+#iphone-keyboard li {
+	margin:.2em .1em .35em;
+}
+
+#modalKeyboard .ini_tit_top_etc ul.ini_etc_left {font-size:16px;}
+
+#iphone-keyboard span {font-size:16px;font-weight:bold;font-family: Helvetica, Arial, sans-serif, Verdana;}
+
+#iphone-keyboard span.ibutton				{width:7.3%;	padding:0.7em 0 0.7em;}
+#iphone-keyboard span.ibutton.numberKey		{				padding:0.6em 0 0.6em;}
+#iphone-keyboard span.blank 				{width:7.3%;	padding:0.7em 0 0.7em;}
+#iphone-keyboard span.blank_nosmall 		{width:8.0%;	padding:.02em 0 .03em;}
+
+#iphone-keyboard span.ibutton.shift 		{width:12.5%;	padding:1.0em 0 0.9em;font-size:13px;}
+#iphone-keyboard span.ibutton.shiftactive	{width:12.5%;	padding:1.0em 0 0.9em;font-size:13px;}
+#iphone-keyboard span.ibutton.backspace 	{width:12.5%;	padding:1.0em 0 0.9em;font-size:13px;}
+
+#iphone-keyboard span.ibutton.numbers 		{width:12%;		padding:0.8em 0 0.6em;font-size:13px;}
+#iphone-keyboard span.ibutton.numberactive 	{width:12%;		padding:0.8em 0 0.6em;font-size:13px;}
+#iphone-keyboard span.ibutton.space 		{width:56%;		padding:0.4em 0 0.3em;}
+#iphone-keyboard span.ibutton.international {width:10%;		padding:0.8em 0 0.6em;font-size:13px;}
+#iphone-keyboard span.ibutton.return 		{width:15%;		padding:0.8em 0 0.6em;font-size:13px;}
+
+#iphone-keyboard span.subText.small 		{font-size:11px;}
+#iphone-keyboard span.subText.small_char 	{font-size:11px;}
+#iphone-keyboard span.subText.small_bt		{font-size:11px;}
+
+
+
+
+
+
+@media screen and (max-width: 505px) {
+
+		#modalKeyboard .ini_tit_top_etc ul.ini_etc_left {font-size:14px;}
+		#modalKeyboard .ini_gap {padding:0px;}
+
+		#modalKeyboard .input_parent	{height:16px;padding: 7px 5px 7px 5px;}
+		#modalKeyboard .input_parent input.input_basic	{font-size:13px;}
+		#modalKeyboard .ini_password ul li.btn_complete {width:60px;padding:7px;font-size:13px;}
+
+		#iphone-keyboard li {
+			margin:.3em .1em .3em;
+		}
+
+		#iphone-keyboard span {font-size:14px;font-weight:bold;font-family: Helvetica, Arial, sans-serif, Verdana;}
+
+		#iphone-keyboard span.ibutton				{width:7.2%;	padding:0.7em 0 0.7em;	margin:0;}
+		#iphone-keyboard span.ibutton.numberKey		{width:7.2%;	padding:1.0em 0 1.0em;	margin:0;}
+		#iphone-keyboard span.blank 				{width:7.2%;	padding:0.9em 0 0.7em;	margin:0;}
+		#iphone-keyboard span.blank_nosmall 		{width:7.2%;	padding:0.9em 0 0.7em;	margin:0;}
+
+		#iphone-keyboard span.ibutton.shift 		{width:12.5%;	padding:0.7em 0 0.8em;}
+		#iphone-keyboard span.ibutton.shiftactive	{width:12.5%;	padding:0.7em 0 0.8em;}
+		#iphone-keyboard span.ibutton.backspace 	{width:12.5%;	padding:0.7em 0 0.8em;}
+
+		#iphone-keyboard span.ibutton.numbers 		{width:11%;		padding:0.7em 0 0.7em;}
+		#iphone-keyboard span.ibutton.numberactive 	{width:11%;		padding:0.7em 0 0.7em;}
+		#iphone-keyboard span.ibutton.space 		{width:46.5%;	padding:0.6em 0 0.6em;}
+		#iphone-keyboard span.ibutton.international {width:11%;		padding:0.7em 0 0.7em;}
+		#iphone-keyboard span.ibutton.return 		{width:24%;		padding:0.7em 0 0.7em;}
+
+		#iphone-keyboard span.subText.small			{font-size:10px;font-weight:normal;	display:block;}
+		#iphone-keyboard span.subText.small_char 	{font-size:10px;font-weight:normal;	display:block;}
+		#iphone-keyboard span.subText.small_bt		{font-size:10px;font-weight:normal;	display:block;}
+
+}
+
+@media screen and (max-width: 400px) {
+
+		#modalKeyboard .ini_tit_top_etc ul.ini_etc_left {font-size:14px;}
+		#modalKeyboard .ini_gap {padding:0px;}
+
+		#modalKeyboard .input_parent	{height:16px;padding: 7px 5px 7px 5px;}
+		#modalKeyboard .input_parent input.input_basic	{font-size:13px;}
+		#modalKeyboard .ini_password ul li.btn_complete {width:60px;padding:7px;font-size:13px;}
+
+
+
+		#iphone-keyboard li {
+			margin:.4em .1em .4em;
+		}
+
+		#iphone-keyboard span {font-size:13px;font-weight:bold;font-family: Helvetica, Arial, sans-serif, Verdana;}
+
+		#iphone-keyboard span.ibutton				{width:7.2%;	padding:1.2em 0.04em 1.2em;	margin:0;}
+		#iphone-keyboard span.ibutton.numberKey		{width:7.2%;	padding:1.5em 0.04em 1.5em;	margin:0;}
+		#iphone-keyboard span.blank 				{width:7.2%;	padding:0.9em 0.04em 0.7em;	margin:0;}
+		#iphone-keyboard span.blank_nosmall 		{width:7.2%;	padding:0.9em 0.04em 0.7em;	margin:0;}
+
+		#iphone-keyboard span.ibutton.shift 		{width:12.5%;	padding:1.2em 0 1.3em;}
+		#iphone-keyboard span.ibutton.shiftactive	{width:12.5%;	padding:1.2em 0 1.3em;}
+		#iphone-keyboard span.ibutton.backspace 	{width:12.5%;	padding:1.2em 0 1.3em;}
+
+		#iphone-keyboard span.ibutton.numbers 		{width:11%;		padding:0.8em 0 0.8em;}
+		#iphone-keyboard span.ibutton.numberactive 	{width:11%;		padding:0.8em 0 0.8em;}
+		#iphone-keyboard span.ibutton.space 		{width:46.5%;	padding:0.7em 0 0.7em;}
+		#iphone-keyboard span.ibutton.international {width:11%;		padding:0.8em 0 0.8em;}
+		#iphone-keyboard span.ibutton.return 		{width:24%;		padding:0.8em 0 0.8em;}
+
+		#iphone-keyboard span.subText.small			{font-size:10px;font-weight:normal;	display:block;}
+		#iphone-keyboard span.subText.small_char 	{font-size:10px;font-weight:normal;	display:block;}
+		#iphone-keyboard span.subText.small_bt		{font-size:10px;font-weight:normal;	display:block;}
+
+}
+
+
+@media screen and (max-height: 380px) {
+
+	#iphone-keyboard span.ibutton				{padding:0.7em 0.05em 0.7em;}
+	#iphone-keyboard span.ibutton.numberKey		{padding:0.9em 0.05em 0.9em;}
+
+
+}
+
+
+@media screen and (max-height: 320px) {
+
+	#modalKeyboard .ini_gap_top1
+	,#modalKeyboard .ini_gap_top2
+	,#modalKeyboard .ini_gap {
+		padding:7px;
+	}
+
+	#modalKeyboard .screen_Key_title{
+		display:none;
+	}
+
+	#iphone-keyboard li:first-child {
+		margin-top:.2em;
+	}
+
+	#iphone-keyboard li {
+		margin:.1em .1em .2em;
+	}
+
+
+}
+
+
+
+/*
+@media screen and (min-height: 768px) {
+
+
+
+	#iphone-keyboard span.ibutton				{padding:0.3em 0 0.7em;}
+	#iphone-keyboard span.ibutton.numberKey		{padding:0.3em 0 0.7em;}
+
+	#iphone-keyboard span.ibutton.space,
+	#iphone-keyboard span.ibutton.return,
+	#iphone-keyboard span.ibutton.numbers,
+	#iphone-keyboard span.ibutton.numberactive,
+	#iphone-keyboard span.ibutton.international {padding:0.3em 0 0.5em;}
+
+	#iphone-keyboard {
+		max-height:400px;
+		max-height:1280px;
+		font-size:1.25em;
+	}
+
+}
+*/
+
+@media screen and (min-width: 800px) {
+
+	#modalKeyboard .ini_gap_top1 {max-width:600px;}
+	#modalKeyboard .ini_gap_top2 {max-width:600px;}
+
+	#iphone-keyboard li {
+		margin:.2em .1em .45em;
+	}
+
+
+	#iphone-keyboard span {font-size:22px;font-weight:bold;font-family: Helvetica, Arial, sans-serif, Verdana;}
+
+	#iphone-keyboard span.ibutton				{padding:0.5em 0 0.6em;	width:7.3%;}
+	#iphone-keyboard span.ibutton.numberKey		{padding:0.5em 0 0.6em;	width:7.3%;}
+	#iphone-keyboard span.blank 				{padding:0.5em 0 0.6em;	width:7.3%;}
+	#iphone-keyboard span.blank_nosmall 		{padding:0.5em 0 0.6em;	width:7.3%;}
+
+	#iphone-keyboard span.ibutton.shift 		{padding:0.6em 0 0.7em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.shiftactive	{padding:0.6em 0 0.7em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.backspace 	{padding:0.6em 0 0.7em;	font-size:20px;}
+
+	#iphone-keyboard span.ibutton.numbers 		{padding:0.6em 0 0.6em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.numberactive 	{padding:0.6em 0 0.6em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.space 		{padding:0.6em 0 0.6em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.international {padding:0.6em 0 0.6em;	font-size:20px;}
+	#iphone-keyboard span.ibutton.return 		{padding:0.6em 0 0.6em;	font-size:20px;}
+
+	#iphone-keyboard span.subText.small			{font-size:14px;}
+	#iphone-keyboard span.subText.small_char 	{font-size:14px;}
+	#iphone-keyboard span.subText.small_bt		{font-size:14px;}
+
+	#iphone-keyboard {
+		max-height:400px;
+		max-height:1280px;
+		font-size:1.25em;
+	}
+
+
+}
+
+
+
+
+
+/*********************** �Է�â ************************/
+
+/* the overlayed element */
+#modalKeyboard {
+
+	/* initially overlay is hidden */
+	display:none;
+
+	/* place overlay on top of other elements */
+	z-index:1;
+	/*position: absolute;*/
+
+	width:100%;
+	height:100%;
+	min-height:100%;
+	min-width:320px;
+
+	background-color:#F9F9F9;
+
+	border:1px solid #E0E0E0;
+
+}
+
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+        display:block;
+}
+
+nav ul {
+        list-style:none;
+}
+
+blockquote, q {
+        quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+        content:'';
+        content:none;
+}
+/* change colours to suit your needs */
+ins {
+        background-color:#ff9;
+        color:#000;
+        text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+        background-color:#ff9;
+        color:#000;
+        font-style:italic;
+        font-weight:bold;
+}
+
+del {
+        text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+        border-bottom:1px dotted;
+        cursor:help;
+}
+
+table {
+    /* 주석처리
+        border-collapse:collapse;
+        border-spacing:0;
+    */
+}
+
+/* change border colour to suit your needs */
+hr {
+        display:block;
+        height:1px;
+        border:0;
+        border-top:1px solid #cccccc;
+        margin:1em 0;
+        padding:0;
+}
+
+input, select {
+        vertical-align:middle;
+}
+
+/* 배치관계 문제로 수정 */
+img {
+        vertical-align:middle;
+}
+
+ol, ul ,li {list-style:none;}
+/* 폼 요소에 대한 리셋 */
+* html input {margin:-1px 0;} /* ie6과 ie7에서 input의 1px 마진 리셋 */
+*:first-child+html input {margin:-1px 0;} /* ie6과 ie7에서 input의 1px 마진 리셋 */
+input.radio, input.checkbox, input[type="radio"], input[type="checkbox"] {width:13px; height:13px; vertical-align:-2px;} /* 체크박스/라디오버튼 위치 최적화 (IE6을 위해 클래스명을 지정해줘서 제어할 것) */
+
+input {float:right; width:100%; border:1px solid #c0c0c0; font-size:80%; padding:10px;}
+
+
+
+.input_parent   {width:auto; clear:both; overflow:hidden; background:#fff; text-align:left; border:1px solid #c0c0c0; padding: 2px 5px 2px 5px; -webkit-box-shadow:inset 1px 1px #EEE}
+.input_parent_gray  {width:auto; clear:both; overflow:hidden; background:#f5f5f5; text-align:left; border:1px solid #c0c0c0; padding: 2px 5px 2px 5px; -webkit-box-shadow:inset 1px 1px #EEE}
+/*.input_parent_gray .input_basic   {color:#222222;}*/
+input.input_basic   {border:none; width:100%; font-size:90%; background:none; padding: 8px 0 8px 0; color:#666666; font-size:80%;}
+input.input_basic::-webkit-input-placeholder {color:#686868;     }
+
+input.text_left     {text-align: left;}
+input.text_center   {text-align: center;}
+input.text_right    {text-align: right;}
+
+select.select_basic {width:100%;height:36px; font-size:80%; padding:9px 0px 9px 5px; text-align:left; background:#FFFFFF url('../images/select.png') no-repeat 100% 50%;border:1px solid #c0c0c0; -webkit-box-shadow:inset 1px 1px #EEE; -webkit-border-radius:0; -webkit-appearance:none; }
+select.select_basic_gray {width:100%;height:36px; font-size:84%; padding:9px 0px 9px 5px; text-align:left; background:#f5f5f5 url('../images/select.png') no-repeat 100% 50%;border:1px solid #c0c0c0; -webkit-box-shadow:inset 1px 1px #EEE; -webkit-border-radius:0; -webkit-appearance:none; }
+
+.text_basic {color:#000000;font-size:84%;width:auto; height:auto; clear:both; overflow:hidden; background:#fff; text-align:left; border:1px dotted #c0c0c0; padding: 10px 10px 10px 10px; -webkit-box-shadow:inset 1px 1px #EEE;font-size:12px;}
+.text_basic_gray    {color:#000000;font-size:84%;width:auto; height:auto; clear:both; overflow:hidden; background:#f5f5f5; text-align:left; border:1px dotted #c0c0c0; padding: 10px 10px 10px 10px; -webkit-box-shadow:inset 1px 1px #EEE}
+.text_basic_gray_blue   {color:#000000;font-size:84%;width:auto; height:auto; clear:both; overflow:hidden; background:#f5f5f5; text-align:left; border:1px solid #235ea0; padding: 10px 10px 10px 10px; -webkit-box-shadow:inset 1px 1px #EEE}
+
+
+span.changeUI_checkbox_off  {display:inline-block;background:url(../images/checkbox_off_mi.png) no-repeat;height:25px;width:25px;cursor:pointer;}
+span.changeUI_checkbox_on   {display:inline-block;background:url(../images/checkbox_on_mi.png) no-repeat;height:25px;width:25px;cursor:pointer;}
+
+span.changeUI_radio_on {display:inline-block; background:url('../images/radio_on.png') no-repeat; height:13px;width:13px; cursor:pointer;}
+span.changeUI_radio_off {display:inline-block; background:url('../images/radio_off.png') no-repeat; height:13px;width:13px; cursor:pointer;}
+
+span.img_idpw       {display:inline-block;background:url(../images/icon_find_s.png) no-repeat; width:18px; height:18px;}
+
+
+/*** logo, icon ***/
+#ini_logo           {background-image:url(../images/logo_blue_s.png); height:11px;width:66px;display:inline-block;}
+#ini_logo_gray      {background-image:url(../images/logo_gray_s.png); height:11px;width:66px;display:inline-block;}
+
+/*btn*/
+.btn_complete {display: inline-block;width:120px;text-align:center; vertical-align:middle;font-size:86%; background:#5594c6; border:1px solid #3f749d; color:#fff;margin:0 0 0 0;padding:10px}
+
+.btn_complete a {color:#fff; text-decoration:none;}
+.btn_complete a:link {color:#fff; text-decoration:none;}
+.btn_complete a:visited {color:#fff; text-decoration:none;}
+.btn_complete a:hover, a:active {color:#fff; text-decoration:none;}
+
+/** etc **/
+
+
+.margin_top1        {margin-top:1x;}
+.margin_top20       {margin-top:2x;}
+
+/* 여백 확인 시*/
+/*
+.space_height5      {height:5px;width:100%;clear:both;background:#ffd0f0;}
+.space_height10     {height:10px;width:100%;clear:both;background:#ffd0f0;}
+.space_height15     {height:15px;width:100%;clear:both;background:#ffd0f0;}
+.space_height20     {height:20px;width:100%;clear:both;background:#ffd0f0;}
+.space_height40     {height:40px;width:100%;clear:both;background:#ffd0f0;}
+
+.space_height_auto  {height:0px;width:100%;clear:both;background:#ffd0f0;}
+
+.ini_t_only     {display:none;background:#99cc00;}
+*/
+
+.space_h2       {height:2px;width:100%;clear:both;display:block;}
+.space_h5       {height:5px;width:100%;clear:both;display:block;}
+.space_h7       {height:7px;width:100%;clear:both;display:block;} /*** 2012.06.18 추가 ***/
+.space_h10      {height:10px;width:100%;clear:both;display:block;}
+.space_h15      {height:15px;width:100%;clear:both;display:block;}
+.space_h20      {height:20px;width:100%;clear:both;display:block;}
+.space_h30      {height:30px;width:100%;clear:both;display:block;}
+.space_h40      {height:40px;width:100%;clear:both;display:block;}
+
+.space_height_auto  {height:0px;width:100%;clear:both;display:block;}
+
+.ini_t_only     {display:none;}
+.ini_m_only     {display:block;}
+
+
+.black {color:#000000;}
+.blue {color:#235ea0;}
+.gray {color:#686868;}
+
+.hide   {display:none;}
+/************************************************************************************
+모바일 UI
+*************************************************************************************/
+#wrapper {width:100%;min-width:320px;}
+#sub_wrapper {width:100%;height:100%;min-width:320px;/*max-width:520px;*/margin:0 auto;}
+
+/*** 영역 구분 ***/
+#wrapper .ini_lay_top_01            {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;background:#235ea0;padding-top:15px;padding-bottom:15px}
+#wrapper .ini_lay_top_02            {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;background:#f9f9f9;padding-top:19px;padding-bottom:15px}
+#wrapper .ini_lay_tab_nav_01        {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;}
+#wrapper .ini_lay_content_01        {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;font-size:92%;}
+#wrapper .ini_lay_content_02        {width:auto;clear:both;overflow:hidden;padding-left:0px;padding-right:0px;font-size:92%;}
+#wrapper .ini_lay_content_02 .content_sub   {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;}
+#wrapper .ini_lay_bottom_01         {width:auto;clear:both;overflow:hidden;padding-left:15px;padding-right:15px;}
+#wrapper .ini_lay_line_01           {width:auto;clear:both;height:2px; background:#235ea0; vertical-align:top}
+
+
+#wrapper .ini_lay_tab_nav_02        {width:auto;clear:both;overflow:hidden;}
+
+    /*** top ***/
+        /* 결제수단 / 로고 */
+        .ini_top_area_01 {width:100%;clear:both;}
+        .ini_top_area_01 ul.title div.left  {float:left;clear:both;-dt-display:table;display:table;font-weight:bold; font-size:102%; color:#FFFFFF;letter-spacing:-1px;}
+        .ini_top_area_01 ul.title div.left span {-dt-display:table-cell;display:table-cell;vertical-align:middle;padding-right:5px}
+        .ini_top_area_01 ul.title div.right {float:right;margin-top:3px}
+
+        /* 상품 정보 */
+        .ini_top_area_01 .info {width:100%;clear:both;}
+        .ini_top_area_01 .info {text-align:right; color:#FFFFFF;margin-bottom:3px;}
+        .ini_top_area_01 .info li.img {float:left;width:auto; height:auto;position:relative; border:1px solid #bcbcbc; }
+        .ini_top_area_01 .info li.text  {float:right;width:auto; }
+        .ini_top_area_01 .info li.text div.price    {overflow:hidden; width:auto;clear:both;font-size:160%;text-shadow:0px 1px 3px #222222;; }
+        .ini_top_area_01 .info li.text div.item {width:auto;clear:both;font-size:82%;margin-top:3px;}
+
+        .ini_top_area_01 {width:100%;clear:both;}
+
+
+        .ini_top_area_02 {width:100%; clear:both;}
+        .ini_top_area_02 ul.title   {float:left;clear:both; display:table;font-weight:bold; font-size:102%; color:#235ea0;letter-spacing:-1px;}
+        .ini_top_area_02 ul.title span  {display:table-cell; vertical-align:middle; padding-right:5px}
+        .ini_top_area_02 ul.log {float:right;}
+        .ini_top_area_02 ul.log div {margin-top:7px}
+
+        .ini_top_area_03 {width:100%; clear:both;}
+        .ini_top_area_03 ul.title   {float:left;clear:both; display:table;font-size:135%; color:#235ea0;letter-spacing:-1px;margin-top:-19px}
+        .ini_top_area_03 ul.title .bold {display:table-cell; vertical-align:middle; padding-right:5px;font-weight:bold; }
+        .ini_top_area_03 ul.title .normal {display:table-cell; vertical-align:middle; padding-right:5px;}
+        .ini_top_area_03 ul.log {float:right;}
+        .ini_top_area_03 ul.log div {margin-top:7px}
+        .ini_top_area_03 ul.line {float:left;width:100%; height:1px; background:#c2c2c2; margin:10px auto;display:none}
+
+        /*********************************** 201.07.09 추가 *********************************************/
+
+
+    /*** tab ***/
+        /* 텝 */
+        .ini_tab_obj_01 {text-align:center; font-size:91%;letter-spacing:-0.5px;}
+
+        .ini_tab_obj_01.tab2 ul {float:left; width:50%; text-align:center;}
+        .ini_tab_obj_01.tab3 ul {float:left; width:33%;}
+        .ini_tab_obj_01.tab4 ul {float:left; width:25%;}
+
+        .ini_tab_obj_01 ul li {width:auto;padding:13px 0 13px 0;cursor:pointer;}
+        .ini_tab_obj_01 ul.on  li {background:#235ea0;color:#ffffff;border:1px solid #235ea0;text-shadow:0px 1px 3px #222222;;}
+        .ini_tab_obj_01 ul.off li {background:#f5f5f5;color:#696969;border:1px solid #cecece;}
+        .ini_tab_obj_01 ul.on  li * {color:#ffffff; text-decoration:none;text-shadow:0px 1px 3px #222222;;}
+        .ini_tab_obj_01 ul.off li * {color:#696969; text-decoration:none;}
+
+    /*** step ***/
+        .ini_step_obj_01 {text-align:center; font-size:74%; width:100%; letter-spacing:-0.5px;}
+
+        .ini_step_obj_01 ul {float:left; display:table;width:100%; background:#f5f5f5; border:1px solid #e7e7e7; border-width:1px 0 1px 0;padding:10px 0px 10px 0px;}
+
+            /* 스텝 모양 */
+        .ini_step_obj_01 ul li {display:table-cell; vertical-align:middle;text-align:center;white-space:nowrap;}
+        .ini_step_obj_01 ul li.col_step_on {color:#235ea0; width:25%; text-align:center;}
+        .ini_step_obj_01 ul li.col_step_off {color:#696969; width:25%; text-align:center;}
+        .ini_step_obj_01 ul li.col_space {width:15px;}
+        .ini_step_obj_01 ul li.col_space .img_step_on {background:url(../images/step_on.png) no-repeat;  height:19px; width:11px; display:inline-block;zoom:1;*display:inline;}
+        .ini_step_obj_01 ul li.col_space .img_step_off{background:url(../images/step_off.png) no-repeat; height:19px; width:11px; display:inline-block;zoom:1;*display:inline;}
+
+
+
+
+    /*** contents ***/
+
+        /*** 테이블 형식으로 간격 조절 ***/
+    .ini_content_common .input_area_01 {width:100%;}
+
+    .ini_content_common .input_area_01 div.input_line {-dt-display:table;display:table;width:100%;}
+    .ini_content_common .input_area_01 div.input_line ul {-dt-display:table-row;display:table-row;width:100%;}
+    .ini_content_common .input_area_01 div.input_line ul li  {vertical-align:middle;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_title  {-dt-display:table-cell;display:table-cell; font-size:84%; color:#222222; letter-spacing:-0.5px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto  {-dt-display:table-cell;display:table-cell;width:auto;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_80_c {-dt-display:table-cell;display:table-cell;width:80px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_100 {-dt-display:table-cell;display:table-cell;width:100px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_200 {-dt-display:table-cell;display:table-cell;width:200px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space   {-dt-display:table-cell;display:table-cell;width:10px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space_20   {-dt-display:table-cell;display:table-cell;width:20px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space_25   {-dt-display:table-cell;display:table-cell;width:25px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space_30   {-dt-display:table-cell;display:table-cell;width:30px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space_50   {-dt-display:table-cell;display:table-cell;width:50px;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_space_42   {-dt-display:table-cell;display:table-cell;width:42px;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.center   {text-align: center;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi {-dt-display:table;display:table;width:100%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul      {-dt-display:table-row;display:table-row;width:100%;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_5 {-dt-display:table-cell;display:table-cell;width:5%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_10 {-dt-display:table-cell;display:table-cell;width:10%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_15 {-dt-display:table-cell;display:table-cell;width:15%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_20 {-dt-display:table-cell;display:table-cell;width:20%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_25 {-dt-display:table-cell;display:table-cell;width:25%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_30 {-dt-display:table-cell;display:table-cell;width:30%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_35 {-dt-display:table-cell;display:table-cell;width:35%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_40 {-dt-display:table-cell;display:table-cell;width:40%;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_45 {-dt-display:table-cell;display:table-cell;width:45%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_50 {-dt-display:table-cell;display:table-cell;width:50%;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.col_70 {-dt-display:table-cell;display:table-cell;width:70%;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_auto .sub_multi ul li.center {text-align: center;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_button   {-dt-display:table-cell;display:table-cell;width:122px;text-align:center;height:100%;font-size:86%; background:#5594c6; border:1px solid #3f749d; color:#ffffff;  padding:10px 0px 10px 0px;cursor:pointer;text-shadow:0px 1px 3px #222222;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_button *  {color:#ffffff;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_button_gay   {-dt-display:table-cell;display:table-cell;width:122px;text-align:center;height:100%;font-size:86%; background:#ececec; border:1px solid #cecece; color:#333333;  padding:10px 0px 10px 0px;;cursor:pointer;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_button_gay *  {color:#333333;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_button2  {-dt-display:table-cell;display:table-cell;width:80px;text-align:center; height:100%;font-size:86%; background:#ececec; border:1px solid #cecece; color:#333333;  padding:10px 0px 10px 0px;;cursor:pointer;}
+    .ini_content_common .input_area_01 div.input_line ul li.col_button2 *  {color:#333333;}
+
+
+    .col_space_m_only {-dt-display:table-cell;display:table-cell;}
+
+    .ini_content_common .input_area_01 div.input_line ul li.col_title  {width:60px;}
+
+    .ini_content_common .input_area_01 div.input_line.word4 ul li.col_title  {width:60px;}
+    .ini_content_common .input_area_01 div.input_line.word6 ul li.col_title  {width:85px;}
+    .ini_content_common .input_area_01 div.input_line.word7 ul li.col_title  {width:100px;}
+    .ini_content_common .input_area_01 div.input_line.word8 ul li.col_title  {width:120px;}
+
+
+        /*** 체크박스 이동처리 ***/
+    .ini_content_common .input_area_01 div.text_line {float:right;clear:both;-dt-display:table;display:table;height:auto;margin-right:0px;text-align:right;}
+    .ini_content_common .input_area_01 div.text_line ul {-dt-display:table-row;display:table-row;width:auto;}
+    .ini_content_common .input_area_01 div.text_line ul li {-dt-display:table-cell;display:table-cell;vertical-align:middle;}
+    .ini_content_common .input_area_01 div.text_line ul li.col_icon {padding:3px 0px 0px 0px}
+    .ini_content_common .input_area_01 div.text_line ul li.col_space {padding:0px 5px 0px 0px}
+    .ini_content_common .input_area_01 div.text_line ul li.col_text {padding:0px 0px 0px 0px;font-size:83%; color:#222222;letter-spacing:-0.5px;}
+    .ini_content_common .input_area_01 div.text_line ul li.col_text2 {padding:0px 0px 0px 0px;font-size:80%; color:#222222;letter-spacing:-0.5px;}
+
+    .ini_content_common .input_area_01 div.text_line.left {float:left;text-align:left;}
+
+    .ini_content_common .input_area_01 div.text_line.move_up {display:block;position:relative;width:auto;height:0px;right:0px;top:-33px;}
+    .ini_content_common .input_area_01 div.text_line.move_up ul {-dt-display:table-row;display:table-row;width:auto;}
+    .ini_content_common .input_area_01 div.text_line.move_up ul li {display:block;}
+    .ini_content_common .input_area_01 div.text_line.move_up ul li.col_space {display:none;}
+    .ini_content_common .input_area_01 div.text_line.move_up ul li.col_text {display:none;}
+
+    /*** 텍스트 전용 ***/
+    .ini_content_common .cont_text_01 {width:100%;clear:both;height:auto;overflow:hidden;font-size:83%; color:#222222;letter-spacing:-0.5px;line-height:20px}
+
+    .ini_content_common .cont_text_01 .sub {padding-left:20px;}
+
+    .ini_content_common .cont_text_01_2 {width:100%;clear:both;height:auto;overflow:hidden;font-size:86%; color:#222222;letter-spacing:-0.5px;line-height:20px}
+    .ini_content_common .cont_text_01_3 {width:100%;clear:both;height:auto;overflow:hidden;font-size:90%; color:#222222;letter-spacing:-0.5px;line-height:20px}
+
+    .ini_content_common .cont_text_02 {width:100%;clear:both;height:auto;overflow:hidden;font-size:80%; color:#222222;letter-spacing:-0.5px;line-height:16px;line-height:18px}
+
+    .ini_content_common .cont_text_03 {width:100%;clear:both;height:auto;overflow:hidden;font-size:88%; color:#222222;letter-spacing:-0.5px;line-height:22px;line-height:24px}
+
+
+    .ini_content_common .title_text_01 {width:100%;clear:both;height:auto;overflow:hidden;font-size:120%; color:#222222;letter-spacing:-0.5px;line-height:22px;line-height:24px;text-shadow:0px 1px 2px #BBB;}
+
+
+    .ini_content_common .align_left {text-align:left;}
+    .ini_content_common .align_right {text-align:right;}
+    .ini_content_common .align_center {text-align:center;}
+
+    .ini_content_common .font_bold {font-weight:bold;}
+
+    /* span에 따로 지정해서 사용*/
+    /*
+    .ini_content_common .black {color:#000000;}
+    .ini_content_common .blue {color:#235ea0;}
+    .ini_content_common .gray {color:#686868;}
+    */
+
+    .ini_content_common ul.table_ul {width:100%;display:table;}
+    .ini_content_common ul.table_ul li  {display:table-cell;vertical-align:middle;}
+
+    /* 상자 표시 / 구분 */
+    .ini_content_common .center_line { height:1px; background:#c0c0c0; }
+
+    .ini_content_common .inside_box {width:100%;clear:both;overflow:hidden;}
+    .ini_content_common .inside_box > .child {width:auto;height:auto;clear:both;overflow:hidden;}
+
+    .ini_content_common .inside_box2 {width:100%;background:#FFFFFF;border:1px solid #bcbcbc;}
+    .ini_content_common .inside_box2 > .child  {width:auto;overflow:auto;margin:0 auto;padding:10px 10px 10px 10px}
+
+    .ini_content_common .inside_box3 {width:100%;background:#FFFFFF;border:1px solid #bcbcbc;}
+    .ini_content_common .inside_box3 > .child  {width:auto;overflow:auto;margin:0 auto;padding:20px 20px 20px 20px}
+
+    /* 경고 메세지 */
+    .ini_content_common .alert_text_01 {width:100%;text-align:center; color:#ed323a; font-size:90%;clear:both;height:auto;display:inline-block;zoom:1;*display:inline;line-height: 20px}
+    .ini_content_common .alert_text_01 ul {display:inline-block;margiwidth:auto;}
+    .ini_content_common .alert_text_01 ul span.icon_warning {float:left;width:auto;}
+    .ini_content_common .alert_text_01 ul span.text_warning {width:auto;}
+    .ini_content_common .alert_text_01 ul span.icon_warning span.icon{display:inline-block;background:url(../images/icon_warning.png) no-repeat; width:25px; height:20px;  margin-bottom:-4px;}
+
+
+    .ini_content_common .alert_text_02 {width:100%;text-align:center; color:#696969; font-size:90%;clear:both;height:auto;display:inline-block;zoom:1;*display:inline;line-height: 20px}
+    .ini_content_common .alert_text_02 ul {display:inline-block;margiwidth:auto;}
+    .ini_content_common .alert_text_02 ul span.icon_warning {float:left;width:auto;}
+    .ini_content_common .alert_text_02 ul span.text_warning {width:auto;}
+    .ini_content_common .alert_text_02 ul span.icon_warning span.icon{display:inline-block;background:url(../images/icon_find_s.png) no-repeat; width:25px; height:20px;  margin-bottom:-5px;}
+
+    /*** connect ***/
+    .ini_content_common .cont_connect_01 {text-align:center; font-size:85%; width:100%; letter-spacing:-0.5px;}
+
+    .ini_content_common .cont_connect_01 ul {float:left; display:table;width:100%; background:#f5f5f5; border:1px solid #e7e7e7; border-width:1px 0 1px 0;padding:15px 0px 15px 0px;}
+
+    .ini_content_common .cont_connect_01 ul li {display:table-cell; vertical-align:middle; text-align:center; white-space:nowrap;}
+    .ini_content_common .cont_connect_01 ul li.col_join {color:#000; width:35%; text-align:center;}
+    .ini_content_common .cont_connect_01 ul li.col_arrow {background:url('../images/connect_arrow.png') no-repeat;  height:26px; margin:0; width:60px; display:inline-block;zoom:1;*display:inline;}
+    .ini_content_common .cont_connect_01 ul li.col_company {color:#000; width:35%; text-align:center;}
+
+
+    /*****************
+     *** 멀티 버튼 ***
+     *****************/
+
+    /*버튼1*/
+    .ini_content_common .multi_btn_01 {-dt-display:table;display:table;width:100%;font-size:80%;letter-spacing:-0.5px; border:1px solid #dcdcdc;background:#f3f3f3;}
+    .ini_content_common .multi_btn_01 ul {-dt-display:table-row;display:table-row;width:100%;}
+    .ini_content_common .multi_btn_01 ul li {-dt-display:table-cell;display:table-cell;height:18px;text-align:center; padding:8px 0 9px 0;vertical-align:middle;cursor:pointer;}
+
+    .ini_content_common .multi_btn_01 ul li * {color:#666666; text-decoration:none;}
+
+    .ini_content_common .multi_btn_01 ul li.col_line {width:auto;text-align:center;margin:0 auto; }
+    .ini_content_common .multi_btn_01 ul li.col_line div.bar {width:1px; height:18px; background:#dcdcdc; display:block;}
+
+    .ini_content_common .multi_btn_01 .col_btn {width:50%;}
+
+
+    .ini_content_common .multi_btn_01.btn2 .col_btn {width:50%;}
+    .ini_content_common .multi_btn_01.btn3 .col_btn {width:33%;}
+    .ini_content_common .multi_btn_01.btn4 .col_btn {width:25%;}
+
+
+    /*버튼2*/
+    .ini_content_common .multi_btn_02 {-dt-display:table;display:table;width:100%;font-size:80%;letter-spacing:-0.5px;background:#e5e5e5;}
+    .ini_content_common .multi_btn_02 ul {-dt-display:table-row;display:table-row;width:100%;}
+    .ini_content_common .multi_btn_02 ul li {-dt-display:table-cell;display:table-cell;height:18px;text-align:center;padding:8px 0 9px 0;vertical-align:middle;cursor:pointer;}
+
+    .ini_content_common .multi_btn_02 ul li * {color:#696969; text-decoration:none;}
+
+    .ini_content_common .multi_btn_02 ul li.col_line {width:auto;text-align:center;margin:0 auto;}
+    .ini_content_common .multi_btn_02 ul li.col_line div.bar {width:1px; height:18px; background:#a8a8a8; display:block;}
+
+    .ini_content_common .multi_btn_02 .col_btn {width:50%;}
+
+    .ini_content_common .multi_btn_02.btn2 .col_btn {width:50%;}
+    .ini_content_common .multi_btn_02.btn3 .col_btn {width:33%;}
+    .ini_content_common .multi_btn_02.btn4 .col_btn {width:25%;}
+
+    /*버튼3*/
+    .ini_content_common .multi_btn_03 {-dt-display:table;display:table;text-align:center;width:100%;font-size:91%;width:100%;}
+    .ini_content_common .multi_btn_03 ul {-dt-display:table-row;display:table-row;width:100%;}
+    .ini_content_common .multi_btn_03 ul li {-dt-display:table-cell;display:table-cell;text-align:center;vertical-align:middle;}
+
+    .ini_content_common .multi_btn_03 ul li.col_space {min-width:12px;} /* 지정 픽셀보다 작게보임 약 2px */
+
+    .ini_content_common .multi_btn_03.btn2 .col_btn {width:50%;}
+    .ini_content_common .multi_btn_03.btn3 .col_btn {width:33%;}
+    .ini_content_common .multi_btn_03.btn4 .col_btn {width:25%;}
+
+    .ini_content_common .multi_btn_03 ul li.btn_main {text-align:center;background:#5594c6; border:1px solid #3f749d; color:#fff; padding:12px 0 12px 0;cursor:pointer;text-shadow:0px 1px 3px #222222;;}
+    .ini_content_common .multi_btn_03 ul li.btn_main * {color:#fff; text-decoration:none;text-shadow:0px 1px 3px #222222;;}
+
+    .ini_content_common .multi_btn_03 ul li.btn_sub {text-align:center;;background:#ececec; border:1px solid #cecece; color:#818181; padding:12px 0 12px 0;;cursor:pointer;}
+    .ini_content_common .multi_btn_03 ul li.btn_sub * {color:#818181; text-decoration:none;}
+
+
+    /*simple_btn_01*/
+    .ini_content_common .simple_btn_01 {text-align:center;text-align:center;font-size:91%;clear:both;overflow:auto;}
+    .ini_content_common .simple_btn_01 div {clear:both; min-width:22px;;margin:auto;text-align:center;vertical-align:middle;text-align:center;background:#5594c6; border:1px solid #3f749d; color:#fff; padding:12px 10px 12px 10px;cursor:pointer;text-shadow:0px 1px 3px #222222;;}
+
+    .ini_content_common .simple_btn_01 div.blue * {color:#fff; text-decoration:none;text-shadow:0px 1px 3px #222222;}
+    .ini_content_common .simple_btn_01 div.gray * {color:#818181; text-decoration:none;}
+
+
+    /*****************
+     *** 멀티 컨텐츠 ***
+     *****************/
+
+    .ini_content_common .multi_area_01 {display:inline-table;width:100%;font-size:80%;letter-spacing:-0.5px; border:1px solid #dcdcdc;background:#f3f3f3;padding:5px;margin:auto;text-align:center;}
+    .ini_content_common .multi_area_01 ul {display:inline-block;margin:auto;text-align:center;overflow:auto;}
+    .ini_content_common .multi_area_01 ul li {float:left;padding:5px 15px;}
+
+/*
+    .ini_content_common .multi_area_01 ul li * {color:#666666; text-decoration:none;}
+
+    .ini_content_common .multi_area_01 ul li.col_line {width:auto;text-align:center;margin:0 auto; }
+    .ini_content_common .multi_area_01 ul li.col_line div.bar {width:1px; height:18px; background:#dcdcdc; display:block;}
+
+    .ini_content_common .multi_area_01 .col_btn {width:50%;}
+*/
+    /*****************
+     *** 하단버튼 ***
+     *****************/
+    .ini_bottom_area_01 {-dt-display:table;display:table;text-align:center;width:100%;font-size:91%;width:100%;}
+    .ini_bottom_area_01 ul {-dt-display:table-row;display:table-row;width:100%;}
+    .ini_bottom_area_01 ul li {-dt-display:table-cell;display:table-cell;text-align:center;vertical-align:middle;}
+
+    .ini_bottom_area_01 ul li.col_space {min-width:12px;} /* 지정 픽셀보다 작게보임 약 2px */
+
+    .ini_bottom_area_01.btn2 .col_btn {width:50%;}
+    .ini_bottom_area_01.btn3 .col_btn {width:33%;}
+    .ini_bottom_area_01.btn4 .col_btn {width:25%;}
+
+    .ini_bottom_area_01 ul li.btn_main {text-align:center;background:#235ea0; border:1px solid #143e6d; color:#fff; padding:12px 0 12px 0;cursor:pointer;text-shadow:0px 1px 3px #222222;;}
+    /*장차법 수정 관련 css 추가*/
+    span.btn_main {text-align:center;background:#235ea0; border:1px solid #143e6d; color:#fff; padding:12px 0 12px 0;cursor:pointer;text-shadow:0px 1px 3px #222222;;}
+    .ini_bottom_area_01 ul li.btn_main * {color:#fff; text-decoration:none;text-shadow:0px 1px 3px #222222;;}
+
+    .ini_bottom_area_01 ul li.btn_sub {text-align:center;;background:#ececec; border:1px solid #cecece; color:#818181; padding:12px 0 12px 0;;cursor:pointer;}
+    /*장차법 수정 관련 css 추가*/
+    span.btn_sub {text-align:center;;background:#ececec; border:1px solid #cecece; color:#818181; padding:12px 0 12px 0;;cursor:pointer;}
+    .ini_bottom_area_01 ul li.btn_sub * {color:#818181; text-decoration:none;}
+
+
+/* 모바일 가로모드 */
+/*
+@media only screen and (min-width: 520px){
+    html, body {background:#FFFFFF;}
+    #sub_wrapper {max-width:520px;margin:0 auto;background:#f9f9f9;}
+}
+*/
+
+
+/* Tablet, NetBook PC  세로모드 */
+@media only screen and (min-width: 768px){
+/*  html, body {background:#FFFFFF;}*/
+/*  #sub_wrapper {max-width:1024px;margin:0 auto;background:#f9f9f9;}*/
+
+    /* 표시 대상 살림 */
+    .ini_t_only {display:block;}
+    .ini_m_only {display:none;}
+
+    /* 기본 좌우 여백 증가 (+10px) */
+
+    /*** 영역 구분 ***/
+    #wrapper .ini_lay_top_01            {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_top_02            {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_tab_nav_01        {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_content_01        {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_content_02        {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_content_02 .content_sub   {}
+    #wrapper .ini_lay_bottom_01         {padding-left:45px;padding-right:45px;}
+    #wrapper .ini_lay_line_01           {}
+
+
+    /*** top ***/
+
+        /* 상품 정보 사이 간격 증가 (+2px) */
+        .ini_top_area_01 .info li.text div.item {margin-top:5px;}
+
+
+        .ini_top_area_03 ul.line {display:block;}
+        .ini_top_area_03 ul.title   {margin-top:5px}
+    /*** tab ***/
+
+        /* Tab 높이 증가 (+1px) */
+
+        .ini_tab_obj_01 ul li   {padding:14px 0 14px 0;}
+
+        /* 네비 색상 변경 */
+        .ini_step_obj_01 ul {background:#235ea0; border:1px solid #e7e7e7;padding:12px 0px 12px 0px;}
+
+        .ini_step_obj_01 ul li.col_step_on {color:#FFFFFF;}
+        .ini_step_obj_01 ul li.col_step_off {color:#7498c2;}
+        .ini_step_obj_01 ul li.col_space .img_step_on {background:url(../images/W_step_on.png) no-repeat;}
+        .ini_step_obj_01 ul li.col_space .img_step_off{background:url(../images/W_step_off.png) no-repeat;}
+
+
+    /*** contents ***/
+        /* content 영역 테두리 표시 */
+        .ini_content_common .inside_box {background:#FFFFFF;border:1px solid #bcbcbc;}
+        .ini_content_common .inside_box > .child  {width:auto;overflow:auto;margin:0 auto;padding:50px 50px 20px 50px}
+
+        .ini_content_common .inside_box2 > .child  {width:auto;overflow:auto;margin:0 auto;padding:30px 30px 30px 30px}
+
+        .ini_content_common .inside_box3 > .child  {width:auto;overflow:auto;margin:0 auto;padding:30px 30px 30px 30px}
+
+
+        .ini_content_common .input_area_01 div.input_line ul li.col_title        {width:80px;}
+        .ini_content_common .input_area_01 div.input_line.word4 ul li.col_title  {width:80px;}
+        .ini_content_common .input_area_01 div.input_line.word6 ul li.col_title  {width:105px;}
+        .ini_content_common .input_area_01 div.input_line.word7 ul li.col_title  {width:120px;}
+        .ini_content_common .input_area_01 div.input_line.word8 ul li.col_title  {width:140px;}
+
+
+        .ini_content_common .input_area_01.half_left {float:left;width:48%;}
+        .ini_content_common .input_area_01.half_right {float:right;width:48%;}
+
+        /* id 저장 체크박스 조절 */
+            /* 상위 박스 높이 조절로 위치 조절 */
+        .ini_content_common .input_area_01 div.text_line.move_up {-dt-display:table;display:table;position:static;width:auto;height:auto;}
+        .ini_content_common .input_area_01 div.text_line.move_up ul {-dt-display:table-row;display:table-row;width:auto;}
+        .ini_content_common .input_area_01 div.text_line.move_up ul li {-dt-display:table-cell;display:table-cell;}
+        .ini_content_common .input_area_01 div.text_line.move_up ul li.col_space {-dt-display:table-cell;display:table-cell;}
+        .ini_content_common .input_area_01 div.text_line.move_up ul li.col_text {-dt-display:table-cell;display:table-cell;}
+        .col_space_m_only {width:0px;-dt-display:none;display:none}
+
+
+            /* 이메일 Input 박스뒤 공간 제거 */
+            #ini_con_area ul.table_ul li.table_cell_li_space  {width:0px;vertical-align:middle;}
+
+        .ini_content_common .input_area_01 div.input_line ul li.col_80_c {width:120px;}
+
+
+        .ini_content_common .input_area_01 div.input_line ul li.col_button   {width:132px;}
+        .ini_content_common .input_area_01 div.input_line ul li.col_button_gay   {width:132px;}
+        .ini_content_common .input_area_01 div.input_line ul li.col_button2  {width:100px;}
+
+        .ini_content_common .cont_connect_01 .t_padding {padding:0px 15px 0px 15px;}
+        .ini_content_common .cont_connect_01 ul {padding:19px 0px 19px 0px;}
+
+    /*** btn ***/
+        /* 버튼 상하 여백 증가 (각 +2px) */
+        ul.ini_bottom_btn span.btn_main {padding:14px 0 14px 0;}
+        ul.ini_bottom_btn span.btn_sub {padding:14px 0 14px 0;}
+        ul.ini_bottom_btn span.btn_main {padding:14px 0 14px 0;}
+
+
+
+}
+
+
+/* Tablet, NetBook PC  가로모드 */
+/*
+@media only screen and (min-width: 920px){
+    html, body {background:#FFFFFF;}
+    #wrapper {}
+    #sub_wrapper {max-width:720px;margin:0 auto;background:#f9f9f9;}
+
+
+
+    .ini_content_common .inside_box > .child  {width:auto;overflow:auto;margin:0 auto;padding:20px 50px 20px 50px}
+}
+*/
