@@ -12,4 +12,14 @@ def order(request):
         else:
             return render(request, 'order/register_noti.html', request.POST)
     else:
-        return render(request, 'order/order.html')
+        return render(request, 'order/register_noti.html')
+        # return render(request, 'order/order.html')
+
+def card(request):
+    return render(request, 'order/card.html', {'user':request.GET})
+
+def inicis(request, num):
+    if num == '1':
+        return render(request, 'order/inicis_first.html', {'user':request.GET})
+    else:
+        return render(request, 'order/inicis_second.html', {'user':request.GET})

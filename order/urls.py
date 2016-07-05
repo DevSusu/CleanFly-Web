@@ -6,5 +6,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^$', 'order.views.index'),
-    url(r'^order/$', 'order.views.order'),
+    url(r'^order$', 'order.views.order'),
+    url(r'^card$', 'order.views.card'),
+    url(r'^inicis\/(?P<num>[0-9])$', 'order.views.inicis'),
 ]
