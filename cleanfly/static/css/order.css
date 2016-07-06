@@ -78,3 +78,7 @@ p.error {
   font-size : 1.2rem;
   color : #FF3838;
 }
+
+textarea.placeholder {
+  color: #aaa;
+}

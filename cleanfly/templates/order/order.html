@@ -33,7 +33,7 @@
             <p class="error" column="name"></p>
             <label>배달원이 세탁물을 <strong>받아가는</strong> 날짜</label>
             <input class="u-full-width datepicker" type="text" placeholder="2016-07-28" autofocus="true" column="collection_date" readonly>
-            <select class="u-full-width" placeholder="11:00" name="collection_time" column="collection_time">
+            <select class="u-full-width" placeholder="11:00" name="collection_time" column="collection">
               <option value="10:00" selected>10:00~12:00</option>
               <option value="12:00">12:00~13:00</option>
               <option value="13:00">13:00~14:00</option>
@@ -54,7 +54,7 @@
             <p class="error" column="phone"></p>
             <label>배달원이 세탁물을 <strong>전해주는</strong> 날짜</label>
             <input class="u-full-width datepicker" type="text" placeholder="010-1234-7098" column="delivery_date" readonly>
-            <select class="u-full-width" placeholder="11:00" column="delivery_time">
+            <select class="u-full-width" placeholder="11:00" column="delivery">
               <option value="10:00" selected="true">10:00~12:00</option>
               <option value="12:00">12:00~13:00</option>
               <option value="13:00">13:00~14:00</option>
@@ -74,7 +74,8 @@
         <div class="row">
           <p>세탁 및 배달원 방문 시 유의사항</p>
           <label>배달원이 주의해야 할 사항</label>
-          <textarea class="u-full-width" style="min-height:150px;" placeholder="소매 부분 얼룩 신경써서 빼주세요&#10;아기가 자고있을수있으니 노크해주세요"></textarea>
+          <textarea class="u-full-width" style="min-height:150px;" placeholder="소매 부분 얼룩 신경써서 빼주세요
+아기가 자고있을수있으니 노크해주세요"></textarea>
           <p class="error" column="address"></p>
         </div>
         <div class="row">
