@@ -1,0 +1,30 @@
+{% extends 'order/base.html' %}
+
+{% block static %}
+{% load staticfiles %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+<link rel="stylesheet" href="{% static 'css/order.css' %}">
+{% endblock %}
+{% block content %}
+
+<section class="first">
+  <div class="container">
+    <div class="row u-center-align mt-40">
+      <h3>주문이 접수되었습니다</h3>
+      <h5>모바일로 전송된 링크를 눌러 결제를 완료하세요</h5>
+      <p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>
+    </div>
+    <div class="order-info eight columns offset-by-two">
+      <div class="row">
+        <p><strong>수거일</strong> : {{user.collection_date}} {{user.collection_time}}</p>
+        <p><strong>배달일</strong> : {{user.delivery_date}} {{user.delivery_time}}</p>
+        <p><strong>주소</strong> : {{user.address}}</p>
+        <p><strong>전화번호</strong> : {{user.phone}}</p>
+        <p><strong>유의사항</strong> : {{user.notices}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

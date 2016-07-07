@@ -39,6 +39,14 @@ header a {
   text-transform: none;
   margin-right: 20px;
 }
+header .logo {
+  position: relative;
+  top: 13px;
+  height: 31px;
+}
+textarea {
+  color : #1E1B18;
+}
 
 section {
   font-family: 'Noto Sans KR', sans-serif;
@@ -91,7 +99,14 @@ p.foucs {
 
 .four-sm {
   display: inline-block;
-  width: 31.5%;
+  width: 32.5%;
+}
+
+@media (max-width: 550px) {
+  .four-sm {
+    display: inline-block;
+    width: 31.5%;
+  }
 }
 
 .six-sm {
@@ -112,6 +127,18 @@ p.foucs {
   margin-top: 20px;
 }
 
+.mt-40 {
+  margin-top: 40px;
+}
+
 .mb-0 {
   margin-bottom: 0;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
 }

@@ -10,6 +10,7 @@ function receiveMessage(event)
   if( result.resultcode == "00" ) {
     info.find('h5').text("카드가 등록되었습니다");
     info.find('p').text("?월?일 ?시에 배달원이 방문합니다");
+    ////* 수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요
   } else {
     info.find('h5').text("카드 등록에 실패했습니다");
     info.find('p').text("계좌 잔액이나 분실 상태를 확인해주세요");

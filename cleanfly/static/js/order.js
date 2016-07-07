@@ -65,12 +65,12 @@ $(document).on('ready page:load', function() {
         var full_time = full_item.slice(full_item.indexOf(" ")+1,-2) + "0"; // ㅅㅂ..
         var option = select.find('option[value="' + full_time +  '"]');
 
-        if( option.attr('selected') ) {
+        if( undefined != option.attr('selected') ) {
           option.attr('selected',false);
           option.next().attr('selected',true);
         }
         option.attr('disabled',true);
-        option.text(option.text() + " 마감" );
+        option.text(option.text() + " 마감");
       }
 
     });
@@ -94,8 +94,6 @@ $(document).on('ready page:load', function() {
       }
       $(option).attr('selected',false);
     });
-
-    select.find('option').first().attr('selected',true);
 
     updateFullDate(input);
 
@@ -129,8 +127,6 @@ $(document).on('ready page:load', function() {
 
   var fetchTime = function(type) { // type = collection or delivery
 
-    // TODO
-    // fetch time from server and disable select option values
     var request_body = {
       "type" : type
     };
@@ -164,6 +160,7 @@ $(document).on('ready page:load', function() {
           full.push(value);
         });
         updateFullDate($('input.datepicker')[ type=="collection" ? 0 : 1 ]);
+        $('input[name="address_code"]').val(result.result.address_code);
       },
       error : function(xhr, status, error) {
         // alert();
@@ -182,31 +179,97 @@ $(document).on('ready page:load', function() {
     adjustDate(this);
   });
 
-  $('textarea[placeholder*="\n"]').each(function(){
+  $('textarea').each(function(){
+    $(this).attr('data-placeholder', $(this).attr('placeholder'));
+    $(this).attr('placeholder', '');
 
-          // Store placeholder elsewhere and blank it
-          $(this).attr('data-placeholder', $(this).attr('placeholder'));
-          $(this).attr('placeholder', '');
+    $(this).focus(function(e){
+      if( $(this).val() == $(this).attr('data-placeholder') ) {
+        $(this).val('');
+        $(this).removeClass('placeholder');
+      }
+    });
 
-          // On focus, if value = placeholder, blank it
-          $(this).focus(function(e){
-                  if( $(this).val() == $(this).attr('data-placeholder') ) {
-                          $(this).attr('value', '');
-                          $(this).removeClass('placeholder');
-                  }
-          });
+    $(this).blur(function(e){
+      if( $(this).val().length == 0 ) {
+        $(this).val($(this).attr('data-placeholder'));
+        $(this).addClass('placeholder');
+      }
+    });
 
-          // On blur, if value = blank, insert placeholder
-          $(this).blur(function(e){
-                  if( $(this).text() == '' ) {
-                          $(this).text($(this).attr('data-placeholder'));
-                          $(this).addClass('placeholder');
-                  }
-          });
+    $(this).blur();
+  });
 
-          // Call blur method to preset element - this will insert the placeholder
-          // if the value hasn't been prepopulated
-          $(this).blur();
+  // TODO
+  // Form submit 막고 api 호출하기
+  // 가격표랑 배달비(만원 이하 주문) 텍스트, 알림 넣기
+  // view 순서 수정하기? /order 없애기랄까
+  var block_sumbit = true;
+
+  $('#order-form').on('submit', function(e) {
+
+    if( block_sumbit ) {
+      e.preventDefault();
+    } else {
+      return;
+    }
+
+    var confirm_str =
+      "수거시간 : " + $('input.datepicker').first().val() + "\n" +
+      "배달시간 : " + $('input.datepicker').last().val() + "\n" +
+      "으로 주문하시겠습니까?";
+
+    if ( confirm(confirm_str) ) {
+
+      var order_data = {
+        "collection_date" :
+          pickerCollection.getMoment().format('YYYY-M-D ') +
+          $('select[name="collection_time"]').val(),
+
+        "delivery_date" :
+          pickerDelivery.getMoment().format('YYYY-M-D ') +
+          $('select[name="delivery_time"]').val(),
+
+        "notices" : $('textarea[name="notices"]').val(),
+        "id" : $('input[name="id"]').val(),
+        "user_code" : $('input[name="user_code"]').val(),
+        "phone" : $('input[name="phone"]').val(),
+        "address" : $('input[name="address"]').val(),
+        "address_code" : $('input[name="address_code"]').val()
+      };
+
+      console.log(order_data);
+
+      $.ajax({
+        url : server_ip + "web/order",
+        type : "POST",
+        data : order_data,
+        success : function(result,status) {
+          console.log(result);
+          alert("주문이 접수되었습니다\n* 모바일로 결제 링크가 전송됩니다");
+          block_sumbit = false;
+          $('#order-form').submit();
+        },
+        error : function(xhr, status, error) {
+          console.log(xhr);
+          alert("주문 등록에 실패했습니다.");
+        }
+      });
+    }
+
+  });
+
+  $('#pricing-btn').on('click', function(e) {
+
+    if( $('#pricing').hasClass('hide') ) {
+      $('#pricing').removeClass('hide');
+      $(this).text("가격표 숨기기");
+    }
+    else {
+      $('#pricing').addClass('hide');
+      $(this).text("가격표 펼치기");
+    }
+
   });
 
 });

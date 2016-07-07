@@ -70,6 +70,27 @@ input.highlight[type="submit"]  {
   height: 38px;
 }
 
+button.highlight:hover,
+input.highlight[type="button"]:hover,
+input.highlight[type="submit"]:hover,
+button.highlight:focus,
+input.highlight[type="submit"]:focus,
+input.highlight[type="reset"]:focus,
+input.highlight[type="button"]:focus {
+  background-color: #17B890;
+  border-color: #17B890;
+  color: #FFFAFF;
+  height: 38px;
+}
+
+label > strong {
+  color: #98DFAF !important;
+}
+
+#pricing-btn {
+  cursor: pointer;
+}
+
 #form-container button {
   margin-top: 15px;
 }
@@ -81,4 +102,40 @@ p.error {
 
 textarea.placeholder {
   color: #aaa;
+}
+
+div.img {
+  background-color: #fff;
+  border-radius: 3px;
+  margin-bottom: 20px;
+  overflow: auto;
+  max-height: 400px;
+}
+
+div.img > img {
+  width : 100%;
+}
+
+@media (max-width: 550px) {
+  div.img {
+    max-height: 300px;
+  }
+  div.img > img {
+    width : 200%;
+  }
+}
+
+.hide {
+  display: none !important;
+}
+
+div.order-info {
+  background-color: #FAFAFA;
+  color: #1E1B18;
+  border-radius: 3px;
+  padding: 20px 20px 10px 20px;
+}
+
+.order-info p {
+  margin-bottom: 10px;
 }

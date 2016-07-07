@@ -26,15 +26,16 @@
       </span>
     </div>
     <div id="form-container">
-      <form name="order-form" id="order-form" method="post" action="order/">
+      <form name="order-form" id="order-form" method="post" action="order">
         <div class="row">
           <div class="six columns">
             <p>수거일</p>
             <p class="error" column="name"></p>
             <label>배달원이 세탁물을 <strong>받아가는</strong> 날짜</label>
-            <input class="u-full-width datepicker" type="text" placeholder="2016-07-28" autofocus="true" column="collection_date" readonly>
-            <select class="u-full-width" placeholder="11:00" name="collection_time" column="collection">
-              <option value="10:00" selected>10:00~12:00</option>
+            <input class="u-full-width datepicker" type="text" name="collection_date" placeholder="2016-07-28" column="collection_date" readonly>
+            <select class="u-full-width" name="collection_time" column="collection">
+              <option value="10:00" selected>10:00~11:00</option>
+              <option value="11:00">11:00~12:00</option>
               <option value="12:00">12:00~13:00</option>
               <option value="13:00">13:00~14:00</option>
               <option value="14:00">14:00~15:00</option>
@@ -53,9 +54,10 @@
             <p>배달일</p>
             <p class="error" column="phone"></p>
             <label>배달원이 세탁물을 <strong>전해주는</strong> 날짜</label>
-            <input class="u-full-width datepicker" type="text" placeholder="010-1234-7098" column="delivery_date" readonly>
-            <select class="u-full-width" placeholder="11:00" column="delivery">
-              <option value="10:00" selected="true">10:00~12:00</option>
+            <input class="u-full-width datepicker" type="text" name="delivery_date" placeholder="010-1234-7098" column="delivery_date" readonly>
+            <select class="u-full-width" name="delivery_time" column="delivery">
+              <option value="10:00" selected>10:00~11:00</option>
+              <option value="11:00">11:00~12:00</option>
               <option value="12:00">12:00~13:00</option>
               <option value="13:00">13:00~14:00</option>
               <option value="14:00">14:00~15:00</option>
@@ -71,16 +73,27 @@
             </select>
           </div>
         </div>
+        <div class="row mb-10">
+          <p>세탁물 가격표</p>
+          <label>세탁물은 배달원 방문 시 확인합니다</label>
+          <label><strong id="pricing-btn">가격표 펼치기</strong> 가격만 확인하세요</label>
+        </div>
+        <div class="row hide" id="pricing">
+          <div class="img twelve columns">
+            <img src="/static/img/pricing.png">
+          </div>
+        </div>
         <div class="row">
           <p>세탁 및 배달원 방문 시 유의사항</p>
           <label>배달원이 주의해야 할 사항</label>
-          <textarea class="u-full-width" style="min-height:150px;" placeholder="소매 부분 얼룩 신경써서 빼주세요
+          <textarea class="u-full-width" style="min-height:150px;" name="notices" placeholder="소매 부분 얼룩 신경써서 빼주세요
 아기가 자고있을수있으니 노크해주세요"></textarea>
           <p class="error" column="address"></p>
         </div>
         <div class="row">
           <div class="six columns offset-by-three">
-            <p class="u-center-align">세탁물은 배달원 방문 시 확인합니다</p>
+            <p class="u-center-align">만원 이하 주문은 배달비가 2000원 추가됩니다</p>
+            <p class="u-center-align">얼룩 상태나 재질에 따라 가격이 변동될 수 있습니다</p>
             <button class="button u-full-width highlight">주문 진행</button>
           </div>
         </div>
@@ -89,6 +102,7 @@
         <input type="hidden" name="phone" value="{{ user.phone }}">
         <input type="hidden" name="address_code" value="{{ user.address_code }}">
         <input type="hidden" name="address" value="{{ user.address }}" column="address">
+        {% csrf_token %}
       </form>
     </div>
   </div>
