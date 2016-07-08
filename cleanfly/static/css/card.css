@@ -54,3 +54,7 @@ li.col_text2 {
 li.col_btn {
   color : #818181;
 }
+
+div.padding {
+  padding-top: 20px;
+}

@@ -1,5 +1,19 @@
+var cardComplete = function(info,confirm) {
+  info.find('h5').text("카드가 등록되었습니다");
+  info.find('p').first().text(
+    moment(confirm.collection_date).format('M월 D일 H시') +
+    "에 배달원이 방문합니다");
+  info.append( $('<p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
+
+  // alert("크린플라이를 이용해주셔서 감사합니다. 앱을 설치하면 ㅁㄴㅇㄹㅁㄴㅇㄹ");
+  $('#card-list').hide();
+  $('#frame').hide();
+  $('#frame-top').hide();
+}
+
 function receiveMessage(event)
 {
+  var server_ip = "https://localhost/";
   console.log("data from iframe!!!!");
   // {"resultcode":"00","cardcd":"06","cardno":"467309019042"}
 
@@ -8,9 +22,25 @@ function receiveMessage(event)
   var result = JSON.parse(event.data);
   var info = $('#card-info');
   if( result.resultcode == "00" ) {
-    info.find('h5').text("카드가 등록되었습니다");
-    info.find('p').text("?월?일 ?시에 배달원이 방문합니다");
-    ////* 수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요
+
+    var order_code = window.location.pathname.split('/')[1];
+    result.order_code = order_code;
+
+    $.ajax({
+      url : server_ip + "web/order/confirm",
+      type : "POST",
+      data : result,
+      success : function(confirm,status) {
+        console.log(confirm);
+        cardComplete(info,confirm);
+      },
+      error : function(xhr, status, error) {
+        alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
+        alert("메인 페이지로 이동합니다");
+        window.location.pathname = "/";
+      }
+    });
+
   } else {
     info.find('h5').text("카드 등록에 실패했습니다");
     info.find('p').text("계좌 잔액이나 분실 상태를 확인해주세요");
@@ -21,10 +51,52 @@ window.addEventListener("message", receiveMessage, false);
 
 $(document).on('ready page:load', function() {
 
+  var cd_to_ko = {
+    "01" : "외한",
+    "03" : "롯데",
+    "04" : "현대",
+    "06" : "국민",
+    "11" : "BC",
+    "12" : "삼성",
+    "14" : "신한",
+    "15" : "한미",
+    "16" : "NH농협",
+    "17" : "하나SK",
+    "21" : "비자",
+    "22" : "마스터",
+    "23" : "JCB",
+    "24" : "아멕스",
+    "25" : "다이너스",
+    "" : "카드"
+  };
+
+  var registerCard = function(e) {
+    var card_info = {
+      card_code : $(e.target).parent().find('p[name="code"]').text(),
+      order_code : window.location.pathname.split('/')[1]
+    };
+    $.ajax({
+      url : server_ip + "web/order/confirm",
+      type : "POST",
+      data : card_info,
+      success : function(confirm,status) {
+        console.log(confirm);
+        cardComplete($('#card-info'),confirm);
+      },
+      error : function(xhr, status, error) {
+        alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
+        alert("메인 페이지로 이동합니다");
+        window.location.pathname = "/";
+      }
+    });
+  };
+
+  $('#frame').hide();
+  $('#frame-top').hide();
+  $('#card-list').hide();
+
   var server_ip = "https://localhost/";
   var inicis_url = "https://inilite.inicis.com/inibill/inibill_card.jsp?";
-  var user_id = "web100000001"; // example
-  var user_type = 5;
   var params = {
 
     price : 0,
@@ -33,24 +105,75 @@ $(document).on('ready page:load', function() {
     orderid : "cleanfly4",
     mid : "cleanfly01",
     timestamp : moment().format('YYYYMMDDHHmmss'),
-    period : moment().format('YYYYMMDD') + moment('2026',['YYYY'])
+    period : moment().format('YYYYMMDD') + moment('2026',['YYYY']).format('YYYYMMDD')
 
   };
-  params.buyername = user_id;
-  params.p_noti = user_type + user_id;
 
-  $.ajax({
-    url : server_ip + "web/inipay",
-    type : "POST",
-    data : params,
-    success : function(result,status) {
-      params.hashdata = result;
-      inicis_url += $.param(params);
-      $('#frame').attr('src',inicis_url);
-    },
-    error : function(xhr, status, error) {
-      alert("결제 정보를 받아오지 못했습니다.");
-    }
-  });
+  params.phash = window.location.pathname.split('/')[2];
+  // params.order_code = $('input[name="order-code"]').val();
+  params.order_code = window.location.pathname.split('/')[1];
+
+  if( undefined != params.phash ) {
+
+    $.ajax({
+      url : server_ip + "web/auth",
+      type : "POST",
+      data : params,
+      success : function(result,status) {
+        console.log(result);
+        if( result.type === "auth" ) { // 아직 카드가 등록되지 않은 주문
+
+          if( result.card_count != 0 ) { // 카드를 등록한적 있는 유저
+            $('#card-list').show();
+            result.cards.forEach( function(card,index) {
+
+              var item_row =
+              $('<div class="row card-item">' +
+                '<div class="twelve columns u-center-align">' +
+                  '<p class="hide" name="code"></p>' +
+                  '<p class="three-sm" name="cardcd"></p>' +
+                  '<p class="six-sm" name="cardno"></p>' +
+                  '<button class="button highlight three-sm" name="card">사용</button>' +
+                '</div>' +
+              '</div>');
+              item_row.on('click', registerCard);
+              $('#card-list').append(item_row);
+              var item = $('#card-list > .card-item').last();
+              item.find('p[name="code"]').text(card.code);
+              item.find('p[name="cardcd"]').text(cd_to_ko[card.cardcd]);
+              item.find('p[name="cardno"]').text(
+                card.cardno.slice(0,4) + " " +
+                card.cardno.slice(4,8) + " " +
+                card.cardno.slice(8,12) + " ****");
+
+            });
+          }
+
+          inicis_url += $.param(result.params);
+          $('#frame-top').show();
+          $('#frame').attr('src',inicis_url);
+          $('#frame').show();
+
+        } else if( result.type === "valid") { // 이미 카드가 등록된 경우
+
+          var info = $('#card-info');
+          info.find('h5').text("카드가 등록되었습니다");
+          info.find('p').first().text(
+            moment(result.order.collection_date,'YYYY-MM-DD HH:mm:ss').format('M월 D일 H시') +
+            "에 배달원이 방문합니다");
+          info.append( $('<p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
+
+        }
+      },
+      error : function(xhr, status, error) {
+        alert("잘못된 결제 url 입니다.\n메인 페이지로 이동합니다");
+        window.location.pathname = "/";
+      }
+    });
+
+  } else {
+    alert("올바른 url이 아닙니다");
+    window.location.pathname = "/"; // redirection
+  }
 
 });

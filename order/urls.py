@@ -7,6 +7,5 @@ urlpatterns = [
 
     url(r'^$', 'order.views.index'),
     url(r'^order$', 'order.views.order'),
-    url(r'^card$', 'order.views.card'),
-    url(r'^inicis\/(?P<num>[0-9])$', 'order.views.inicis'),
+    url(r'^(?P<order_code>[\d]+)/(?P<phash>[\da-z]{10})$', 'order.views.card')
 ]

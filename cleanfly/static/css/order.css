@@ -83,6 +83,12 @@ input.highlight[type="button"]:focus {
   height: 38px;
 }
 
+@media (max-width: 550px) {
+  button.highlight {
+    padding : 0 10px;
+  }
+}
+
 label > strong {
   color: #98DFAF !important;
 }

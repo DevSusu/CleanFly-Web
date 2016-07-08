@@ -15,5 +15,5 @@ def index(request):
 def order(request):
     return render(request, 'order/order_complete.html', {'user':request.POST})
 
-def card(request):
-    return render(request, 'order/card.html', {'user':request.GET})
+def card(request,order_code,phash):
+    return render(request, 'order/card.html', {'user':request.GET,'hash':phash,'order_code':order_code})
