@@ -27,6 +27,10 @@
     </div>
     <div id="form-container">
       <form name="order-form" id="order-form" method="post" action="order">
+        <div class="row mb-10">
+          <p>수거/배달 날짜를 설정합니다</p>
+          <label>평일은 24시, 주말은 18시까지 배달합니다</label>
+        </div>
         <div class="row">
           <div class="six columns">
             <p>수거일</p>
@@ -34,7 +38,7 @@
             <label>배달원이 세탁물을 <strong>받아가는</strong> 날짜</label>
             <input class="u-full-width datepicker" type="text" name="collection_date" placeholder="2016-07-28" column="collection_date" readonly>
             <select class="u-full-width" name="collection_time" column="collection">
-              <option value="10:00" selected>10:00~11:00</option>
+              <option value="10:00" selected="true">10:00~11:00</option>
               <option value="11:00">11:00~12:00</option>
               <option value="12:00">12:00~13:00</option>
               <option value="13:00">13:00~14:00</option>

@@ -3,7 +3,7 @@ var cardComplete = function(info,confirm) {
   info.find('p').first().text(
     moment(confirm.collection_date).format('M월 D일 H시') +
     "에 배달원이 방문합니다");
-  info.append( $('<p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
+  info.append( $('<p>시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
 
   // alert("크린플라이를 이용해주셔서 감사합니다. 앱을 설치하면 ㅁㄴㅇㄹㅁㄴㅇㄹ");
   $('#card-list').hide();

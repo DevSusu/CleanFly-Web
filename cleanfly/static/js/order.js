@@ -23,10 +23,22 @@ $(document).on('ready page:load', function() {
     weekdaysShort : ['일','월','화','수','목','금','토']
   };
 
+  var collection_min_date = moment();
+  var max_collection_time = 23;
+
+  if( collection_min_date.day() == 0 || collection_min_date.day() == 6 ) {
+    // 주말엔 6시까지
+    max_collection_time = 17;
+  }
+
+  if( collection_min_date.hour() > max_collection_time ) {
+    collection_min_date.add(1,'d');
+  }
+
   var pickerCollection = new Pikaday({
     field: $('.datepicker')[0],
     i18n: i18n,
-    minDate: moment().toDate(),
+    minDate: collection_min_date.toDate(),
     maxDate: moment().add(7,'d').toDate(),
     defaultDate: moment().toDate(),
     numberOfMonths: 1,
@@ -54,6 +66,32 @@ $(document).on('ready page:load', function() {
     return full_address.slice(0,-1);
   }
 
+  var addDate = function(type) {
+    if( type == "collection_date" ) {
+      var input = pickerCollection.getDate();
+      pickerCollection.setDate( input.setDate(input.getDate() + 1) );
+    } else {
+      var input = pickerDelivery.getDate();
+      pickerDelivery.setDate( input.setDate(input.getDate() + 1) );
+    }
+  }
+
+  var moveSelected = function(option) {
+    option.attr('selected','');
+    var next = option.next();
+
+    if( next.length == 0 && option.parent.find('option[disabled]').length == 14 ) { // 끝까지 도달
+      // 하루 더하기
+      addDate(next.parent().prev().attr('name'));
+    }
+    else if( undefined != next.attr('disabled') && next.attr('disabled').length > 0 ) {
+      moveSelected(next);
+    }
+    else {
+      next.attr('selected','true');
+    }
+  }
+
   var updateFullDate = function(input) {
     var input_moment = new moment( $(input).val() ).startOf('day');
     var select = $(input).next();
@@ -65,9 +103,8 @@ $(document).on('ready page:load', function() {
         var full_time = full_item.slice(full_item.indexOf(" ")+1,-2) + "0"; // ㅅㅂ..
         var option = select.find('option[value="' + full_time +  '"]');
 
-        if( undefined != option.attr('selected') ) {
-          option.attr('selected',false);
-          option.next().attr('selected',true);
+        if( undefined != option.attr('selected') && option.attr('selected').length > 0 ) {
+          moveSelected(option);
         }
         option.attr('disabled',true);
         option.text(option.text() + " 마감");
@@ -78,6 +115,7 @@ $(document).on('ready page:load', function() {
 
   var updateDateInput = function(input) {
     var val = $(input).val();
+    var input_moment = new moment( $(input).val().slice(0,-4),["YYYY-M-D"] );
     var day = val.slice(-3);
     val = val.slice(0,-3) + to_ko[day];
     $(input).val(val);
@@ -85,16 +123,33 @@ $(document).on('ready page:load', function() {
     var select = $(input).next();
     console.dir(select);
 
-    // 마감 다 없애기
+    if( input_moment.day() == 0 || input_moment.day() == 6 ) {
+      max_collection_time = 17;
+    } else {
+      max_collection_time = 23;
+    }
+
+    // 마감 다 없애기 , 지금보다 이전 시간 비활성화 , 배달 시간보다 늦은 것 비활성화
     select.find('option').each( function(index, option) {
+
       var tmp = $(option).text().indexOf(" ");
       if( tmp != -1 ){
         $(option).text( $(option).text().slice(0,tmp) );
         $(option).attr('disabled',false);
       }
-      $(option).attr('selected',false);
-    });
 
+      console.log(moment().diff( moment( $(input).val().slice(0,-4) + " " + $(option).val(), ["YYYY-M-D"] ), 'hours' ));
+      if( moment().diff( moment( $(input).val().slice(0,-4) + " " + $(option).val(), ["YYYY-M-D"] ), 'hours' ) > 0 ) {
+        $(option).attr('disabled',true);
+      }
+
+      if( moment().diff( input_moment ,'days') == 0 && parseInt($(option).val()) > max_collection_time ) {
+        $(option).attr('disabled',true);
+      } else {
+        $(option).attr('disabled',false);
+      }
+    });
+    // 마감 체크
     updateFullDate(input);
 
   };
@@ -151,7 +206,7 @@ $(document).on('ready page:load', function() {
     console.dir(request_body);
 
     $.ajax({
-      url : server_ip + "fly/order",
+      url : "https://cleanfly.link/" + "fly/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {
@@ -159,7 +214,7 @@ $(document).on('ready page:load', function() {
         result.result.full.forEach( function(value) {
           full.push(value);
         });
-        updateFullDate($('input.datepicker')[ type=="collection" ? 0 : 1 ]);
+        // updateFullDate($('input.datepicker')[ type=="collection" ? 0 : 1 ]);
         $('input[name="address_code"]').val(result.result.address_code);
       },
       error : function(xhr, status, error) {
