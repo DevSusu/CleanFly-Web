@@ -13,7 +13,7 @@ var cardComplete = function(info,confirm) {
 
 function receiveMessage(event)
 {
-  var server_ip = "https://localhost/";
+  var server_ip = "https://cleanfly.link/";
   console.log("data from iframe!!!!");
   // {"resultcode":"00","cardcd":"06","cardno":"467309019042"}
 
@@ -95,7 +95,7 @@ $(document).on('ready page:load', function() {
   $('#frame-top').hide();
   $('#card-list').hide();
 
-  var server_ip = "https://localhost/";
+  var server_ip = "https://cleanfly.link/";
   var inicis_url = "https://inilite.inicis.com/inibill/inibill_card.jsp?";
   var params = {
 

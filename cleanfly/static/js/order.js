@@ -1,7 +1,7 @@
 $(document).on('ready page:load', function() {
 
   // change on production
-  var server_ip = "https://localhost/";
+  var server_ip = "https://cleanfly.link/";
 
   var full = [];
 
@@ -206,7 +206,7 @@ $(document).on('ready page:load', function() {
     console.dir(request_body);
 
     $.ajax({
-      url : "https://cleanfly.link/" + "fly/order",
+      url : server_ip + "fly/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {
