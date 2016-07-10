@@ -1,3 +1,22 @@
+var confirmOnPageExit = function (e)
+{
+    // If we haven't been passed the event get the window.event
+    e = e || window.event;
+
+    var message = '결제가 진행중입니다. 정말로 나가시겠습니까?';
+
+    // For IE6-8 and Firefox prior to version 4
+    if (e)
+    {
+        e.returnValue = message;
+    }
+
+    // For Chrome, Safari, IE8+ and Opera 12+
+    return message;
+};
+
+window.onbeforeunload = confirmOnPageExit;
+
 var cardComplete = function(info,confirm) {
   info.find('h5').text("카드가 등록되었습니다");
   info.find('p').first().text(
