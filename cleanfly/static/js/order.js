@@ -23,6 +23,10 @@ $(document).on('ready page:load', function() {
     weekdaysShort : ['일','월','화','수','목','금','토']
   };
 
+  var current_time_option = {
+    "collection" : $('select[column="collection"]').children('option:selected'),
+    "delivery" : $('select[column="delivery"]').children('option:selected')
+  };
   var collection_min_date = moment();
   var max_collection_time = 23;
 
@@ -76,52 +80,64 @@ $(document).on('ready page:load', function() {
     }
   }
 
-  var moveSelected = function(option) {
-    option.attr('selected','');
-    var next = option.next();
+  var moveSelected = function(type) {
+    var select = $('select[column="' + type + '"]');
+    var current_option = current_time_option[type];
+    console.log(current_option);
+    var min_diff = 24;
+    var min_option;
+    var min_val = "";
 
-    if( next.length == 0 && option.parent.find('option[disabled]').length == 14 ) { // 끝까지 도달
-      // 하루 더하기
-      addDate(next.parent().prev().attr('name'));
-    }
-    else if( undefined != next.attr('disabled') && next.attr('disabled').length > 0 ) {
-      moveSelected(next);
-    }
-    else {
-      next.attr('selected','true');
-    }
+    select.children('option[disabled!="disabled"]').each( function(index, option) {
+      var tmp_diff = Math.abs(parseInt($(option).val().slice(0,2)) - parseInt($(current_option).val().slice(0,2)));
+      console.log(option);
+      console.log(tmp_diff);
+      if ( min_diff > tmp_diff ) {
+        min_index = index;
+        min_diff = tmp_diff;
+        min_val = $(option).val();
+      }
+
+    });
+
+    select.children('option[selected]').each( function(index,option) {
+      $(option).removeAttr('selected');
+    });
+    select.children('option:eq('+ min_index +')').attr('selected','selected');
+    select.val(min_val);
+    current_time_option[type] = select.children('option:eq('+ min_index +')');
   }
 
   var updateFullDate = function(input) {
+    var type = $(input).attr('column').slice(0,-5);
     var input_moment = new moment( $(input).val() ).startOf('day');
-    var select = $(input).next();
+    var select = $('select[column="' + type + '"]');
 
     full.forEach( function(full_item,index) {
       var full_date = new moment(full_item.slice(0,full_item.indexOf(" ")),"yyyy-M-D").startOf('day');
 
       if( input_moment.diff( full_date ) == 0 ) {
         var full_time = full_item.slice(full_item.indexOf(" ")+1,-2) + "0"; // ㅅㅂ..
-        var option = select.find('option[value="' + full_time +  '"]');
+        var option = select.children('option[value="' + full_time +  '"]');
 
-        if( undefined != option.attr('selected') && option.attr('selected').length > 0 ) {
-          moveSelected(option);
-        }
         option.attr('disabled',true);
         option.text(option.text() + " 마감");
       }
-
+      if ( index == full.length - 1 ) {
+          moveSelected(type);
+      }
     });
   }
 
   var updateDateInput = function(input) {
+    var type = $(input).attr('column').slice(0,-5);
     var val = $(input).val();
     var input_moment = new moment( $(input).val().slice(0,-4),["YYYY-M-D"] );
     var day = val.slice(-3);
     val = val.slice(0,-3) + to_ko[day];
     $(input).val(val);
 
-    var select = $(input).next();
-    console.dir(select);
+    var select = $('select[column="' + type + '"]');
 
     if( input_moment.day() == 0 || input_moment.day() == 6 ) {
       max_collection_time = 17;
@@ -129,24 +145,20 @@ $(document).on('ready page:load', function() {
       max_collection_time = 23;
     }
 
-    // 마감 다 없애기 , 지금보다 이전 시간 비활성화 , 배달 시간보다 늦은 것 비활성화
+    // 지금+2시간보다 이전 시간 비활성화 , 배달 시간보다 늦은 것 비활성화
     select.find('option').each( function(index, option) {
 
-      var tmp = $(option).text().indexOf(" ");
-      if( tmp != -1 ){
-        $(option).text( $(option).text().slice(0,tmp) );
-        $(option).attr('disabled',false);
+      $(option).attr('disabled',false);
+      if( $(option).text().indexOf(" ") != -1 ) {
+        $(option).text( $(option).text().slice(0,-3) );
       }
 
-      console.log(moment().diff( moment( $(input).val().slice(0,-4) + " " + $(option).val(), ["YYYY-M-D"] ), 'hours' ));
-      if( moment().diff( moment( $(input).val().slice(0,-4) + " " + $(option).val(), ["YYYY-M-D"] ), 'hours' ) > 0 ) {
+      if( moment().diff( moment( $(input).val().slice(0,-4) + " " + $(option).val(), ["YYYY-M-D HH:mm"] ), 'hours' ) > -1 ) {
         $(option).attr('disabled',true);
       }
 
-      if( moment().diff( input_moment ,'days') == 0 && parseInt($(option).val()) > max_collection_time ) {
+      if( parseInt($(option).val()) > max_collection_time ) {
         $(option).attr('disabled',true);
-      } else {
-        $(option).attr('disabled',false);
       }
     });
     // 마감 체크
@@ -198,7 +210,7 @@ $(document).on('ready page:load', function() {
 
     };
     if( type == "delivery" ) {
-      request_body.start_date = pickerCollection.getMoment().add('5','days').format('YYYY-M-D HH:mm:ss');
+      request_body.start_date = pickerCollection.getMoment().add('4','days').format('YYYY-M-D HH:mm:ss');
       request_body.end_date = pickerCollection.getMoment().add('12','days').format('YYYY-M-D HH:mm:ss');
     }
 
@@ -214,7 +226,7 @@ $(document).on('ready page:load', function() {
         result.result.full.forEach( function(value) {
           full.push(value);
         });
-        // updateFullDate($('input.datepicker')[ type=="collection" ? 0 : 1 ]);
+        updateFullDate($('input.datepicker')[ type=="collection" ? 0 : 1 ]);
         $('input[name="address_code"]').val(result.result.address_code);
       },
       error : function(xhr, status, error) {
@@ -225,13 +237,29 @@ $(document).on('ready page:load', function() {
   };
 
   // initial update
-  $('input.datepicker').each( function(index, value) {
-    updateDateInput(value, fetchTime( index == 0 ? "collection" : "delivery" ));
+  $('input.datepicker').each( function(index, input) {
+    updateDateInput(input, fetchTime( index == 0 ? "collection" : "delivery" ));
   });
 
   $('input.datepicker').on('change input', function() {
+
+    // 0. 영어로 된 요일 한글로 바꿔주기 ok
+    // 1. 원래 선택됐었던 '시간' 저장 ok
+    // 2. full 인 시간 비활성화 ok
+    // 3. 현재시간+2시간 보다 이전인 시간 비활성화 ok
+    // 4. 주말에는 18시 이후 비활성화 ok
+    // 5. 원래 선택한 시간이 비활성화 됐다면 가장 가까운 시간 찾아주기
+    // 6. 전부 다 비활성화 된 경우 다음날로 바꾸고 다시 2부터 반복
+
     updateDateInput(this);
     adjustDate(this);
+  });
+
+  $('select').on('change', function() {
+    console.log('time changed');
+    var select = $(this);
+    var option = select.children('option[value="'+select.val()+'"]');
+    current_time_option[select.attr('column')] = option;
   });
 
   $('textarea').each(function(){
