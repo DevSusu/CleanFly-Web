@@ -1,3 +1,22 @@
+var confirmOnPageExit = function (e)
+{
+    // If we haven't been passed the event get the window.event
+    e = e || window.event;
+
+    var message = '주문 정보를 작성중입니다. 정말로 나가시겠습니까?';
+
+    // For IE6-8 and Firefox prior to version 4
+    if (e)
+    {
+        e.returnValue = message;
+    }
+
+    // For Chrome, Safari, IE8+ and Opera 12+
+    return message;
+};
+
+window.onbeforeunload = confirmOnPageExit;
+
 $(document).on('ready page:load', function() {
 
   // change on production
@@ -105,7 +124,7 @@ $(document).on('ready page:load', function() {
     });
     select.children('option:eq('+ min_index +')').attr('selected','selected');
     select.val(min_val);
-    current_time_option[type] = select.children('option:eq('+ min_index +')');
+    current_time_option[type] = select.children('option[value="'+min_val+'"]');
   }
 
   var updateFullDate = function(input) {
