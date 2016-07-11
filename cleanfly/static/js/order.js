@@ -313,6 +313,7 @@ $(document).on('ready page:load', function() {
     if( block_sumbit ) {
       e.preventDefault();
     } else {
+      window.onbeforeunload = false;
       return;
     }
 
