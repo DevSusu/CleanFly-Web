@@ -177,6 +177,8 @@ $(document).on("ready page:load", function () {
         createUser(checkAddress);
 
       }
+    } else {
+      window.onbeforeunload = false;
     }
 
   });

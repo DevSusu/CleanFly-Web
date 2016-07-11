@@ -185,8 +185,7 @@ $(document).on('ready page:load', function() {
         }
       },
       error : function(xhr, status, error) {
-        alert("잘못된 결제 url 입니다.\n메인 페이지로 이동합니다");
-        window.location.pathname = "/";
+        alert("잘못된 결제 url 입니다.");
       }
     });
 
