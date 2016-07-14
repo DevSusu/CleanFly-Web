@@ -18,16 +18,15 @@ var confirmOnPageExit = function (e)
 window.onbeforeunload = confirmOnPageExit;
 
 var cardComplete = function(info,confirm) {
-  info.find('h5').text("카드가 등록되었습니다");
+  info.find('h5').text("주문이 완료되었습니다");
   info.find('p').first().text(
     moment(confirm.collection_date).tz('Asia/Seoul').format('M월 D일 H시') +
     "에 배달원이 방문합니다");
   info.append( $('<p>시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
 
-  // alert("크린플라이를 이용해주셔서 감사합니다. 앱을 설치하면 ㅁㄴㅇㄹㅁㄴㅇㄹ");
-  $('#card-list').hide();
-  $('#frame').hide();
-  $('#frame-top').hide();
+  $('#card-list').remove();
+  $('#frame').remove();
+  $('#frame-top').remove();
 }
 
 function receiveMessage(event)
@@ -176,9 +175,9 @@ $(document).on('ready page:load', function() {
         } else if( result.type === "valid") { // 이미 카드가 등록된 경우
 
           var info = $('#card-info');
-          info.find('h5').text("카드가 등록되었습니다");
+          info.find('h5').text("주문이 완료되었습니다");
           info.find('p').first().text(
-            moment(result.order.collection_date,'YYYY-MM-DD HH:mm:ss').format('M월 D일 H시') +
+            moment(result.order.collection_date,'YYYY-MM-DD HH:mm:ss').tz('Asia/Seoul').format('M월 D일 H시') +
             "에 배달원이 방문합니다");
           info.append( $('<p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
 

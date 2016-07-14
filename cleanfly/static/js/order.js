@@ -139,8 +139,11 @@ $(document).on('ready page:load', function() {
         var full_time = full_item.slice(full_item.indexOf(" ")+1,-2) + "0"; // ㅅㅂ..
         var option = select.children('option[value="' + full_time +  '"]');
 
-        option.attr('disabled',true);
-        option.text(option.text() + " 마감");
+        if( option.text().indexOf(" ") == -1 ) {
+          option.attr('disabled',true);
+          option.text(option.text() + " 마감");  
+        }
+
       }
       if ( index == full.length - 1 ) {
           moveSelected(type);
@@ -186,10 +189,10 @@ $(document).on('ready page:load', function() {
   };
 
   var adjustDate = function(input) {
-
+	console.log(input);
     if( $(input).attr('column') == 'collection_date' ) {
-      var date_string = $(input).val();
-      var collection_moment = new moment(date_string);
+      var date_string = $(input).val().slice(0,-4);
+      var collection_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
 
       var interval = 4;
       if( collection_moment.day() >=2 ) interval = 5;
@@ -200,7 +203,7 @@ $(document).on('ready page:load', function() {
       if ( pickerDelivery.getDate() < delivery_min_date )
         pickerDelivery.setDate( delivery_min_date );
 
-      var delivery_max_date = new moment(date_string).add(interval + 7,'days').toDate();
+      var delivery_max_date = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul').add(interval + 7,'days').toDate();
       pickerDelivery.setMaxDate( delivery_max_date );
       if ( pickerDelivery.getDate() > delivery_max_date )
         pickerDelivery.setDate( delivery_max_date );
@@ -257,7 +260,9 @@ $(document).on('ready page:load', function() {
 
   // initial update
   $('input.datepicker').each( function(index, input) {
-    updateDateInput(input, fetchTime( index == 0 ? "collection" : "delivery" ));
+    fetchTime( index == 0 ? "collection" : "delivery" );
+    updateDateInput(input);
+    adjustDate(input);
   });
 
   $('input.datepicker').on('change input', function() {
@@ -351,6 +356,7 @@ $(document).on('ready page:load', function() {
           console.log(result);
           alert("주문이 접수되었습니다\n* 모바일로 결제 링크가 전송됩니다");
           block_sumbit = false;
+          if( $('textarea').hasClass('placeholder') ) $('textarea').val('');
           $('#order-form').submit();
         },
         error : function(xhr, status, error) {
