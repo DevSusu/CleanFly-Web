@@ -20,7 +20,7 @@ window.onbeforeunload = confirmOnPageExit;
 var cardComplete = function(info,confirm) {
   info.find('h5').text("주문이 완료되었습니다");
   info.find('p').first().text(
-    moment(confirm.collection_date).tz('Asia/Seoul').format('M월 D일 H시') +
+    moment(confirm.collection_date).utcOffset(0).format('M월 D일 H시') +
     "에 배달원이 방문합니다");
   info.append( $('<p>시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
 
