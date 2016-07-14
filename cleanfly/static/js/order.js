@@ -102,15 +102,12 @@ $(document).on('ready page:load', function() {
   var moveSelected = function(type) {
     var select = $('select[column="' + type + '"]');
     var current_option = current_time_option[type];
-    console.log(current_option);
     var min_diff = 24;
     var min_option;
     var min_val = "";
 
     select.children('option[disabled!="disabled"]').each( function(index, option) {
       var tmp_diff = Math.abs(parseInt($(option).val().slice(0,2)) - parseInt($(current_option).val().slice(0,2)));
-      console.log(option);
-      console.log(tmp_diff);
       if ( min_diff > tmp_diff ) {
         min_index = index;
         min_diff = tmp_diff;
@@ -141,9 +138,8 @@ $(document).on('ready page:load', function() {
 
         if( option.text().indexOf(" ") == -1 ) {
           option.attr('disabled',true);
-          option.text(option.text() + " 마감");  
+          option.text(option.text() + " 마감");
         }
-
       }
       if ( index == full.length - 1 ) {
           moveSelected(type);
@@ -189,7 +185,7 @@ $(document).on('ready page:load', function() {
   };
 
   var adjustDate = function(input) {
-	console.log(input);
+
     if( $(input).attr('column') == 'collection_date' ) {
       var date_string = $(input).val().slice(0,-4);
       var collection_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
@@ -236,11 +232,8 @@ $(document).on('ready page:load', function() {
       request_body.end_date = pickerCollection.getMoment().add('12','days').format('YYYY-M-D HH:mm:ss');
     }
 
-    console.log("request body");
-    console.dir(request_body);
-
     $.ajax({
-      url : server_ip + "fly/order",
+      url : "https://cleanfly.link/" + "fly/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {
@@ -260,9 +253,8 @@ $(document).on('ready page:load', function() {
 
   // initial update
   $('input.datepicker').each( function(index, input) {
-    fetchTime( index == 0 ? "collection" : "delivery" );
-    updateDateInput(input);
-    adjustDate(input);
+    updateDateInput(input, fetchTime( index == 0 ? "collection" : "delivery" ));
+    adjustDate(this);
   });
 
   $('input.datepicker').on('change input', function() {
