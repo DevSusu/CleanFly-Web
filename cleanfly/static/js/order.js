@@ -19,6 +19,8 @@ window.onbeforeunload = confirmOnPageExit;
 
 $(document).on('ready page:load', function() {
 
+  ga('send', 'event', 'order-page', 'view');
+
   // change on production
   var server_ip = "https://cleanfly.link/";
 

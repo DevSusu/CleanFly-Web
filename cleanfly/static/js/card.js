@@ -41,6 +41,7 @@ function receiveMessage(event)
   var result = JSON.parse(event.data);
   var info = $('#card-info');
   if( result.resultcode == "00" ) {
+    ga('send', 'event', 'card', 'create');
 
     var order_code = window.location.pathname.split('/')[1];
     result.order_code = order_code;
@@ -69,6 +70,8 @@ function receiveMessage(event)
 window.addEventListener("message", receiveMessage, false);
 
 $(document).on('ready page:load', function() {
+
+  ga('send', 'event', 'card-page', 'view');
 
   var cd_to_ko = {
     "01" : "외한",

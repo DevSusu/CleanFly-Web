@@ -19,6 +19,8 @@ window.onbeforeunload = confirmOnPageExit;
 
 $(document).on("ready page:load", function () {
 
+  ga('send', 'event', 'address-page', 'view');
+
   // change on production
   var server_ip = "https://cleanfly.link/";
 
@@ -179,6 +181,19 @@ $(document).on("ready page:load", function () {
     } else {
       window.onbeforeunload = false;
       ga('send', 'event', 'address-form', 'submit');
+    }
+
+  });
+
+  $('#pricing-btn').on('click', function(e) {
+    console.log(e);
+    if( $('#pricing').hasClass('hide') ) {
+      $('#pricing').removeClass('hide');
+      $(this).text("가격표 숨기기");
+    }
+    else {
+      $('#pricing').addClass('hide');
+      $(this).text("가격표 펼치기");
     }
 
   });
