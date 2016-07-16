@@ -1,10 +1,14 @@
 $(document).on('ready page:load',function() {
 
+  ga('send', 'event', 'noti-page', 'view');
+
   // change on production
   var server_ip = "https://cleanfly.link/";
 
   $('#register-noti').on('submit',function(e) {
     e.preventDefault();
+
+    ga('send', 'event', 'noti', 'register');
 
     $.ajax({
       url : server_ip + "web/user/notification",
