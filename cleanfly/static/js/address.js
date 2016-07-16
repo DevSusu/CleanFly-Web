@@ -152,7 +152,6 @@ $(document).on("ready page:load", function () {
   }
 
   $('form').on('submit', function(e) {
-
     if (block_sumbit == true)
     {
 
@@ -179,6 +178,7 @@ $(document).on("ready page:load", function () {
       }
     } else {
       window.onbeforeunload = false;
+      ga('send', 'event', 'address-form', 'submit');
     }
 
   });

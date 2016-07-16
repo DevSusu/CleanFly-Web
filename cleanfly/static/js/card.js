@@ -18,6 +18,7 @@ var confirmOnPageExit = function (e)
 window.onbeforeunload = confirmOnPageExit;
 
 var cardComplete = function(info,confirm) {
+  ga('send', 'event', 'card', 'register');
   info.find('h5').text("주문이 완료되었습니다");
   info.find('p').first().text(
     moment(confirm.collection_date).utcOffset(0).format('M월 D일 H시') +
@@ -173,7 +174,6 @@ $(document).on('ready page:load', function() {
           $('#frame').show();
 
         } else if( result.type === "valid") { // 이미 카드가 등록된 경우
-
           var info = $('#card-info');
           info.find('h5').text("주문이 완료되었습니다");
           info.find('p').first().text(

@@ -311,6 +311,7 @@ $(document).on('ready page:load', function() {
       e.preventDefault();
     } else {
       window.onbeforeunload = false;
+      ga('send', 'event', 'order-form', 'submit');
       return;
     }
 
