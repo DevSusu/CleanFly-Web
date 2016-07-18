@@ -122,7 +122,7 @@ $(document).on('ready page:load', function() {
   var params = {
 
     price : 0,
-    returnurl : "https://dev.cleanfly.link/inipay",
+    returnurl : server_ip + "inipay",
     goodname : "크린플라이 카드등록",
     orderid : "cleanfly4",
     mid : "cleanfly01",
