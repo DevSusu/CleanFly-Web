@@ -144,7 +144,16 @@ $(document).on('ready page:load', function() {
         }
       }
       if ( index == full.length - 1 ) {
+        if ( select.children('option[disabled="disabled"]').length == 14 ) {
+          if ( $(input).attr('column') === "collection_date" ) {
+            pickerCollection.setMoment(input_moment.add(1,'days'));
+          } else {
+            pickerDelivery.setMoment(input_moment.add(1,'days'));
+          }
+          updateDateInput(input);
+        } else {
           moveSelected(type);
+        }
       }
     });
   }
@@ -193,18 +202,39 @@ $(document).on('ready page:load', function() {
       var collection_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
 
       var interval = 4;
-      if( collection_moment.day() >=2 ) interval = 5;
+      if( collection_moment.day() > 2 ) interval = 5;
 
-      var delivery_min_date = collection_moment.add(interval,'days').toDate();
-      pickerDelivery.setMinDate( delivery_min_date );
+      var delivery_min_date = collection_moment.add(interval,'days');
+
+      var holiday_start = new moment('2016-07-28',"YYYY-MM-DD").tz('Asia/Seoul');
+      var holiday_end   = new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul');
+
+      var current_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
+
+      // 수거 시간이 휴가 전, 배달 시간이 휴가 시작일 이후
+      if( current_moment.diff(holiday_start,'days') < 0 && holiday_start.diff(delivery_min_date,'days') <= 0 ) {
+        delivery_min_date = delivery_min_date.add(4,'days');
+        interval += 4;
+        if( collection_moment.day() > 2 ) interval--;
+      }
+      // 수거 시간이 휴가 일 이내에 있을 때
+      else if ( current_moment.diff(holiday_start,'days') >= 0 && current_moment.diff(holiday_end,'days') < 0 ) {
+        pickerCollection.setMaxDate( new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').add(7,'days').toDate() );
+        pickerCollection.setMinDate( new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').toDate() );
+        pickerCollection.setDate( holiday_end.toDate() );
+        delivery_min_date = new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').add(4,'days').toDate();
+        interval = 0;
+      }
+
+      pickerDelivery.setMinDate( delivery_min_date.toDate() );
       // 만약 지금 배달 시간이 4박 5일 이내에 있거나 너무 멀리 있을때만 다시 조정.
-      if ( pickerDelivery.getDate() < delivery_min_date )
-        pickerDelivery.setDate( delivery_min_date );
+      if ( pickerDelivery.getDate() < delivery_min_date.toDate() )
+        pickerDelivery.setDate( delivery_min_date.toDate() );
 
-      var delivery_max_date = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul').add(interval + 7,'days').toDate();
-      pickerDelivery.setMaxDate( delivery_max_date );
-      if ( pickerDelivery.getDate() > delivery_max_date )
-        pickerDelivery.setDate( delivery_max_date );
+      var delivery_max_date = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul').add(interval+7,'days');
+      pickerDelivery.setMaxDate( delivery_max_date.toDate() );
+      if ( pickerDelivery.getDate() > delivery_max_date.toDate() )
+        pickerDelivery.setDate( delivery_max_date.toDate() );
 
     } else {
 
@@ -255,8 +285,8 @@ $(document).on('ready page:load', function() {
 
   // initial update
   $('input.datepicker').each( function(index, input) {
-    updateDateInput(input, fetchTime( index == 0 ? "collection" : "delivery" ));
     adjustDate(this);
+    updateDateInput(input, fetchTime( index == 0 ? "collection" : "delivery" ));
   });
 
   $('input.datepicker').on('change input', function() {
@@ -268,9 +298,8 @@ $(document).on('ready page:load', function() {
     // 4. 주말에는 18시 이후 비활성화 ok
     // 5. 원래 선택한 시간이 비활성화 됐다면 가장 가까운 시간 찾아주기
     // 6. 전부 다 비활성화 된 경우 다음날로 바꾸고 다시 2부터 반복
-
-    updateDateInput(this);
     adjustDate(this);
+    updateDateInput(this);
   });
 
   $('select').on('change', function() {
