@@ -107,6 +107,11 @@ p.foucs {
     display: inline-block;
     width: 31.5%;
   }
+
+  .twelve-sm {
+    display: inline-block;
+    width: 100vw !important;
+  }
 }
 
 .six-sm {

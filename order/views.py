@@ -17,3 +17,11 @@ def order(request):
 
 def card(request,order_code,phash):
     return render(request, 'order/card.html', {'user':request.GET,'hash':phash,'order_code':order_code})
+
+@require_http_methods(["GET"])
+def card_error(request,order_code,phash):
+    return render(
+            request,
+            'order/card_error.html',
+            {}
+            )

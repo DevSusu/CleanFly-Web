@@ -18,7 +18,7 @@ var confirmOnPageExit = function (e)
 window.onbeforeunload = confirmOnPageExit;
 
 var cardComplete = function(info,confirm) {
-  ga('send', 'event', 'card', 'register');
+  ga('send', 'event', 'card-register', 'register');
   info.find('h5').text("주문이 완료되었습니다");
   info.find('p').first().text(
     moment(confirm.collection_date).utcOffset(0).format('M월 D일 H시') +
@@ -41,7 +41,7 @@ function receiveMessage(event)
   var result = JSON.parse(event.data);
   var info = $('#card-info');
   if( result.resultcode == "00" ) {
-    ga('send', 'event', 'card', 'create');
+    ga('send', 'event', 'card-create', 'create');
 
     var order_code = window.location.pathname.split('/')[1];
     result.order_code = order_code;
@@ -56,14 +56,14 @@ function receiveMessage(event)
       },
       error : function(xhr, status, error) {
         alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
-        alert("메인 페이지로 이동합니다");
-        window.location.pathname = "/";
+        window.location = window.location;
       }
     });
 
   } else {
-    info.find('h5').text("카드 등록에 실패했습니다");
-    info.find('p').text("계좌 잔액이나 분실 상태를 확인해주세요");
+    window.onbeforeunload = false;
+    window.location.pathname = "/card" + window.location.pathname;
+    // redirect to card error page
   }
 }
 
@@ -107,8 +107,8 @@ $(document).on('ready page:load', function() {
       },
       error : function(xhr, status, error) {
         alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
-        alert("메인 페이지로 이동합니다");
-        window.location.pathname = "/";
+        window.onbeforeunload = false;
+        window.location = window.location; // reload
       }
     });
   };
@@ -193,7 +193,7 @@ $(document).on('ready page:load', function() {
 
   } else {
     alert("올바른 url이 아닙니다");
-    window.location.pathname = "/"; // redirection
+    window.location = window.location; // reload
   }
 
 });
