@@ -110,6 +110,7 @@ p.foucs {
 
   .twelve-sm {
     display: inline-block;
+    padding: 0;
     width: 100vw !important;
   }
 }
