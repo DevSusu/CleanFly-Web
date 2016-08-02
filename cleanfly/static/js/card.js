@@ -19,11 +19,11 @@ window.onbeforeunload = confirmOnPageExit;
 
 var cardComplete = function(info,confirm) {
   ga('send', 'event', 'card-register', 'register');
-  info.find('h5').text("주문이 완료되었습니다");
+  info.find('h5').text("결제 예약이 완료되었습니다");
   info.find('p').first().text(
     moment(confirm.collection_date).utcOffset(0).format('M월 D일 H시') +
     "에 배달원이 방문합니다");
-  info.append( $('<p>시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
+  info.append( $('<p>수거/배달 시간 변경 및 취소는 1800-7098 또는 카카오톡 @크린플라이로 알려주세요</p>'));
 
   $('#card-list').remove();
   $('#frame').remove();
@@ -55,7 +55,7 @@ function receiveMessage(event)
         cardComplete(info,confirm);
       },
       error : function(xhr, status, error) {
-        alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
+        alert("결제 예약에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
         window.location = window.location;
       }
     });
@@ -106,7 +106,7 @@ $(document).on('ready page:load', function() {
         cardComplete($('#card-info'),confirm);
       },
       error : function(xhr, status, error) {
-        alert("주문 활성화에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
+        alert("결제 예약에 실패했습니다.\n1800-7098 또는 카카오톡 @크린플라이로 문의해주세요");
         window.onbeforeunload = false;
         window.location = window.location; // reload
       }
@@ -178,7 +178,7 @@ $(document).on('ready page:load', function() {
 
         } else if( result.type === "valid") { // 이미 카드가 등록된 경우
           var info = $('#card-info');
-          info.find('h5').text("주문이 완료되었습니다");
+          info.find('h5').text("결제 예약이 완료되었습니다");
           info.find('p').first().text(
             moment(result.order.collection_date,'YYYY-MM-DD HH:mm:ss').tz('Asia/Seoul').format('M월 D일 H시') +
             "에 배달원이 방문합니다");
