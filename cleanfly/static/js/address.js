@@ -186,7 +186,6 @@ $(document).on("ready page:load", function () {
   });
 
   $('#pricing-btn').on('click', function(e) {
-    console.log(e);
     if( $('#pricing').hasClass('hide') ) {
       $('#pricing').removeClass('hide');
       $(this).text("가격표 숨기기");
