@@ -11,14 +11,14 @@ $(document).on('ready page:load', function() {
   });
 
   var collection_date =
-    new Date(
+    new moment(
       $('p[column="collection_date"]').text().slice(0,-4) + " " +
-      $('p[column="collection_time"]').text()
+      $('p[column="collection_time"]').text() , ["YYYY-MM-DD HH:mm"]
     );
 
   var collection_str =
-    (collection_date.getMonth()+1) + "월" + collection_date.getDay() + "일 " +
-    collection_date.getHours() + "-" + (collection_date.getHours()+1);
+    (collection_date.month()+1) + "월" + collection_date.date() + "일 " +
+    collection_date.hour() + "-" + (collection_date.hour()+1);
 
   $('#collection-text').text(collection_str + $('#collection-text').text() );
 
