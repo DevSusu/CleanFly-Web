@@ -163,7 +163,10 @@ $(document).on('ready page:load', function() {
     var val = $(input).val();
     var input_moment = new moment( $(input).val().slice(0,-4),["YYYY-M-D"] );
     var day = val.slice(-3);
-    val = val.slice(0,-3) + to_ko[day];
+
+    if( to_ko[day] )
+      val = val.slice(0,-3) + to_ko[day];
+
     $(input).val(val);
 
     var select = $('select[column="' + type + '"]');
@@ -265,7 +268,7 @@ $(document).on('ready page:load', function() {
     }
 
     $.ajax({
-      url : "https://cleanfly.link/" + "fly/order",
+      url : server_ip + "fly/order",
       type : "POST",
       data : request_body,
       success : function(result,status) {

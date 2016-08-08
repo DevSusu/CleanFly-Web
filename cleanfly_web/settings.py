@@ -114,10 +114,10 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # HTTPS settings
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 # HTTPS settings
-os.environ['HTTPS'] = "on"
-os.environ['wsgi.url_scheme'] = 'https'
+# os.environ['HTTPS'] = "on"
+# os.environ['wsgi.url_scheme'] = 'https'
