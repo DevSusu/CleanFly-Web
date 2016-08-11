@@ -373,6 +373,8 @@ $(document).on('ready page:load', function() {
         "address_code" : $('input[name="address_code"]').val()
       };
 
+      if( $('textarea').hasClass('placeholder') ) order_data.notices = "";
+
       console.log(order_data);
 
       $.ajax({
