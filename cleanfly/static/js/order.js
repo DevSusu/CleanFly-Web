@@ -383,7 +383,7 @@ $(document).on('ready page:load', function() {
         data : order_data,
         success : function(result,status) {
           console.log(result);
-          alert("주문이 접수되었습니다\n* 모바일로 결제 링크가 전송됩니다");
+          alert("주문이 접수되었습니다\n* 모바일로 결제 메세지가 전송됩니다");
           block_sumbit = false;
           if( $('textarea').hasClass('placeholder') ) $('textarea').val('');
           $('#order-form').submit();
