@@ -60,12 +60,23 @@ $(document).on('ready page:load', function() {
     collection_min_date.add(1,'d');
   }
 
+  var isHoliday = function(date) {
+    date = new moment(date);
+    var holiday_start = new moment('2016-09-14',"YYYY-MM-DD").tz('Asia/Seoul');
+    var holiday_end   = new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul');
+    if( date.diff(holiday_start, 'minutes') >= 0 && holiday_end.diff(date, 'minutes') > 0  ) {
+      return true;
+    }
+    return false;
+  }
+
   var pickerCollection = new Pikaday({
     field: $('.datepicker')[0],
     i18n: i18n,
     minDate: collection_min_date.toDate(),
     maxDate: moment().add(7,'d').toDate(),
     defaultDate: moment().toDate(),
+    disableDayFn: isHoliday,
     numberOfMonths: 1,
     setDefaultDate: true,
     reposition: false,
@@ -78,6 +89,7 @@ $(document).on('ready page:load', function() {
     minDate: moment().add(4,'d').toDate(),
     maxDate: moment().add(7+4,'d').toDate(),
     defaultDate: moment().toDate(),
+    disableDayFn: isHoliday,
     numberOfMonths: 1,
     setDefaultDate: true,
     format: 'YYYY-MM-DD ddd'
@@ -209,23 +221,23 @@ $(document).on('ready page:load', function() {
 
       var delivery_min_date = collection_moment.add(interval,'days');
 
-      var holiday_start = new moment('2016-08-15',"YYYY-MM-DD").tz('Asia/Seoul');
-      var holiday_end   = new moment('2016-08-16',"YYYY-MM-DD").tz('Asia/Seoul');
+      var holiday_start = new moment('2016-09-14',"YYYY-MM-DD").tz('Asia/Seoul');
+      var holiday_end   = new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul');
 
       var current_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
 
       // 수거 시간이 휴가 전, 배달 시간이 휴가 시작일 이후
       if( current_moment.diff(holiday_start,'days') < 0 && holiday_start.diff(delivery_min_date,'days') <= 0 ) {
-        delivery_min_date = delivery_min_date.add(1,'days');
+        delivery_min_date = delivery_min_date.add(3,'days');
         interval += 1;
         if( collection_moment.day() > 2 ) interval--;
       }
       // 수거 시간이 휴가 일 이내에 있을 때
       else if ( current_moment.diff(holiday_start,'days') >= 0 && current_moment.diff(holiday_end,'days') < 0 ) {
-        pickerCollection.setMaxDate( new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').add(7,'days').toDate() );
-        pickerCollection.setMinDate( new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').toDate() );
+        pickerCollection.setMaxDate( new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').add(7,'days').toDate() );
+        pickerCollection.setMinDate( new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').toDate() );
         pickerCollection.setDate( holiday_end.toDate() );
-        delivery_min_date = new moment('2016-08-01',"YYYY-MM-DD").tz('Asia/Seoul').add(4,'days').toDate();
+        delivery_min_date = new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').add(4,'days').toDate();
         interval = 0;
       }
 
