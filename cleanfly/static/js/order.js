@@ -205,6 +205,7 @@ $(document).on('ready page:load', function() {
         $(option).attr('disabled',true);
       }
     });
+    moveSelected(type);
     // 마감 체크
     updateFullDate(input);
 
