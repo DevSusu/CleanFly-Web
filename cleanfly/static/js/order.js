@@ -119,6 +119,7 @@ $(document).on('ready page:load', function() {
     var min_diff = 24;
     var min_option;
     var min_val = "";
+    var min_index;
 
     select.children('option[disabled!="disabled"]').each( function(index, option) {
       var tmp_diff = Math.abs(parseInt($(option).val().slice(0,2)) - parseInt($(current_option).val().slice(0,2)));
@@ -205,7 +206,7 @@ $(document).on('ready page:load', function() {
         $(option).attr('disabled',true);
       }
     });
-    moveSelected(type);
+    //moveSelected(type);
     // 마감 체크
     updateFullDate(input);
 
@@ -222,8 +223,8 @@ $(document).on('ready page:load', function() {
 
       var delivery_min_date = collection_moment.add(interval,'days');
 
-      var holiday_start = new moment('2016-10-03',"YYYY-MM-DD").tz('Asia/Seoul');
-      var holiday_end   = new moment('2016-10-04',"YYYY-MM-DD").tz('Asia/Seoul');
+      var holiday_start = new moment('2016-12-25',"YYYY-MM-DD").tz('Asia/Seoul');
+      var holiday_end   = new moment('2016-12-26',"YYYY-MM-DD").tz('Asia/Seoul');
 
       var current_moment = new moment(date_string,"YYYY-MM-DD").tz('Asia/Seoul');
 
@@ -235,10 +236,10 @@ $(document).on('ready page:load', function() {
       }
       // 수거 시간이 휴가 일 이내에 있을 때
       else if ( current_moment.diff(holiday_start,'days') >= 0 && current_moment.diff(holiday_end,'days') < 0 ) {
-        pickerCollection.setMaxDate( new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').add(7,'days').toDate() );
-        pickerCollection.setMinDate( new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').toDate() );
+        pickerCollection.setMinDate( new moment('2016-12-26',"YYYY-MM-DD").tz('Asia/Seoul').toDate() );
+        pickerCollection.setMaxDate( new moment('2016-12-26',"YYYY-MM-DD").tz('Asia/Seoul').add(7,'days').toDate() );
         pickerCollection.setDate( holiday_end.toDate() );
-        delivery_min_date = new moment('2016-09-17',"YYYY-MM-DD").tz('Asia/Seoul').add(4,'days').toDate();
+        delivery_min_date = new moment('2016-12-26',"YYYY-MM-DD").tz('Asia/Seoul').add(4,'days').toDate();
         interval = 0;
       }
 
