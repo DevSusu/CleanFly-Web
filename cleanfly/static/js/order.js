@@ -48,6 +48,7 @@ $(document).on('ready page:load', function() {
     "collection" : $('select[column="collection"]').children('option:selected'),
     "delivery" : $('select[column="delivery"]').children('option:selected')
   };
+  console.log(current_time_option);
   var collection_min_date = moment();
   var max_collection_time = 23;
 
@@ -206,7 +207,7 @@ $(document).on('ready page:load', function() {
         $(option).attr('disabled',true);
       }
     });
-    //moveSelected(type);
+    moveSelected(type);
     // 마감 체크
     updateFullDate(input);
 
