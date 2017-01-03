@@ -120,7 +120,7 @@ $(document).on('ready page:load', function() {
     var min_diff = 24;
     var min_option;
     var min_val = "";
-    var min_index;
+    var min_index = 0;
 
     select.children('option[disabled!="disabled"]').each( function(index, option) {
       var tmp_diff = Math.abs(parseInt($(option).val().slice(0,2)) - parseInt($(current_option).val().slice(0,2)));
@@ -170,6 +170,19 @@ $(document).on('ready page:load', function() {
         }
       }
     });
+
+    if( full.length == 0 ) {
+      if ( select.children('option[disabled="disabled"]').length == 14 ) {
+        if ( $(input).attr('column') === "collection_date" ) {
+          pickerCollection.setMoment(input_moment.add(1,'days'));
+        } else {
+          pickerDelivery.setMoment(input_moment.add(1,'days'));
+        }
+        updateDateInput(input);
+      } else {
+        moveSelected(type);
+      }
+    }
   }
 
   var updateDateInput = function(input) {
@@ -207,7 +220,6 @@ $(document).on('ready page:load', function() {
         $(option).attr('disabled',true);
       }
     });
-    moveSelected(type);
     // 마감 체크
     updateFullDate(input);
 
