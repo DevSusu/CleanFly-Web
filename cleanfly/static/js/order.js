@@ -279,6 +279,9 @@ $(document).on('ready page:load', function() {
     };
     var full_address = getFullAddress();
     var address_detail = full_address.split(" ");
+    if( address_detail[0].indexOf('도') == address_detail[0].length -1 ) {
+      address_detail[0] = address_detail[0].slice(0,-1);
+    }
     request_body.address = {
 
       "admin_area" : address_detail[0],
@@ -381,6 +384,12 @@ $(document).on('ready page:load', function() {
       "배달시간 : " + $('input.datepicker').last().val() + "\n" +
       "으로 주문하시겠습니까?";
 
+    var full_address = getFullAddress();
+    var address_detail = full_address.split(" ");
+    if( address_detail[0].indexOf('도') == address_detail[0].length -1 ) {
+      address_detail[0] = address_detail[0].slice(0,-1);
+    }
+
     if ( confirm(confirm_str) ) {
 
       var order_data = {
@@ -396,7 +405,7 @@ $(document).on('ready page:load', function() {
         "id" : $('input[name="id"]').val(),
         "user_code" : $('input[name="user_code"]').val(),
         "phone" : $('input[name="phone"]').val(),
-        "address" : $('input[name="address"]').val(),
+        "address" : address_detail.join(" "),
         "address_code" : $('input[name="address_code"]').val()
       };
 
