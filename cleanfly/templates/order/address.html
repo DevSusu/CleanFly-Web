@@ -3,7 +3,7 @@
 {% block static %}
 {% load staticfiles %}
 <script src="{% static 'js/postcode.v2.js' %}"></script>
-<script src="https://s1.daumcdn.net/svc/attach/U03/cssjs/postcode/1467267596298/160630.js"></script>
+<script src="https://spi.maps.daum.net/imap/map_js_init/postcode.v2.js"></script>
 <link rel="stylesheet" href="{% static 'css/index.css' %}">
 <link rel="stylesheet" href="{% static 'css/order.css' %}">
 <script src="{% static 'js/address.js' %}"></script>
@@ -148,7 +148,8 @@ function sample3_execDaumPostcode() {
         },
         width : '100%',
         height : '100%',
-        theme: themeObj
+        theme: themeObj,
+        shorthand : true
     }).embed(element_wrap);
 
     // iframe을 넣은 element를 보이게 한다.
