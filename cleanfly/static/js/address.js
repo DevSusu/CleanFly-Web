@@ -107,6 +107,9 @@ $(document).on("ready page:load", function () {
 
     var full_address = getFullAddress();
     var address_detail = full_address.split(" ");
+    if( address_detail[0].indexOf('도') == address_detail[0].length -1 ) {
+      address_detail[0] = address_detail[0].slice(0,-1);
+    }
     address_body.address = {
 
       "admin_area" : address_detail[0],
