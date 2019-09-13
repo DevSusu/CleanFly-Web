@@ -14,7 +14,7 @@ SECRET_KEY = 'd_1e_b=$f&$+9ktnyo&wb$0u3jyg$e&x!+@^xlnlz+4dwdq0bl'
 DEBUG = False
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['easy.getcleanfly.com','localhost']
+ALLOWED_HOSTS = ['easy.cleanfly.link', 'easy.getcleanfly.com','localhost']
 
 
 # Application definition
@@ -76,7 +76,7 @@ DATABASES = {
         'NAME': 'cleanfly',
         'USER': 'cleanfly',
         'PASSWORD': 'cccc1234!',
-        'HOST': 'cleanfly-replica.coc8lqibmkn4.ap-northeast-1.rds.amazonaws.com',
+        'HOST': 'cleanfly.cluster-coc8lqibmkn4.ap-northeast-1.rds.amazonaws.com',
         'PORT': '3306',
     },
 }
